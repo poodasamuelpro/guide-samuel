@@ -68,7 +68,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
             <div className="flex justify-center mb-5">
               <GSLogo size={56} />
             </div>
-            <h1 className="text-2xl font-extrabold text-[#1e3a5f] tracking-tight">
+            <h1 className="text-2xl font-extrabold text-[#073b4c] tracking-tight">
               Bienvenue dans la formation !
             </h1>
             <p className="text-gray-500 text-sm mt-2 leading-relaxed">
@@ -78,14 +78,14 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
           </div>
 
           {/* What you'll learn */}
-          <div className="bg-[#1e3a5f] rounded-2xl p-4 mb-6">
-            <p className="text-xs font-semibold text-[#f6932a] uppercase tracking-widest mb-3">
+          <div className="bg-[#073b4c] rounded-2xl p-4 mb-6">
+            <p className="text-xs font-semibold text-[#6ba832] uppercase tracking-widest mb-3">
               Ce que vous allez apprendre
             </p>
             <div className="grid grid-cols-2 gap-2">
               {TIPS.map((tip) => (
                 <div key={tip} className="flex items-start gap-2">
-                  <CheckCircle size={13} className="text-[#f6932a] shrink-0 mt-0.5" />
+                  <CheckCircle size={13} className="text-[#6ba832] shrink-0 mt-0.5" />
                   <span className="text-xs text-white/70 leading-tight">{tip}</span>
                 </div>
               ))}
@@ -100,9 +100,9 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                 <div>
                   <label
                     htmlFor="firstName"
-                    className="block text-sm font-semibold text-[#1e3a5f] mb-1.5"
+                    className="block text-sm font-semibold text-[#073b4c] mb-1.5"
                   >
-                    Prénom <span className="text-[#f6932a]">*</span>
+                    Prénom <span className="text-[#6ba832]">*</span>
                   </label>
                   <div className="relative">
                     <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -125,9 +125,9 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                 <div>
                   <label
                     htmlFor="lastName"
-                    className="block text-sm font-semibold text-[#1e3a5f] mb-1.5"
+                    className="block text-sm font-semibold text-[#073b4c] mb-1.5"
                   >
-                    Nom <span className="text-[#f6932a]">*</span>
+                    Nom <span className="text-[#6ba832]">*</span>
                   </label>
                   <div className="relative">
                     <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -150,7 +150,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                 <div>
                   <label
                     htmlFor="city"
-                    className="block text-sm font-semibold text-[#1e3a5f] mb-1.5"
+                    className="block text-sm font-semibold text-[#073b4c] mb-1.5"
                   >
                     Ville{' '}
                     <span className="text-gray-400 font-normal text-xs">(optionnel)</span>
