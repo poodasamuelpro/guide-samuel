@@ -2,9 +2,12 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+  ArrowLeft, ArrowRight, Check, X, CheckCircle,
+  XCircle, Trophy, RotateCcw, BookOpen, Zap
+} from 'lucide-react';
 import { QUIZ_DATA } from '@/lib/quizData';
-import { QuizQuestion } from '@/types';
-import { IconCheck, IconX, IconArrowRight } from '@/components/Icons';
+import { MODULES } from '@/lib/modules';
 
 interface QuizProps {
   moduleId: number;
@@ -12,76 +15,139 @@ interface QuizProps {
   onBack: () => void;
 }
 
+const PASS_THRESHOLD = 0.66;
+
 export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
-  const questions: QuizQuestion[] = QUIZ_DATA[moduleId] ?? [];
-  const [current, setCurrent] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
+  const questions = QUIZ_DATA[moduleId] ?? [];
+  const module = MODULES.find((m) => m.id === moduleId);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
   const [showExplanation, setShowExplanation] = useState(false);
-  const [score, setScore] = useState(0);
-  const [finished, setFinished] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const q = questions[current];
+  const current = questions[currentIndex];
+  const selectedAnswer = answers[currentIndex];
+  const isLast = currentIndex === questions.length - 1;
 
-  function handleSelect(idx: number) {
-    if (selected !== null) return;
-    setSelected(idx);
+  // Results
+  const correctCount = submitted
+    ? answers.filter((a, i) => a === questions[i].correctIndex).length
+    : 0;
+  const passed = correctCount / questions.length >= PASS_THRESHOLD;
+  const scorePercent = Math.round((correctCount / questions.length) * 100);
+
+  const handleSelect = (optionIndex: number) => {
+    if (showExplanation) return;
+    const newAnswers = [...answers];
+    newAnswers[currentIndex] = optionIndex;
+    setAnswers(newAnswers);
+  };
+
+  const handleConfirm = () => {
+    if (selectedAnswer === null) return;
     setShowExplanation(true);
-    if (idx === q.correctIndex) setScore((s) => s + 1);
-  }
+  };
 
-  function handleNext() {
-    if (current + 1 < questions.length) {
-      setCurrent((c) => c + 1);
-      setSelected(null);
-      setShowExplanation(false);
+  const handleNext = () => {
+    setShowExplanation(false);
+    if (isLast) {
+      setSubmitted(true);
     } else {
-      setFinished(true);
+      setCurrentIndex((i) => i + 1);
     }
-  }
+  };
 
-  const passed = score >= Math.ceil(questions.length * 0.66);
+  const handleRetry = () => {
+    setAnswers(Array(questions.length).fill(null));
+    setCurrentIndex(0);
+    setShowExplanation(false);
+    setSubmitted(false);
+  };
 
-  if (finished) {
+  if (!current && !submitted) return null;
+
+  // Results screen
+  if (submitted) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#fafaf8] flex items-center justify-center px-4 py-16">
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-xl"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          className="w-full max-w-md"
         >
-          <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 ${passed ? 'bg-green-100' : 'bg-orange-100'}`}>
-            {passed
-              ? <IconCheck size={36} color="#16a34a" />
-              : <IconX size={36} color="#ea580c" />
-            }
-          </div>
-          <h2 className="text-2xl font-bold text-[#1a2a4a] mb-2">
-            {passed ? 'Bravo !' : 'Pas tout à fait...'}
-          </h2>
-          <p className="text-gray-600 mb-2 text-base">
-            {score}/{questions.length} bonne{score > 1 ? 's' : ''} réponse{score > 1 ? 's' : ''}
-          </p>
-          {passed ? (
-            <p className="text-green-700 font-semibold mb-6 text-sm">Module débloqué — +100 XP gagnés !</p>
-          ) : (
-            <p className="text-orange-600 font-semibold mb-6 text-sm">Relis le module et réessaie.</p>
-          )}
-          <div className="space-y-3">
+          <div className="card p-8 text-center shadow-xl">
+            {/* Score circle */}
+            <div className={`w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center border-4 ${
+              passed
+                ? 'border-green-400 bg-green-50'
+                : 'border-orange-300 bg-orange-50'
+            }`}>
+              {passed ? (
+                <Trophy size={36} className="text-green-600" />
+              ) : (
+                <RotateCcw size={36} className="text-orange-500" />
+              )}
+            </div>
+
+            <h2 className={`text-2xl font-extrabold mb-2 ${passed ? 'text-green-700' : 'text-[#1a2a4a]'}`}>
+              {passed ? 'Bravo, réussi !' : 'Presque ! Encore un effort'}
+            </h2>
+
+            {/* Score */}
+            <div className="my-5">
+              <div className={`text-5xl font-extrabold ${passed ? 'text-green-600' : 'text-[#f2994a]'}`}>
+                {scorePercent}%
+              </div>
+              <p className="text-gray-500 text-sm mt-1">
+                {correctCount}/{questions.length} bonne{correctCount > 1 ? 's' : ''} réponse{correctCount > 1 ? 's' : ''}
+              </p>
+            </div>
+
+            {/* Per-question summary */}
+            <div className="space-y-2 mb-6 text-left">
+              {questions.map((q, i) => {
+                const correct = answers[i] === q.correctIndex;
+                return (
+                  <div key={q.id} className={`flex items-start gap-2.5 p-3 rounded-xl border text-sm ${
+                    correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+                  }`}>
+                    {correct
+                      ? <CheckCircle size={15} className="text-green-600 shrink-0 mt-0.5" />
+                      : <XCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
+                    }
+                    <span className={`text-xs leading-relaxed ${correct ? 'text-green-800' : 'text-red-700'}`}>
+                      Q{i+1} : {correct ? 'Correct' : `Réponse : ${q.options[q.correctIndex]}`}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
             {passed ? (
-              <button
-                onClick={onPass}
-                className="w-full bg-gradient-to-r from-[#f2994a] to-[#f5af4d] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2"
-              >
-                <span>Continuer</span>
-                <IconArrowRight size={18} color="white" />
-              </button>
+              <div>
+                <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-[#fef3e8] rounded-xl border border-[#f2994a]/30">
+                  <Zap size={16} className="text-[#f2994a]" />
+                  <span className="text-sm font-bold text-[#1a2a4a]">+100 XP gagnés !</span>
+                  <span className="text-xs text-gray-500">Badge «{module?.badgeLabel}» débloqué</span>
+                </div>
+                <button onClick={onPass} className="btn-primary w-full">
+                  <CheckCircle size={17} />
+                  Continuer vers le dashboard
+                  <ArrowRight size={17} />
+                </button>
+              </div>
             ) : (
-              <button
-                onClick={onBack}
-                className="w-full bg-gradient-to-r from-[#1a2a4a] to-[#2a3f6a] text-white font-bold py-4 rounded-xl"
-              >
-                Revoir le module
-              </button>
+              <div className="space-y-3">
+                <button onClick={handleRetry} className="btn-primary w-full">
+                  <RotateCcw size={17} />
+                  Réessayer le quiz
+                </button>
+                <button onClick={onBack} className="btn-secondary w-full">
+                  <BookOpen size={17} />
+                  Revoir le module
+                </button>
+              </div>
             )}
           </div>
         </motion.div>
@@ -89,100 +155,167 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
     );
   }
 
+  const isCorrect = selectedAnswer === current.correctIndex;
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-gradient-to-br from-[#1a2a4a] to-[#0f1a2e] px-4 pt-8 pb-12">
-        <div className="max-w-lg mx-auto">
-          <button onClick={onBack} className="text-gray-400 text-sm mb-4 flex items-center gap-1 hover:text-white transition-colors">
-            &#8592; Retour au module
-          </button>
-          <h2 className="text-white font-bold text-lg">Quiz — Module {moduleId}</h2>
-          <div className="flex gap-2 mt-3">
-            {questions.map((_, i) => (
-              <div
-                key={i}
-                className={`h-1.5 flex-1 rounded-full transition-all ${
-                  i < current ? 'bg-[#f2994a]' : i === current ? 'bg-white' : 'bg-white/30'
-                }`}
-              />
-            ))}
+    <div className="min-h-screen bg-[#fafaf8] flex flex-col">
+      {/* Header */}
+      <div className="bg-[#1a2a4a] pt-4 pb-6">
+        <div className="max-w-xl mx-auto px-4">
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm transition-colors min-h-0 p-0 bg-transparent border-none"
+              aria-label="Retour au module"
+            >
+              <ArrowLeft size={16} />
+              Retour
+            </button>
+            <div className="text-center">
+              <p className="text-[10px] text-white/50 uppercase tracking-widest">Quiz — Module {moduleId}</p>
+              <p className="text-white font-bold text-sm">{module?.title}</p>
+            </div>
+            <div className="text-right">
+              <span className="text-[#f2994a] font-bold text-sm">{currentIndex + 1}</span>
+              <span className="text-white/40 text-sm">/{questions.length}</span>
+            </div>
           </div>
-          <p className="text-gray-400 text-xs mt-2">{current + 1}/{questions.length}</p>
+          {/* Progress */}
+          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-[#f2994a] rounded-full"
+              initial={{ width: '0%' }}
+              animate={{ width: `${((currentIndex + (submitted ? 1 : 0)) / questions.length) * 100}%` }}
+              transition={{ duration: 0.4 }}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto px-4 -mt-6 pb-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            className="bg-white rounded-2xl p-6 shadow-md border border-gray-100"
-          >
-            <p className="font-bold text-[#1a2a4a] text-base mb-6 leading-relaxed">{q.question}</p>
+      {/* Question */}
+      <div className="flex-1 flex items-start justify-center px-4 pt-6 pb-10">
+        <div className="w-full max-w-xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+            >
+              {/* Question text */}
+              <div className="card p-5 mb-4 shadow-md">
+                <p className="text-[11px] font-bold text-[#f2994a] uppercase tracking-widest mb-2">
+                  Question {currentIndex + 1} sur {questions.length}
+                </p>
+                <p className="text-[#1a2a4a] font-bold text-base leading-relaxed">
+                  {current.question}
+                </p>
+              </div>
 
-            <div className="space-y-3">
-              {q.options.map((opt, idx) => {
-                let btnClass = 'border-gray-200 bg-gray-50 hover:border-[#f2994a] cursor-pointer';
-                let textClass = 'text-gray-700';
-                if (selected !== null) {
-                  if (idx === q.correctIndex) {
-                    btnClass = 'border-green-500 bg-green-50';
-                    textClass = 'text-green-800';
-                  } else if (idx === selected) {
-                    btnClass = 'border-red-400 bg-red-50';
-                    textClass = 'text-red-700';
-                  } else {
-                    btnClass = 'border-gray-200 bg-gray-50 opacity-50';
-                    textClass = 'text-gray-500';
+              {/* Options */}
+              <div className="space-y-2.5 mb-4">
+                {current.options.map((option, i) => {
+                  let optClass = 'quiz-option';
+                  if (showExplanation) {
+                    if (i === current.correctIndex) optClass += ' correct';
+                    else if (i === selectedAnswer) optClass += ' incorrect';
+                  } else if (i === selectedAnswer) {
+                    optClass += ' selected';
                   }
-                }
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => handleSelect(idx)}
-                    className={`w-full text-left border-2 rounded-xl px-4 py-3.5 text-sm transition-all ${btnClass}`}
+
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => handleSelect(i)}
+                      className={optClass}
+                      disabled={showExplanation}
+                      aria-pressed={selectedAnswer === i}
+                      aria-label={`Option ${String.fromCharCode(65+i)}: ${option}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold shrink-0 ${
+                          showExplanation && i === current.correctIndex
+                            ? 'border-green-500 bg-green-500 text-white'
+                            : showExplanation && i === selectedAnswer && i !== current.correctIndex
+                            ? 'border-red-400 bg-red-400 text-white'
+                            : selectedAnswer === i
+                            ? 'border-[#1a2a4a] bg-[#1a2a4a] text-white'
+                            : 'border-gray-300 text-gray-400'
+                        }`}>
+                          {showExplanation && i === current.correctIndex ? (
+                            <Check size={11} />
+                          ) : showExplanation && i === selectedAnswer && i !== current.correctIndex ? (
+                            <X size={11} />
+                          ) : (
+                            String.fromCharCode(65 + i)
+                          )}
+                        </span>
+                        <span className="flex-1 text-left text-sm">{option}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Explanation */}
+              <AnimatePresence>
+                {showExplanation && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className={`rounded-xl p-4 mb-4 border ${
+                      isCorrect
+                        ? 'bg-green-50 border-green-200'
+                        : 'bg-orange-50 border-orange-200'
+                    }`}
                   >
-                    <span className="font-bold text-[#1a2a4a] mr-2">{String.fromCharCode(65 + idx)}.</span>
-                    <span className={textClass}>{opt}</span>
-                  </button>
-                );
-              })}
-            </div>
+                    <div className="flex items-start gap-2.5">
+                      {isCorrect
+                        ? <CheckCircle size={16} className="text-green-600 shrink-0 mt-0.5" />
+                        : <XCircle size={16} className="text-orange-500 shrink-0 mt-0.5" />
+                      }
+                      <div>
+                        <p className={`text-xs font-bold mb-1 ${isCorrect ? 'text-green-700' : 'text-orange-700'}`}>
+                          {isCorrect ? 'Bonne réponse !' : 'Pas tout à fait…'}
+                        </p>
+                        <p className={`text-xs leading-relaxed ${isCorrect ? 'text-green-800' : 'text-orange-800'}`}>
+                          {current.explanation}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-            {showExplanation && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`mt-4 rounded-xl p-4 text-sm border ${
-                  selected === q.correctIndex
-                    ? 'bg-green-50 text-green-800 border-green-200'
-                    : 'bg-orange-50 text-orange-800 border-orange-200'
-                }`}
-              >
-                <div className="flex items-center gap-2 font-bold mb-1">
-                  {selected === q.correctIndex
-                    ? <IconCheck size={16} color="#16a34a" />
-                    : <IconX size={16} color="#ea580c" />
-                  }
-                  <span>{selected === q.correctIndex ? 'Correct !' : 'Pas tout à fait'}</span>
-                </div>
-                <p className="text-xs leading-relaxed">{q.explanation}</p>
-              </motion.div>
-            )}
-
-            {showExplanation && (
-              <button
-                onClick={handleNext}
-                className="w-full mt-4 bg-gradient-to-r from-[#f2994a] to-[#f5af4d] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2"
-              >
-                <span>{current + 1 < questions.length ? 'Question suivante' : 'Voir mon résultat'}</span>
-                <IconArrowRight size={16} color="white" />
-              </button>
-            )}
-          </motion.div>
-        </AnimatePresence>
+              {/* Actions */}
+              {!showExplanation ? (
+                <button
+                  onClick={handleConfirm}
+                  disabled={selectedAnswer === null}
+                  className={`btn-primary w-full ${selectedAnswer === null ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  aria-label="Valider la réponse"
+                >
+                  Valider ma réponse
+                  <Check size={17} />
+                </button>
+              ) : (
+                <button
+                  onClick={handleNext}
+                  className="btn-primary w-full"
+                  aria-label={isLast ? 'Voir les résultats' : 'Question suivante'}
+                >
+                  {isLast ? (
+                    <>Voir mes résultats <Trophy size={17} /></>
+                  ) : (
+                    <>Question suivante <ArrowRight size={17} /></>
+                  )}
+                </button>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

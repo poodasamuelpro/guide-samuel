@@ -5,6 +5,8 @@ import { AppState, UserProfile } from '@/types';
 import { loadState, markModuleComplete } from '@/lib/storage';
 import { generateCertificate } from '@/lib/certificate';
 
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import Landing from '@/components/Landing';
 import Onboarding from '@/components/Onboarding';
 import Dashboard from '@/components/Dashboard';
@@ -31,30 +33,8 @@ const MODULE_COMPONENTS: Record<number, React.ComponentType<{ onStartQuiz: () =>
   5: Module5,
 };
 
-function LegalFooter() {
-  return (
-    <footer className="bg-[#0f1a2e] border-t border-white/10 px-4 py-4 text-center">
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        {[
-          { href: '/legal/mentions-legales', label: 'Mentions légales' },
-          { href: '/legal/cgu', label: 'CGU' },
-          { href: '/legal/confidentialite', label: 'Confidentialité' },
-        ].map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            className="text-gray-500 hover:text-gray-300 text-xs transition-colors underline-offset-2 hover:underline"
-          >
-            {link.label}
-          </a>
-        ))}
-      </div>
-      <p className="text-gray-600 text-xs mt-2">
-        © 2025 Le Guide de Samuel · Formation privée, non commerciale
-      </p>
-    </footer>
-  );
-}
+// Views that show the header
+const VIEWS_WITH_HEADER: View['type'][] = ['dashboard', 'landing'];
 
 export default function App() {
   const [state, setState] = useState<AppState | null>(null);
@@ -63,7 +43,6 @@ export default function App() {
   useEffect(() => {
     const s = loadState();
     setState(s);
-    // Skip landing if already onboarded
     if (s.onboardingDone) {
       setView({ type: 'dashboard' });
     }
@@ -73,13 +52,19 @@ export default function App() {
     setState(loadState());
   }, []);
 
+  const handleNavigate = (target: string) => {
+    if (target === 'landing') setView({ type: 'landing' });
+    else if (target === 'dashboard') {
+      const s = loadState();
+      if (s.onboardingDone) setView({ type: 'dashboard' });
+      else setView({ type: 'onboarding' });
+    }
+  };
+
   const handleStart = () => {
     const s = loadState();
-    if (s.onboardingDone) {
-      setView({ type: 'dashboard' });
-    } else {
-      setView({ type: 'onboarding' });
-    }
+    if (s.onboardingDone) setView({ type: 'dashboard' });
+    else setView({ type: 'onboarding' });
   };
 
   const handleOnboardingComplete = (user: UserProfile) => {
@@ -107,28 +92,40 @@ export default function App() {
     await generateCertificate(state);
   };
 
-  if (!state) return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a2a4a] to-[#0f1a2e] flex flex-col items-center justify-center">
-      <div className="text-center">
-        <div className="w-12 h-12 border-4 border-[#f2994a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-gray-300 text-sm">Chargement...</p>
+  // Loading
+  if (!state) {
+    return (
+      <div className="min-h-screen bg-[#1a2a4a] flex flex-col items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-[#f2994a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-white/60 text-sm">Chargement de la formation…</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  const completedModules = state.modules.filter((m) => m.quizPassed).length;
+  const showHeader = VIEWS_WITH_HEADER.includes(view.type as View['type']);
 
   // Landing
   if (view.type === 'landing') {
     return (
       <div className="flex flex-col min-h-screen">
-        <div className="flex-1">
+        <Header
+          currentView="landing"
+          totalXP={state.totalXP}
+          modulesCompleted={completedModules}
+          onNavigate={handleNavigate}
+        />
+        <main className="flex-1">
           <Landing onStart={handleStart} />
-        </div>
-        <LegalFooter />
+        </main>
+        <Footer />
       </div>
     );
   }
 
-  // Onboarding
+  // Onboarding — no header/footer
   if (view.type === 'onboarding') {
     return <Onboarding onComplete={handleOnboardingComplete} />;
   }
@@ -136,51 +133,41 @@ export default function App() {
   // Dashboard
   if (view.type === 'dashboard') {
     return (
-      <div className="flex flex-col min-h-screen bg-gray-50">
-        <div className="flex-1">
+      <div className="flex flex-col min-h-screen">
+        <Header
+          currentView="dashboard"
+          totalXP={state.totalXP}
+          modulesCompleted={completedModules}
+          onNavigate={handleNavigate}
+        />
+        <main className="flex-1">
           <Dashboard
             state={state}
             onStartModule={handleStartModule}
             onDownloadCertificate={handleDownloadCertificate}
           />
-        </div>
-        <footer className="bg-white border-t border-gray-100 px-4 py-4 text-center">
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            {[
-              { href: '/legal/mentions-legales', label: 'Mentions légales' },
-              { href: '/legal/cgu', label: 'CGU' },
-              { href: '/legal/confidentialite', label: 'Confidentialité' },
-            ].map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-gray-400 hover:text-gray-600 text-xs transition-colors hover:underline"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-          <p className="text-gray-400 text-xs mt-2">
-            © 2025 Le Guide de Samuel
-          </p>
-        </footer>
+        </main>
+        <Footer />
       </div>
     );
   }
 
-  // Module
+  // Module — no full header, has back button inside
   if (view.type === 'module') {
     const ModuleComp = MODULE_COMPONENTS[view.id];
     if (!ModuleComp) return null;
     return (
-      <ModuleComp
-        onStartQuiz={() => handleStartQuiz(view.id)}
-        onBack={() => setView({ type: 'dashboard' })}
-      />
+      <div className="flex flex-col min-h-screen">
+        <ModuleComp
+          onStartQuiz={() => handleStartQuiz(view.id)}
+          onBack={() => setView({ type: 'dashboard' })}
+        />
+        <Footer />
+      </div>
     );
   }
 
-  // Quiz
+  // Quiz — no footer
   if (view.type === 'quiz') {
     return (
       <Quiz

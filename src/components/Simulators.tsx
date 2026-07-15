@@ -1,412 +1,776 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  IconCalculator,
-  IconCheck,
-  IconCheckCircle,
-  IconReceiptText,
-  IconShoppingCart,
-  IconPackage,
-  IconPlane,
-  IconZap,
-  IconAlertTriangle,
-  IconDollarSign,
-  IconClock,
-  IconTag,
-  IconTrendingUp,
-  IconRefreshCw,
-  IconArrowRight,
-  IconX,
-  IconInfo,
-  IconSmartphone,
-  IconLightbulb,
-} from '@/components/Icons';
+  Calculator, CheckCircle, AlertTriangle, Info, RefreshCw,
+  TrendingUp, Package, Clock, ShoppingCart, Building2,
+  Check, RotateCcw, ArrowRight, Tag, Ship, Plane
+} from 'lucide-react';
 
-// ── Module 1 : Simulateur de budget ──────────────────────────────────────────
-
+/* ─────────────────────────────────────────────────────── */
+/*  1. BUDGET SIMULATOR (Module 1)                         */
+/* ─────────────────────────────────────────────────────── */
 export function BudgetSimulator() {
-  const cards = [
-    { id: 'uba', label: 'Carte Visa UBA', cost: 10000, note: 'Rechargeable via Orange Money' },
-    { id: 'ecobank', label: 'Carte Cashxpress Ecobank', cost: 3500, note: 'Rechargeable en agence uniquement' },
-  ];
-  const [card, setCard] = useState(cards[0]);
-  const [withBP, setWithBP] = useState(true);
-  const bpCost = 17200;
-  const total = card.cost + (withBP ? bpCost : 0);
+  const [card, setCard] = useState<'uba' | 'orange' | 'ecobank'>('uba');
+  const [includePoBox, setIncludePoBox] = useState(true);
+  const [firstOrder, setFirstOrder] = useState(15000);
+
+  const cardCosts = {
+    uba: { name: 'Carte VISA UBA (Africard)', acquisition: 10000, monthly: 500 },
+    orange: { name: 'Carte VISA Orange Money', acquisition: 6000, monthly: 300 },
+    ecobank: { name: 'Carte Ecobank prépayée', acquisition: 8000, monthly: 400 },
+  };
+
+  const poBoxCost = includePoBox ? 15200 : 0;
+  const selectedCard = cardCosts[card];
+  const total = selectedCard.acquisition + poBoxCost + Math.max(0, firstOrder);
 
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 space-y-4">
-      <div className="flex items-center gap-2">
-        <IconCalculator size={18} color="#1a2a4a" />
-        <h3 className="font-bold text-[#1a2a4a] text-base">Simulateur de budget de départ</h3>
-      </div>
-      <div>
-        <label className="text-sm font-semibold text-gray-700 block mb-2">Choisis ta carte bancaire :</label>
-        <div className="space-y-2">
-          {cards.map((c) => (
-            <label key={c.id} className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
-              ${card.id === c.id ? 'border-[#f2994a] bg-orange-50' : 'border-gray-200 bg-white'}`}>
-              <input type="radio" name="card" checked={card.id === c.id} onChange={() => setCard(c)} className="accent-[#f2994a]" />
-              <div>
-                <p className="font-semibold text-sm text-[#1a2a4a]">{c.label} — <span className="text-[#f2994a]">{c.cost.toLocaleString()} FCFA</span></p>
-                <p className="text-xs text-gray-500">{c.note}</p>
-              </div>
-            </label>
-          ))}
+    <div className="card p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center">
+          <Calculator size={18} className="text-blue-600" />
         </div>
-      </div>
-      <label className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
-        ${withBP ? 'border-[#f2994a] bg-orange-50' : 'border-gray-200 bg-white'}`}>
-        <input type="checkbox" checked={withBP} onChange={(e) => setWithBP(e.target.checked)} className="accent-[#f2994a]" />
         <div>
-          <p className="font-semibold text-sm text-[#1a2a4a]">Boîte postale La Poste — <span className="text-[#f2994a]">17 200 FCFA</span></p>
-          <p className="text-xs text-gray-500">Indispensable pour recevoir tes colis</p>
+          <h3 className="text-sm font-bold text-[#1a2a4a]">Simulateur de budget de départ</h3>
+          <p className="text-[11px] text-gray-500">Estimez votre investissement initial</p>
         </div>
-      </label>
-      <div className="bg-[#1a2a4a] text-white rounded-xl p-4 text-center">
-        <p className="text-sm text-gray-300 mb-1">Budget total estimé</p>
-        <p className="text-3xl font-bold text-[#f2994a]">{total.toLocaleString()} FCFA</p>
-        <p className="text-xs text-gray-400 mt-1">≈ {(total / 655).toFixed(0)} € · {(total / 600).toFixed(0)} USD</p>
+      </div>
+
+      <div className="space-y-4">
+        {/* Card choice */}
+        <div>
+          <label className="block text-xs font-semibold text-[#1a2a4a] mb-2">Votre carte bancaire</label>
+          <div className="space-y-2">
+            {Object.entries(cardCosts).map(([key, val]) => (
+              <button
+                key={key}
+                onClick={() => setCard(key as typeof card)}
+                className={`w-full flex items-center justify-between p-3 rounded-xl border-2 text-left transition-all min-h-0 ${
+                  card === key
+                    ? 'border-[#f2994a] bg-[#fef3e8]'
+                    : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+              >
+                <span className="text-xs font-medium text-gray-700">{val.name}</span>
+                <div className="flex items-center gap-2 text-right">
+                  <span className="text-xs font-bold text-[#1a2a4a]">{val.acquisition.toLocaleString()} FCFA</span>
+                  {card === key && <Check size={13} className="text-[#f2994a]" />}
+                </div>
+              </button>
+            ))}
+          </div>
+          <p className="text-[10px] text-gray-400 mt-1 italic">* Tarifs indicatifs — vérifiez auprès de votre banque</p>
+        </div>
+
+        {/* PO Box */}
+        <div>
+          <label className="flex items-center justify-between cursor-pointer">
+            <div>
+              <p className="text-xs font-semibold text-[#1a2a4a]">Boîte postale La Poste</p>
+              <p className="text-[11px] text-gray-500">~15 000 FCFA/an + 200 FCFA timbre</p>
+            </div>
+            <div
+              onClick={() => setIncludePoBox(!includePoBox)}
+              className={`w-11 h-6 rounded-full relative transition-colors cursor-pointer ${includePoBox ? 'bg-[#f2994a]' : 'bg-gray-200'}`}
+            >
+              <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${includePoBox ? 'translate-x-5.5 left-0.5' : 'left-0.5'}`} />
+            </div>
+          </label>
+        </div>
+
+        {/* First order */}
+        <div>
+          <label className="block text-xs font-semibold text-[#1a2a4a] mb-2">
+            Montant de votre première commande test
+          </label>
+          <input
+            type="number"
+            value={firstOrder}
+            onChange={(e) => setFirstOrder(Math.max(0, parseInt(e.target.value) || 0))}
+            min={0}
+            step={1000}
+            className="sim-input"
+            aria-label="Montant première commande en FCFA"
+          />
+          <p className="text-[10px] text-gray-400 mt-1">Conseil : commencer avec 5 000 à 20 000 FCFA pour un test</p>
+        </div>
+      </div>
+
+      {/* Result */}
+      <div className="mt-5 rounded-xl bg-[#1a2a4a] p-4">
+        <p className="text-xs text-white/60 mb-2">Budget total estimé</p>
+        <p className="text-3xl font-extrabold text-[#f2994a]">{total.toLocaleString()} FCFA</p>
+        <div className="mt-3 space-y-1.5 text-xs text-white/70">
+          <div className="flex justify-between">
+            <span>Carte bancaire</span>
+            <span className="font-semibold">{cardCosts[card].acquisition.toLocaleString()} FCFA</span>
+          </div>
+          {includePoBox && (
+            <div className="flex justify-between">
+              <span>Boîte postale</span>
+              <span className="font-semibold">15 200 FCFA</span>
+            </div>
+          )}
+          <div className="flex justify-between">
+            <span>Première commande</span>
+            <span className="font-semibold">{firstOrder.toLocaleString()} FCFA</span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-// ── Module 1 : Checklist ──────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────── */
+/*  2. ALIEXPRESS VS ALIBABA QUIZ (Module 2)               */
+/* ─────────────────────────────────────────────────────── */
+const SCENARIOS = [
+  {
+    id: 1,
+    scenario: 'Tu veux tester 3 paires de chaussures pour voir si elles se vendent',
+    correct: 'aliexpress',
+    explanation: 'AliExpress permet les petites quantités, idéal pour tester un produit sans risque.',
+  },
+  {
+    id: 2,
+    scenario: 'Tu veux commander 500 pièces d\'un même article pour remplir ton stock',
+    correct: 'alibaba',
+    explanation: 'Alibaba offre des prix de gros pour les grosses commandes avec des fabricants directs.',
+  },
+  {
+    id: 3,
+    scenario: 'C\'est ta première commande et tu veux être protégé en cas de problème',
+    correct: 'aliexpress',
+    explanation: 'AliExpress intègre une protection acheteur de 60 jours automatiquement.',
+  },
+  {
+    id: 4,
+    scenario: 'Tu veux faire fabriquer un produit avec ton propre logo',
+    correct: 'alibaba',
+    explanation: 'Alibaba connecte avec des fabricants qui acceptent la personnalisation et le logo.',
+  },
+  {
+    id: 5,
+    scenario: 'Budget limité à 20 000 FCFA pour 10 articles différents',
+    correct: 'aliexpress',
+    explanation: 'AliExpress permet d\'acheter différents articles en petites quantités sans MOQ.',
+  },
+];
 
-export function StarterChecklist() {
-  const items = [
-    { id: 'phone', text: "J'ai un téléphone Android ou un ordinateur" },
-    { id: 'internet', text: "J'ai une connexion internet (WiFi ou data)" },
-    { id: 'card', text: "J'ai ma carte Visa prépayée (UBA ou Ecobank)" },
-    { id: 'bp', text: "J'ai ouvert ma boîte postale à La Poste" },
-    { id: 'budget', text: "J'ai mon budget de départ disponible" },
-    { id: 'aliexpress', text: "J'ai créé mon compte sur AliExpress" },
-  ];
-  const [checked, setChecked] = useState<Set<string>>(new Set());
+export function AlibabaAliexpressQuiz() {
+  const [current, setCurrent] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, 'aliexpress' | 'alibaba'>>({});
+  const [showResult, setShowResult] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
 
-  const toggle = (id: string) => {
-    setChecked((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const q = SCENARIOS[current];
+  const answer = answers[q.id];
+  const isCorrect = answer === q.correct;
+  const correctCount = Object.entries(answers).filter(([id, a]) => SCENARIOS.find(s => s.id === parseInt(id))?.correct === a).length;
+
+  const handleAnswer = (choice: 'aliexpress' | 'alibaba') => {
+    if (answers[q.id]) return;
+    setAnswers({ ...answers, [q.id]: choice });
+    setShowExplanation(true);
   };
 
-  const percent = Math.round((checked.size / items.length) * 100);
+  const handleNext = () => {
+    setShowExplanation(false);
+    if (current < SCENARIOS.length - 1) {
+      setCurrent(current + 1);
+    } else {
+      setShowResult(true);
+    }
+  };
+
+  const handleReset = () => {
+    setCurrent(0);
+    setAnswers({});
+    setShowResult(false);
+    setShowExplanation(false);
+  };
+
+  if (showResult) {
+    return (
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="card p-6 shadow-md text-center">
+        <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${correctCount >= 4 ? 'bg-green-100' : 'bg-orange-100'}`}>
+          {correctCount >= 4 ? <CheckCircle size={30} className="text-green-600" /> : <AlertTriangle size={30} className="text-orange-500" />}
+        </div>
+        <h3 className="text-lg font-extrabold text-[#1a2a4a] mb-1">Quiz terminé !</h3>
+        <p className="text-3xl font-extrabold text-[#f2994a] my-3">{correctCount}/{SCENARIOS.length}</p>
+        <p className="text-sm text-gray-500 mb-5">{correctCount >= 4 ? 'Excellent ! Vous maîtrisez la différence.' : 'Relisez le module pour améliorer votre score.'}</p>
+        <button onClick={handleReset} className="btn-secondary mx-auto">
+          <RotateCcw size={15} /> Rejouer
+        </button>
+      </motion.div>
+    );
+  }
 
   return (
-    <div className="bg-green-50 border border-green-200 rounded-2xl p-5 space-y-3">
-      <div className="flex items-center gap-2">
-        <IconCheckCircle size={18} color="#1a2a4a" />
-        <h3 className="font-bold text-[#1a2a4a] text-base">Ma checklist de démarrage</h3>
-      </div>
-      <div className="bg-white rounded-xl p-3">
-        <div className="flex justify-between text-xs text-gray-600 mb-1.5">
-          <span className="font-medium">Prêt à importer</span>
-          <span className="font-bold text-[#f2994a]">{checked.size}/{items.length}</span>
+    <div className="card p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center">
+          <ShoppingCart size={18} className="text-orange-500" />
         </div>
-        <div className="bg-gray-200 rounded-full h-2">
+        <div>
+          <h3 className="text-sm font-bold text-[#1a2a4a]">Mise en situation : AliExpress ou Alibaba ?</h3>
+          <p className="text-[11px] text-gray-500">Scénario {current + 1}/{SCENARIOS.length}</p>
+        </div>
+      </div>
+
+      <div className="h-1.5 bg-gray-100 rounded-full mb-5">
+        <div className="h-full bg-[#f2994a] rounded-full transition-all" style={{ width: `${((current + 1) / SCENARIOS.length) * 100}%` }} />
+      </div>
+
+      <div className="rounded-xl bg-[#1a2a4a]/5 border border-[#1a2a4a]/10 p-4 mb-5">
+        <p className="text-sm font-semibold text-[#1a2a4a] leading-relaxed">🎯 {q.scenario}</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        {[
+          { key: 'aliexpress' as const, label: 'AliExpress', icon: ShoppingCart, color: 'orange' },
+          { key: 'alibaba' as const, label: 'Alibaba', icon: Building2, color: 'blue' },
+        ].map(({ key, label, icon: Icon, color }) => {
+          const selected = answer === key;
+          const correct = q.correct === key;
+          let btnClass = `flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all cursor-pointer min-h-0`;
+          if (answer) {
+            if (correct) btnClass += ' border-green-400 bg-green-50';
+            else if (selected && !correct) btnClass += ' border-red-400 bg-red-50';
+            else btnClass += ' border-gray-200 bg-gray-50 opacity-60';
+          } else {
+            btnClass += ` border-${color}-200 bg-${color}-50 hover:border-${color}-400`;
+          }
+
+          return (
+            <button key={key} onClick={() => handleAnswer(key)} disabled={!!answer} className={btnClass}>
+              <Icon size={22} className={answer ? (correct ? 'text-green-600' : selected ? 'text-red-500' : 'text-gray-400') : `text-${color}-500`} />
+              <span className={`text-sm font-bold ${answer ? (correct ? 'text-green-700' : selected ? 'text-red-600' : 'text-gray-400') : 'text-[#1a2a4a]'}`}>{label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <AnimatePresence>
+        {showExplanation && (
           <motion.div
-            animate={{ width: `${percent}%` }}
-            className="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full"
-          />
-        </div>
-      </div>
-      <div className="space-y-2">
-        {items.map((item) => (
-          <label key={item.id} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all
-            ${checked.has(item.id) ? 'bg-green-100' : 'bg-white'}`}>
-            <div className={`w-5 h-5 rounded flex items-center justify-center border-2 flex-shrink-0 transition-all
-              ${checked.has(item.id) ? 'bg-green-500 border-green-500' : 'border-gray-300'}`}
-              onClick={() => toggle(item.id)}>
-              {checked.has(item.id) && <IconCheck size={12} color="white" />}
-            </div>
-            <span className={`text-sm ${checked.has(item.id) ? 'line-through text-gray-400' : 'text-gray-700'}`}>{item.text}</span>
-          </label>
-        ))}
-      </div>
-      {checked.size === items.length && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-green-600 text-white text-center rounded-xl p-3 font-bold text-sm flex items-center justify-center gap-2"
-        >
-          <IconCheckCircle size={18} color="white" />
-          <span>Tu es prêt(e) à passer ta première commande !</span>
-        </motion.div>
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`rounded-xl p-3 mb-4 border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-orange-50 border-orange-200'}`}
+          >
+            <p className={`text-xs font-bold mb-1 ${isCorrect ? 'text-green-700' : 'text-orange-700'}`}>
+              {isCorrect ? '✓ Bonne réponse !' : '✗ Pas cette fois'}
+            </p>
+            <p className={`text-xs leading-relaxed ${isCorrect ? 'text-green-800' : 'text-orange-800'}`}>{q.explanation}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {showExplanation && (
+        <button onClick={handleNext} className="btn-primary w-full">
+          {current < SCENARIOS.length - 1 ? (
+            <><span>Scénario suivant</span><ArrowRight size={15} /></>
+          ) : (
+            <><span>Voir les résultats</span><CheckCircle size={15} /></>
+          )}
+        </button>
       )}
     </div>
   );
 }
 
-// ── Module 3 : Simulateur de taxes douanières ─────────────────────────────────
+/* ─────────────────────────────────────────────────────── */
+/*  3. TAX SIMULATOR (Module 3)                            */
+/* ─────────────────────────────────────────────────────── */
+const TAX_CATEGORIES = [
+  { id: 'essential', label: 'Biens essentiels (médicaments, équipements agricoles)', rate: 0 },
+  { id: 'equipment', label: 'Matières premières / Équipements', rate: 0.05 },
+  { id: 'intermediate', label: 'Produits intermédiaires', rate: 0.10 },
+  { id: 'consumer', label: 'Produits de consommation courante', rate: 0.20 },
+];
 
 export function TaxSimulator() {
-  const [qty, setQty] = useState(5);
-  const [pricePerUnit, setPricePerUnit] = useState(3000);
-  const total = qty * pricePerUnit;
+  const [value, setValue] = useState(50000);
+  const [category, setCategory] = useState('consumer');
+  const [quantity, setQuantity] = useState(10);
 
-  let taxNote = '';
-  let taxColor = 'text-green-700';
-  let TaxIcon = IconCheckCircle;
-  let taxIconColor = '#16a34a';
+  const cat = TAX_CATEGORIES.find(c => c.id === category)!;
+  const customs = value * cat.rate;
+  const tva = (value + customs) * 0.18; // TVA standard UEMOA
+  const total = value + customs + tva;
+  const perUnit = total / Math.max(1, quantity);
 
-  if (qty < 10 && pricePerUnit < 5000) {
-    taxNote = 'Probablement exonéré — petite quantité et faible valeur unitaire.';
-    taxColor = 'text-green-700';
-    TaxIcon = IconCheckCircle;
-    taxIconColor = '#16a34a';
-  } else if (total > 30000) {
-    taxNote = 'Risque élevé de taxation. Prévoir entre 5 000 et 10 000 FCFA minimum de frais de douane. À vérifier auprès de la douane locale.';
-    taxColor = 'text-orange-700';
-    TaxIcon = IconAlertTriangle;
-    taxIconColor = '#ea580c';
-  } else {
-    taxNote = 'Taxation possible. En pratique souvent < 5 000 FCFA pour ce montant. Vérifier auprès de la douane locale.';
-    taxColor = 'text-yellow-700';
-    TaxIcon = IconInfo;
-    taxIconColor = '#d97706';
-  }
+  const Icon = customs === 0 ? CheckCircle : customs < value * 0.1 ? Info : AlertTriangle;
+  const iconColor = customs === 0 ? 'text-green-500' : customs < value * 0.1 ? 'text-blue-500' : 'text-orange-500';
 
   return (
-    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5 space-y-4">
-      <div className="flex items-center gap-2">
-        <IconReceiptText size={18} color="#1a2a4a" />
-        <h3 className="font-bold text-[#1a2a4a] text-base">Simulateur de taxes douanières</h3>
-      </div>
-      <p className="text-xs text-gray-600">Indication approximative — les tarifs varient selon la catégorie de produit. Consultez la douane locale pour un tarif exact.</p>
-      <div className="space-y-3">
-        <div>
-          <label className="text-sm font-semibold text-gray-700 block mb-1">Nombre de pièces : <span className="text-[#f2994a]">{qty}</span></label>
-          <input type="range" min={1} max={50} value={qty} onChange={(e) => setQty(+e.target.value)} className="w-full accent-[#f2994a]" />
+    <div className="card p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center">
+          <Calculator size={18} className="text-green-600" />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700 block mb-1">Prix unitaire (FCFA) : <span className="text-[#f2994a]">{pricePerUnit.toLocaleString()}</span></label>
-          <input type="range" min={500} max={50000} step={500} value={pricePerUnit} onChange={(e) => setPricePerUnit(+e.target.value)} className="w-full accent-[#f2994a]" />
+          <h3 className="text-sm font-bold text-[#1a2a4a]">Simulateur de taxes douanières</h3>
+          <p className="text-[11px] text-gray-500">Estimation basée sur le TEC CEDEAO</p>
         </div>
       </div>
-      <div className="bg-white rounded-xl p-4">
-        <div className="flex justify-between text-sm mb-3">
-          <span className="text-gray-600">Valeur totale du colis</span>
-          <span className="font-bold text-[#1a2a4a]">{total.toLocaleString()} FCFA</span>
+
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">Valeur de la marchandise (FCFA)</label>
+          <input type="number" value={value} onChange={e => setValue(Math.max(0, parseInt(e.target.value) || 0))} step={5000} min={0} className="sim-input" />
         </div>
-        <div className={`flex items-start gap-2 text-sm font-semibold ${taxColor}`}>
-          <TaxIcon size={16} color={taxIconColor} className="flex-shrink-0 mt-0.5" />
-          <span>{taxNote}</span>
+
+        <div>
+          <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">Nombre de pièces</label>
+          <input type="number" value={quantity} onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} min={1} className="sim-input" />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">Catégorie du produit</label>
+          <div className="space-y-2">
+            {TAX_CATEGORIES.map(c => (
+              <button
+                key={c.id}
+                onClick={() => setCategory(c.id)}
+                className={`w-full flex items-center justify-between p-3 rounded-xl border-2 text-left transition-all min-h-0 ${
+                  category === c.id ? 'border-[#f2994a] bg-[#fef3e8]' : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+              >
+                <span className="text-xs text-gray-700">{c.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-bold ${c.rate === 0 ? 'text-green-600' : c.rate <= 0.1 ? 'text-blue-600' : 'text-orange-600'}`}>
+                    {(c.rate * 100).toFixed(0)}%
+                  </span>
+                  {category === c.id && <Check size={12} className="text-[#f2994a]" />}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Result */}
+      <div className="mt-5 rounded-xl bg-[#1a2a4a] p-4">
+        <div className="flex items-start gap-2 mb-3">
+          <Icon size={15} className={`${iconColor} shrink-0 mt-0.5`} />
+          <p className="text-xs text-white/70 leading-relaxed">
+            Estimation indicative — les douanes peuvent appliquer des règles différentes pour les petits colis personnels.
+          </p>
+        </div>
+        <div className="space-y-2 text-xs text-white/70 mb-3">
+          <div className="flex justify-between"><span>Valeur de la marchandise</span><span className="font-semibold text-white">{value.toLocaleString()} FCFA</span></div>
+          <div className="flex justify-between"><span>Droits de douane ({(cat.rate*100).toFixed(0)}%)</span><span className="font-semibold text-white">{Math.round(customs).toLocaleString()} FCFA</span></div>
+          <div className="flex justify-between"><span>TVA (18% — indicatif)</span><span className="font-semibold text-white">{Math.round(tva).toLocaleString()} FCFA</span></div>
+          <div className="h-px bg-white/20 my-2" />
+          <div className="flex justify-between text-sm"><span className="font-bold text-white">Total estimé</span><span className="font-extrabold text-[#f2994a]">{Math.round(total).toLocaleString()} FCFA</span></div>
+          <div className="flex justify-between"><span>Coût par pièce</span><span className="font-bold text-white">{Math.round(perUnit).toLocaleString()} FCFA</span></div>
         </div>
       </div>
     </div>
   );
 }
 
-// ── Module 3 : Chronologie litige AliExpress ──────────────────────────────────
+/* ─────────────────────────────────────────────────────── */
+/*  4. CBM CALCULATOR (Module 3)                           */
+/* ─────────────────────────────────────────────────────── */
+export function CBMCalculator() {
+  const [length, setLength] = useState(50);
+  const [width, setWidth] = useState(40);
+  const [height, setHeight] = useState(30);
+  const [ratePerCBM, setRatePerCBM] = useState(150000);
 
-export function LitigeTimeline() {
-  const steps = [
-    { day: 'J+0', label: 'Commande passée', Icon: IconShoppingCart, color: 'bg-blue-500' },
-    { day: 'J+1 à 5', label: "Vendeur prépare l'envoi", Icon: IconPackage, color: 'bg-blue-400' },
-    { day: 'J+20 à 45', label: 'Livraison standard (AliExpress Shipping)', Icon: IconPlane, color: 'bg-orange-400' },
-    { day: 'J+7 à 15', label: 'Livraison express (DHL / EMS)', Icon: IconZap, color: 'bg-green-500' },
-    { day: 'Avant J+60', label: 'Ouvrir un litige si non reçu', Icon: IconAlertTriangle, color: 'bg-red-400' },
-    { day: 'J+7 à 15', label: 'Remboursement reçu après litige', Icon: IconDollarSign, color: 'bg-green-600' },
-  ];
+  const cbm = (length / 100) * (width / 100) * (height / 100);
+  const cost = cbm * ratePerCBM;
 
   return (
-    <div className="bg-orange-50 border border-orange-200 rounded-2xl p-5">
-      <div className="flex items-center gap-2 mb-4">
-        <IconClock size={18} color="#1a2a4a" />
-        <h3 className="font-bold text-[#1a2a4a] text-base">Chronologie type commande</h3>
+    <div className="card p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center">
+          <Package size={18} className="text-purple-600" />
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-[#1a2a4a]">Calculateur CBM (fret maritime)</h3>
+          <p className="text-[11px] text-gray-500">CBM = Longueur × Largeur × Hauteur en mètres</p>
+        </div>
       </div>
-      <div className="space-y-3">
-        {steps.map(({ day, label, Icon, color }, i) => (
-          <div key={i} className="flex items-start gap-3">
-            <div className={`w-9 h-9 rounded-full ${color} flex items-center justify-center flex-shrink-0`}>
-              <Icon size={16} color="white" />
-            </div>
-            <div className="pt-0.5">
-              <span className="text-xs font-bold text-gray-400 uppercase block">{day}</span>
-              <p className="text-sm font-medium text-[#1a2a4a]">{label}</p>
-            </div>
+
+      <div className="cbm-grid mb-4">
+        {[
+          { label: 'Longueur (cm)', value: length, setter: setLength },
+          { label: 'Largeur (cm)', value: width, setter: setWidth },
+          { label: 'Hauteur (cm)', value: height, setter: setHeight },
+        ].map(({ label, value, setter }) => (
+          <div key={label}>
+            <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">{label}</label>
+            <input
+              type="number"
+              value={value}
+              onChange={e => setter(Math.max(1, parseInt(e.target.value) || 1))}
+              min={1}
+              className="sim-input"
+            />
           </div>
         ))}
       </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">
+          Tarif maritime estimatif (FCFA/CBM)
+          <span className="text-[10px] text-gray-400 ml-1 font-normal">— à demander à votre transitaire</span>
+        </label>
+        <input
+          type="number"
+          value={ratePerCBM}
+          onChange={e => setRatePerCBM(Math.max(0, parseInt(e.target.value) || 0))}
+          step={10000}
+          min={0}
+          className="sim-input"
+        />
+      </div>
+
+      <div className="mt-5 rounded-xl bg-[#1a2a4a] p-4 text-center">
+        <p className="text-xs text-white/60 mb-1">Volume calculé</p>
+        <p className="text-3xl font-extrabold text-[#f2994a]">{cbm.toFixed(4)} CBM</p>
+        <p className="text-lg font-bold text-white mt-2">≈ {Math.round(cost).toLocaleString()} FCFA</p>
+        <p className="text-[11px] text-white/50 mt-1">
+          {length}cm × {width}cm × {height}cm = {(length/100).toFixed(2)}m × {(width/100).toFixed(2)}m × {(height/100).toFixed(2)}m
+        </p>
+      </div>
+
+      <div className="warning-box mt-4">
+        <div className="flex items-start gap-2">
+          <AlertTriangle size={13} className="text-orange-500 shrink-0 mt-0.5" />
+          <p className="text-xs text-orange-800 leading-relaxed">
+            Estimation uniquement. Le tarif réel dépend du transitaire, du port de transit 
+            (Abidjan, Lomé, Cotonou…), de la période et du type de marchandise. 
+            Demandez toujours un devis avant d&apos;engager un envoi.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
 
-// ── Module 4 : Jeu de tri "Importer ou pas ?" ─────────────────────────────────
+/* ─────────────────────────────────────────────────────── */
+/*  5. LITIGE TIMELINE (Module 3)                          */
+/* ─────────────────────────────────────────────────────── */
+const LITIGE_STEPS = [
+  { day: 'J0', title: 'Commande passée', desc: 'Votre commande est confirmée et payée.', color: 'blue', icon: ShoppingCart },
+  { day: 'J1–3', title: 'Expédition par le vendeur', desc: 'Le vendeur emballe et expédie votre colis. Le numéro de suivi est disponible.', color: 'blue', icon: Package },
+  { day: 'J5–45', title: 'Colis en transit', desc: 'Selon le mode de livraison choisi (Standard : 20–45j, Express : 5–15j).', color: 'orange', icon: Plane },
+  { day: 'J20–60', title: 'Réception du colis', desc: 'Vous récupérez le colis à La Poste. Inspectez-le AVANT de confirmer.', color: 'green', icon: CheckCircle },
+  { day: 'J+15', title: 'Fenêtre de litige (15 jours)', desc: 'Après confirmation de réception, vous avez 15 jours pour ouvrir un litige si problème.', color: 'red', icon: AlertTriangle },
+  { day: 'J60–75', title: 'Fin de la protection acheteur', desc: 'La protection expire. Passé ce délai, AliExpress ne peut plus vous rembourser.', color: 'gray', icon: Clock },
+];
 
+export function LitigeTimeline() {
+  const [active, setActive] = useState<number | null>(null);
+
+  return (
+    <div className="card p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-red-50 flex items-center justify-center">
+          <Clock size={18} className="text-red-500" />
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-[#1a2a4a]">Chronologie de la protection acheteur</h3>
+          <p className="text-[11px] text-gray-500">Cliquez sur une étape pour les détails</p>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        {LITIGE_STEPS.map((step, i) => {
+          const isActive = active === i;
+          const Icon = step.icon;
+          const colorMap = {
+            blue: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'text-blue-600', dot: 'bg-blue-500', badge: 'text-blue-700 bg-blue-100' },
+            orange: { bg: 'bg-orange-50', border: 'border-orange-200', icon: 'text-orange-500', dot: 'bg-orange-500', badge: 'text-orange-700 bg-orange-100' },
+            green: { bg: 'bg-green-50', border: 'border-green-200', icon: 'text-green-600', dot: 'bg-green-500', badge: 'text-green-700 bg-green-100' },
+            red: { bg: 'bg-red-50', border: 'border-red-200', icon: 'text-red-500', dot: 'bg-red-500', badge: 'text-red-700 bg-red-100' },
+            gray: { bg: 'bg-gray-50', border: 'border-gray-200', icon: 'text-gray-400', dot: 'bg-gray-400', badge: 'text-gray-600 bg-gray-100' },
+          };
+          const c = colorMap[step.color as keyof typeof colorMap];
+
+          return (
+            <button
+              key={i}
+              onClick={() => setActive(isActive ? null : i)}
+              className={`w-full flex items-start gap-3 p-3 rounded-xl border-2 transition-all text-left min-h-0 ${
+                isActive ? `${c.bg} ${c.border}` : 'border-gray-100 bg-white hover:border-gray-200'
+              }`}
+            >
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${c.bg}`}>
+                <Icon size={15} className={c.icon} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${c.badge}`}>{step.day}</span>
+                  <p className="text-xs font-bold text-[#1a2a4a]">{step.title}</p>
+                </div>
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.p
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="text-xs text-gray-600 mt-1.5 leading-relaxed"
+                    >
+                      {step.desc}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────── */
+/*  6. SORTING GAME (Module 4)                             */
+/* ─────────────────────────────────────────────────────── */
 const PRODUCTS = [
-  { name: 'Accessoires téléphone', Icon: IconSmartphone, shouldImport: true, reason: 'Léger, forte marge, non fabriqué localement.' },
-  { name: 'Ciment en sac', Icon: IconPackage, shouldImport: false, reason: 'Lourd, taxé, fabriqué localement — pas rentable.' },
-  { name: 'Ampoules LED', Icon: IconZap, shouldImport: true, reason: 'Produit tech, non fabriqué localement, forte demande.' },
-  { name: 'Chaussures contrefaites', Icon: IconX, shouldImport: false, reason: 'Contrefaçon = risque de saisie et poursuites judiciaires.' },
-  { name: 'Souris et claviers', Icon: IconPackage, shouldImport: true, reason: 'Produit tech léger, non fabriqué localement.' },
-  { name: 'Chocolat industriel', Icon: IconX, shouldImport: false, reason: "Produit alimentaire — réglementations sanitaires complexes." },
-  { name: 'Cosmétiques et beauté', Icon: IconTag, shouldImport: true, reason: "Forte demande en Afrique de l'Ouest, bonne marge possible." },
-  { name: 'Carburant', Icon: IconX, shouldImport: false, reason: "Produit réglementé et dangereux — interdit à l'importation privée." },
+  { id: 1, name: 'Écouteurs Bluetooth', correct: true, reason: 'Léger, forte demande, pas fabriqué localement' },
+  { id: 2, name: 'Sacs de ciment (50kg)', correct: false, reason: 'Très lourd → transport coûteux, fabriqué localement → marge nulle' },
+  { id: 3, name: 'Chargeurs rapides USB-C', correct: true, reason: 'Léger, forte demande tech, bonne marge possible' },
+  { id: 4, name: 'Médicaments non homologués', correct: false, reason: 'Nécessite une licence pharmaceutique — interdit sans autorisation' },
+  { id: 5, name: 'Bijoux fantaisie tendance', correct: true, reason: 'Léger, forte valeur ajoutée, facile à vendre' },
+  { id: 6, name: 'Contrefaçons Nike/Adidas', correct: false, reason: 'Risque de saisie douanière + poursuites pénales' },
+  { id: 7, name: 'Jouets éducatifs', correct: true, reason: 'Léger, forte demande, peu de concurrence locale' },
+  { id: 8, name: 'Eau minérale en bouteille', correct: false, reason: 'Très lourd, produit local → zéro marge' },
 ];
 
 export function SortingGame() {
   const [current, setCurrent] = useState(0);
-  const [feedback, setFeedback] = useState<{ correct: boolean; reason: string } | null>(null);
-  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, boolean>>({});
+  const [showFeedback, setShowFeedback] = useState(false);
   const [done, setDone] = useState(false);
 
-  const p = PRODUCTS[current];
+  const product = PRODUCTS[current];
+  const answer = answers[product.id];
+  const isCorrect = answer === product.correct;
+  const correctCount = Object.entries(answers).filter(([id, a]) => PRODUCTS.find(p => p.id === parseInt(id))?.correct === a).length;
 
-  function choose(choice: boolean) {
-    if (feedback) return;
-    const correct = choice === p.shouldImport;
-    if (correct) setScore((s) => s + 1);
-    setFeedback({ correct, reason: p.reason });
+  const handleAnswer = (choice: boolean) => {
+    if (showFeedback) return;
+    setAnswers({ ...answers, [product.id]: choice });
+    setShowFeedback(true);
+  };
+
+  const handleNext = () => {
+    setShowFeedback(false);
+    if (current < PRODUCTS.length - 1) {
+      setCurrent(current + 1);
+    } else {
+      setDone(true);
+    }
+  };
+
+  const handleReset = () => {
+    setCurrent(0);
+    setAnswers({});
+    setShowFeedback(false);
+    setDone(false);
+  };
+
+  if (done) {
+    return (
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="card p-6 shadow-md text-center">
+        <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${correctCount >= 6 ? 'bg-green-100' : 'bg-orange-100'}`}>
+          {correctCount >= 6 ? <CheckCircle size={30} className="text-green-600" /> : <AlertTriangle size={30} className="text-orange-500" />}
+        </div>
+        <h3 className="text-lg font-extrabold text-[#1a2a4a] mb-1">Score final</h3>
+        <p className="text-3xl font-extrabold text-[#f2994a] my-3">{correctCount}/{PRODUCTS.length}</p>
+        <p className="text-sm text-gray-500 mb-5">{correctCount >= 6 ? 'Excellent œil ! Vous savez sélectionner les bons produits.' : 'Relisez les critères de sélection dans le module.'}</p>
+        <button onClick={handleReset} className="btn-secondary mx-auto"><RotateCcw size={15} /> Rejouer</button>
+      </motion.div>
+    );
   }
-
-  function next() {
-    if (current + 1 >= PRODUCTS.length) { setDone(true); return; }
-    setCurrent((c) => c + 1);
-    setFeedback(null);
-  }
-
-  function restart() {
-    setCurrent(0); setScore(0); setFeedback(null); setDone(false);
-  }
-
-  if (done) return (
-    <div className="bg-purple-50 border border-purple-200 rounded-2xl p-5 text-center">
-      <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-        <IconTrendingUp size={28} color="#7c3aed" />
-      </div>
-      <h3 className="font-bold text-[#1a2a4a] text-base mb-1">Résultat du jeu de tri</h3>
-      <p className="text-3xl font-bold text-[#f2994a] mb-2">{score}/{PRODUCTS.length}</p>
-      <p className="text-sm text-gray-600">
-        {score >= 6 ? 'Excellent ! Tu sais choisir tes produits.' : 'Continue à pratiquer ! Relis le module pour affiner tes choix.'}
-      </p>
-      <button onClick={restart} className="mt-4 bg-purple-600 text-white font-bold px-5 py-2 rounded-xl text-sm flex items-center gap-2 mx-auto">
-        <IconRefreshCw size={14} color="white" />
-        <span>Rejouer</span>
-      </button>
-    </div>
-  );
-
-  const ProductIcon = p.Icon;
 
   return (
-    <div className="bg-purple-50 border border-purple-200 rounded-2xl p-5 space-y-4">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <IconTag size={18} color="#1a2a4a" />
-          <h3 className="font-bold text-[#1a2a4a] text-base">Importer ou pas ?</h3>
+    <div className="card p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center">
+          <Tag size={18} className="text-purple-600" />
         </div>
-        <span className="text-xs text-purple-600 font-bold bg-purple-100 px-2.5 py-1 rounded-full">{current + 1}/{PRODUCTS.length}</span>
-      </div>
-      <div className="bg-white rounded-xl p-5 text-center border border-purple-100">
-        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-          <ProductIcon size={24} color="#7c3aed" />
+        <div>
+          <h3 className="text-sm font-bold text-[#1a2a4a]">Jeu de tri : Importer ou pas ?</h3>
+          <p className="text-[11px] text-gray-500">Produit {current + 1}/{PRODUCTS.length}</p>
         </div>
-        <p className="font-bold text-[#1a2a4a] text-base">{p.name}</p>
       </div>
-      <div className="grid grid-cols-2 gap-3">
-        <button onClick={() => choose(true)} className={`py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2
-          ${feedback ? (p.shouldImport ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400') : 'bg-green-100 text-green-700 hover:bg-green-200'}`}>
-          <IconCheck size={16} color={feedback ? (p.shouldImport ? 'white' : '#9ca3af') : '#16a34a'} />
-          <span>Importer</span>
-        </button>
-        <button onClick={() => choose(false)} className={`py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2
-          ${feedback ? (!p.shouldImport ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-400') : 'bg-red-100 text-red-700 hover:bg-red-200'}`}>
-          <IconX size={16} color={feedback ? (!p.shouldImport ? 'white' : '#9ca3af') : '#dc2626'} />
-          <span>Éviter</span>
-        </button>
+
+      <div className="h-1.5 bg-gray-100 rounded-full mb-5">
+        <div className="h-full bg-purple-500 rounded-full transition-all" style={{ width: `${((current + 1) / PRODUCTS.length) * 100}%` }} />
       </div>
-      {feedback && (
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          className={`rounded-xl p-4 text-sm border ${feedback.correct ? 'bg-green-50 text-green-800 border-green-200' : 'bg-orange-50 text-orange-800 border-orange-200'}`}>
-          <div className="flex items-center gap-2 font-bold mb-1">
-            {feedback.correct
-              ? <IconCheckCircle size={16} color="#16a34a" />
-              : <IconAlertTriangle size={16} color="#ea580c" />
-            }
-            <span>{feedback.correct ? 'Bonne réponse !' : 'Pas tout à fait...'}</span>
-          </div>
-          <p className="text-xs mb-3">{feedback.reason}</p>
-          <button onClick={next} className="bg-[#f2994a] text-white font-bold px-4 py-1.5 rounded-lg text-xs flex items-center gap-1.5">
-            <span>{current + 1 < PRODUCTS.length ? 'Produit suivant' : 'Voir mon score'}</span>
-            <IconArrowRight size={12} color="white" />
-          </button>
-        </motion.div>
+
+      <div className="rounded-xl bg-[#1a2a4a] text-white p-5 text-center mb-5">
+        <p className="text-[10px] text-white/50 uppercase tracking-widest mb-2">Produit</p>
+        <p className="text-lg font-extrabold">{product.name}</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        {[
+          { choice: true, label: 'Importer ✓', color: 'green' },
+          { choice: false, label: 'Éviter ✗', color: 'red' },
+        ].map(({ choice, label, color }) => {
+          const selected = answer === choice;
+          const correct = product.correct === choice;
+          let cls = `flex items-center justify-center gap-2 p-4 rounded-xl border-2 font-bold text-sm transition-all min-h-0 `;
+          if (showFeedback) {
+            if (correct) cls += 'border-green-400 bg-green-50 text-green-700';
+            else if (selected) cls += 'border-red-400 bg-red-50 text-red-600';
+            else cls += 'border-gray-200 bg-gray-50 text-gray-400';
+          } else {
+            cls += `border-${color}-200 bg-${color}-50 text-${color}-700 hover:border-${color}-400 cursor-pointer`;
+          }
+          return (
+            <button key={String(choice)} onClick={() => handleAnswer(choice)} disabled={showFeedback} className={cls}>
+              {label}
+            </button>
+          );
+        })}
+      </div>
+
+      <AnimatePresence>
+        {showFeedback && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`rounded-xl p-3 mb-4 border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-orange-50 border-orange-200'}`}
+          >
+            <p className={`text-xs font-bold mb-1 ${isCorrect ? 'text-green-700' : 'text-orange-700'}`}>
+              {isCorrect ? '✓ Correct !' : `✗ Réponse : ${product.correct ? 'Importer' : 'Éviter'}`}
+            </p>
+            <p className={`text-xs leading-relaxed ${isCorrect ? 'text-green-800' : 'text-orange-800'}`}>{product.reason}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {showFeedback && (
+        <button onClick={handleNext} className="btn-primary w-full">
+          {current < PRODUCTS.length - 1 ? (<><span>Produit suivant</span><ArrowRight size={15} /></>) : (<><span>Voir le score</span><CheckCircle size={15} /></>)}
+        </button>
       )}
     </div>
   );
 }
 
-// ── Module 5 : Simulateur de marge ───────────────────────────────────────────
-
+/* ─────────────────────────────────────────────────────── */
+/*  7. MARGIN SIMULATOR (Module 5)                         */
+/* ─────────────────────────────────────────────────────── */
 export function MarginSimulator() {
-  const [buyPrice, setBuyPrice] = useState(2000);
-  const [fees, setFees] = useState(500);
-  const [sellPrice, setSellPrice] = useState(5000);
+  const [purchasePrice, setPurchasePrice] = useState(2000);
+  const [freightCost, setFreightCost] = useState(1500);
+  const [customsTax, setCustomsTax] = useState(0);
+  const [quantity, setQuantity] = useState(10);
+  const [sellingPrice, setSellingPrice] = useState(7000);
 
-  const cost = buyPrice + fees;
-  const profit = sellPrice - cost;
-  const margin = sellPrice > 0 ? Math.round((profit / sellPrice) * 100) : 0;
-  const profitColor = profit > 0 ? 'text-green-700' : 'text-red-600';
+  const totalCost = (purchasePrice + freightCost + customsTax) * quantity;
+  const totalRevenue = sellingPrice * quantity;
+  const totalMargin = totalRevenue - totalCost;
+  const marginPercent = totalRevenue > 0 ? (totalMargin / totalRevenue) * 100 : 0;
+  const unitCost = purchasePrice + freightCost + customsTax;
+  const unitMargin = sellingPrice - unitCost;
+
+  const isGood = marginPercent >= 50;
+  const isOk = marginPercent >= 30 && marginPercent < 50;
 
   return (
-    <div className="bg-red-50 border border-red-200 rounded-2xl p-5 space-y-4">
-      <div className="flex items-center gap-2">
-        <IconDollarSign size={18} color="#1a2a4a" />
-        <h3 className="font-bold text-[#1a2a4a] text-base">Simulateur de marge</h3>
+    <div className="card p-6 shadow-md">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-red-50 flex items-center justify-center">
+          <TrendingUp size={18} className="text-red-500" />
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-[#1a2a4a]">Simulateur de marge commerciale</h3>
+          <p className="text-[11px] text-gray-500">Calculez la rentabilité de votre importation</p>
+        </div>
       </div>
-      <div className="space-y-3">
+
+      <div className="grid sm:grid-cols-2 gap-4 mb-4">
         {[
-          { label: "Prix d'achat (Chine)", value: buyPrice, set: setBuyPrice, max: 50000 },
-          { label: 'Frais (transport, douane, BP)', value: fees, set: setFees, max: 20000 },
-          { label: 'Prix de vente local', value: sellPrice, set: setSellPrice, max: 100000 },
-        ].map((f) => (
-          <div key={f.label}>
-            <label className="text-sm font-semibold text-gray-700 block mb-1">
-              {f.label} : <span className="text-[#f2994a]">{f.value.toLocaleString()} FCFA</span>
-            </label>
-            <input type="range" min={0} max={f.max} step={100} value={f.value}
-              onChange={(e) => f.set(+e.target.value)} className="w-full accent-[#f2994a]" />
+          { label: 'Prix achat/pièce (FCFA)', value: purchasePrice, setter: setPurchasePrice, step: 500 },
+          { label: 'Fret estimatif/pièce (FCFA)', value: freightCost, setter: setFreightCost, step: 500 },
+          { label: 'Taxes douane/pièce (FCFA)', value: customsTax, setter: setCustomsTax, step: 100 },
+          { label: 'Quantité', value: quantity, setter: setQuantity, step: 1, min: 1 },
+          { label: 'Prix de vente/pièce (FCFA)', value: sellingPrice, setter: setSellingPrice, step: 500 },
+        ].map(({ label, value, setter, step, min = 0 }) => (
+          <div key={label}>
+            <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">{label}</label>
+            <input
+              type="number"
+              value={value}
+              onChange={e => setter(Math.max(min, parseInt(e.target.value) || 0))}
+              step={step}
+              min={min}
+              className="sim-input"
+            />
           </div>
         ))}
       </div>
-      <div className="bg-white rounded-xl p-4 space-y-2">
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Coût total</span>
-          <span className="font-bold text-[#1a2a4a]">{cost.toLocaleString()} FCFA</span>
+
+      <div className="rounded-xl bg-[#1a2a4a] p-4">
+        <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
+          <div className="bg-white/10 rounded-xl p-3">
+            <p className="text-white/60">Coût de revient/pièce</p>
+            <p className="text-base font-extrabold text-white mt-1">{unitCost.toLocaleString()} FCFA</p>
+          </div>
+          <div className="bg-white/10 rounded-xl p-3">
+            <p className="text-white/60">Marge/pièce</p>
+            <p className={`text-base font-extrabold mt-1 ${unitMargin > 0 ? 'text-[#f2994a]' : 'text-red-400'}`}>
+              {unitMargin > 0 ? '+' : ''}{unitMargin.toLocaleString()} FCFA
+            </p>
+          </div>
+          <div className="bg-white/10 rounded-xl p-3">
+            <p className="text-white/60">Chiffre d&apos;affaires total</p>
+            <p className="text-base font-extrabold text-white mt-1">{totalRevenue.toLocaleString()} FCFA</p>
+          </div>
+          <div className={`rounded-xl p-3 ${isGood ? 'bg-green-500/20' : isOk ? 'bg-orange-500/20' : 'bg-red-500/20'}`}>
+            <p className="text-white/60">Marge nette totale</p>
+            <p className={`text-base font-extrabold mt-1 ${isGood ? 'text-green-400' : isOk ? 'text-orange-400' : 'text-red-400'}`}>
+              {totalMargin > 0 ? '+' : ''}{totalMargin.toLocaleString()} FCFA
+            </p>
+          </div>
         </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Prix de vente</span>
-          <span className="font-bold text-[#1a2a4a]">{sellPrice.toLocaleString()} FCFA</span>
-        </div>
-        <hr className="border-gray-100" />
-        <div className="flex justify-between">
-          <span className="font-bold text-[#1a2a4a] text-sm">Bénéfice net</span>
-          <span className={`font-bold text-lg ${profitColor}`}>{profit > 0 ? '+' : ''}{profit.toLocaleString()} FCFA</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">Marge</span>
-          <span className={`font-semibold text-sm ${profitColor}`}>{margin}%</span>
+
+        {/* Margin bar */}
+        <div>
+          <div className="flex justify-between text-xs text-white/60 mb-1.5">
+            <span>Marge : {marginPercent.toFixed(1)}%</span>
+            <span>{isGood ? 'Excellent' : isOk ? 'Correct' : 'Trop faible'}</span>
+          </div>
+          <div className="h-3 bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className={`h-full rounded-full ${isGood ? 'bg-green-500' : isOk ? 'bg-[#f2994a]' : 'bg-red-500'}`}
+              initial={{ width: '0%' }}
+              animate={{ width: `${Math.max(0, Math.min(100, marginPercent))}%` }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
+          <div className="flex justify-between text-[10px] text-white/30 mt-1">
+            <span>0%</span>
+            <span>30%</span>
+            <span>50%</span>
+            <span>100%</span>
+          </div>
         </div>
       </div>
 
-      {profit <= 0 && (
-        <div className="flex items-start gap-2 text-red-700 text-xs font-semibold">
-          <IconAlertTriangle size={14} color="#dc2626" className="flex-shrink-0 mt-0.5" />
-          <span>Prix de vente trop bas — tu perds de l&apos;argent !</span>
-        </div>
-      )}
-      {profit > 0 && profit < cost * 0.2 && (
-        <div className="flex items-start gap-2 text-yellow-700 text-xs font-semibold">
-          <IconInfo size={14} color="#d97706" className="flex-shrink-0 mt-0.5" />
-          <span>Marge faible — essaie de négocier le prix ou d&apos;augmenter le prix de vente.</span>
-        </div>
-      )}
-      {profit >= cost * 0.5 && (
-        <div className="flex items-start gap-2 text-green-700 text-xs font-semibold">
-          <IconTrendingUp size={14} color="#16a34a" className="flex-shrink-0 mt-0.5" />
-          <span>Excellente marge ! Tu es sur la bonne voie.</span>
+      {!isGood && (
+        <div className="tip-box mt-4">
+          <div className="flex items-start gap-2">
+            <Info size={13} className="text-[#f2994a] shrink-0 mt-0.5" />
+            <p className="text-xs text-gray-700 leading-relaxed">
+              {totalMargin <= 0
+                ? '⚠️ Opération non rentable. Augmentez le prix de vente ou réduisez le fret (commandez en plus grande quantité).'
+                : '💡 Marge faible. Visez au minimum 50% de marge pour couvrir les imprévus et les frais de vente.'}
+            </p>
+          </div>
         </div>
       )}
     </div>

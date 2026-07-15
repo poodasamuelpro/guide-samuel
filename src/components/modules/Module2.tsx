@@ -1,185 +1,241 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import VideoPlayer from '@/components/VideoPlayer';
 import {
-  IconShoppingCart,
-  IconShoppingBag,
-  IconBuilding,
-  IconUsers,
-  IconPackage,
-  IconTruck,
-  IconShield,
-  IconMessageCircle,
-  IconGraduationCap,
-  IconStar,
-  IconCamera,
-  IconCheckCircle,
-  IconTarget,
-  IconArrowRight,
-} from '@/components/Icons';
+  ArrowLeft, ArrowRight, ShoppingCart, Building2, Users,
+  Package, Truck, Shield, Star, Camera, MessageCircle,
+  CheckCircle, AlertTriangle, Info, Lightbulb, Zap
+} from 'lucide-react';
+import VideoPlayer from '@/components/VideoPlayer';
+import { AlibabaAliexpressQuiz } from '@/components/Simulators';
 
-interface Props { onStartQuiz: () => void; onBack: () => void; }
+interface Props {
+  onStartQuiz: () => void;
+  onBack: () => void;
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }),
+};
 
 export default function Module2({ onStartQuiz, onBack }: Props) {
-  const aliFeatures = [
-    { Icon: IconUsers, label: 'Profil', value: 'Détaillants, acheteurs particuliers' },
-    { Icon: IconPackage, label: 'Quantité', value: "À l'unité ou en petites quantités" },
-    { Icon: IconTruck, label: 'Livraison', value: "Gérée par le vendeur jusqu'à toi" },
-    { Icon: IconShield, label: 'Protection', value: 'Protection acheteur 60 jours intégrée' },
-    { Icon: IconMessageCircle, label: 'Négociation', value: 'Pas nécessaire — prix fixes' },
-    { Icon: IconGraduationCap, label: 'Niveau', value: 'Débutant' },
-  ];
-
-  const alibabaFeatures = [
-    { Icon: IconUsers, label: 'Profil', value: 'Grossistes, revendeurs, entreprises' },
-    { Icon: IconPackage, label: 'Quantité', value: 'Grosses commandes (MOQ élevé)' },
-    { Icon: IconTruck, label: 'Livraison', value: 'À négocier directement avec le fabricant' },
-    { Icon: IconShield, label: 'Protection', value: 'Trade Assurance (moins accessible aux débutants)' },
-    { Icon: IconMessageCircle, label: 'Négociation', value: 'Oui — prix, délais, conditions à négocier' },
-    { Icon: IconGraduationCap, label: 'Niveau', value: 'Intermédiaire / Avancé' },
-  ];
-
-  const tips = [
-    { Icon: IconStar, title: 'Choisis des vendeurs bien notés', desc: 'Minimum 4,5 étoiles avec plus de 100 avis. Lis les commentaires récents.' },
-    { Icon: IconCamera, title: 'Regarde les photos des acheteurs', desc: 'Les vraies photos sont souvent plus honnêtes que celles du vendeur.' },
-    { Icon: IconMessageCircle, title: 'Contacte le vendeur avant d\'acheter', desc: 'Pose tes questions sur la qualité, le délai. Un bon vendeur répond vite.' },
-    { Icon: IconPackage, title: 'Commence par petites quantités', desc: 'Commande 1 ou 2 pièces pour tester la qualité avant une grosse commande.' },
-    { Icon: IconShield, title: 'Protection 60 jours', desc: "Si ton colis n'arrive pas dans les 60 jours, ouvre un litige pour être remboursé." },
-  ];
+  const [activeTab, setActiveTab] = useState<'content' | 'simulator'>('content');
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-10">
-      <div className="bg-gradient-to-br from-orange-500 to-orange-700 text-white px-4 pt-8 pb-14">
-        <div className="max-w-lg mx-auto">
-          <button onClick={onBack} className="text-orange-200 text-sm mb-4 hover:text-white transition-colors">&larr; Dashboard</button>
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-              <IconShoppingCart size={24} color="white" />
+    <div className="min-h-screen bg-[#fafaf8]">
+      <div className="bg-[#1a2a4a] pt-6 pb-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm mb-5 transition-colors min-h-0 p-0 bg-transparent border-none"
+          >
+            <ArrowLeft size={15} /> Retour
+          </button>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-orange-500/20 flex items-center justify-center shrink-0">
+              <ShoppingCart size={22} className="text-orange-400" />
             </div>
             <div>
-              <p className="text-orange-200 text-xs font-medium">Module 2</p>
-              <h1 className="font-bold text-xl text-white">Sur quels sites acheter</h1>
+              <p className="text-[10px] font-bold text-[#f2994a] uppercase tracking-widest">Module 02</p>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-white">Sur quels sites acheter</h1>
             </div>
           </div>
-          <p className="text-orange-100 text-sm">AliExpress vs Alibaba — comprends les différences pour faire le bon choix.</p>
+          <div className="flex gap-2 mt-5">
+            {(['content', 'simulator'] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all min-h-0 ${
+                  activeTab === tab ? 'bg-[#f2994a] text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'
+                }`}
+              >
+                {tab === 'content' ? 'Contenu' : 'Quiz mise en situation'}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto px-4 -mt-8 space-y-5">
-        <VideoPlayer envKey="NEXT_PUBLIC_VIDEO_MODULE_2" title="Module 2 — résumé vidéo" />
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+        {activeTab === 'content' ? (
+          <motion.div initial="hidden" animate="visible" className="space-y-6">
 
-        {/* Comparatif */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-          <h2 className="font-bold text-[#1a2a4a] mb-4 text-base">AliExpress vs Alibaba</h2>
+            <VideoPlayer envKey="NEXT_PUBLIC_VIDEO_MODULE_2" />
 
-          <div className="space-y-4">
-            {/* AliExpress */}
-            <div className="border-2 border-orange-400 rounded-xl p-4 bg-orange-50">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-orange-400 rounded-lg flex items-center justify-center">
-                  <IconShoppingBag size={20} color="white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-[#1a2a4a] text-sm">AliExpress</h3>
-                  <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">Recommandé pour débuter</span>
-                </div>
+            {/* Intro comparison */}
+            <motion.div variants={fadeUp} custom={0}>
+              <div className="card p-6 shadow-sm">
+                <h2 className="text-base font-bold text-[#1a2a4a] mb-3">AliExpress ou Alibaba ? Comprendre la différence</h2>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Ces deux plateformes appartiennent au groupe Alibaba, mais s&apos;adressent à des profils 
+                  très différents. Le choix de la bonne plateforme est crucial pour démarrer dans les 
+                  meilleures conditions.
+                </p>
               </div>
-              <div className="space-y-2">
-                {aliFeatures.map(({ Icon, label, value }) => (
-                  <div key={label} className="flex gap-2 text-sm">
-                    <div className="flex items-center gap-1.5 w-32 flex-shrink-0">
-                      <Icon size={13} color="#9ca3af" />
-                      <span className="text-gray-500 text-xs">{label}</span>
+            </motion.div>
+
+            {/* Comparison cards */}
+            <motion.div variants={fadeUp} custom={1}>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* AliExpress */}
+                <div className="card p-5 border-2 border-orange-200 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+                      <ShoppingCart size={18} className="text-orange-500" />
                     </div>
-                    <span className="text-gray-800 text-xs">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Alibaba */}
-            <div className="border border-gray-200 rounded-xl p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <IconBuilding size={20} color="white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-[#1a2a4a] text-sm">Alibaba</h3>
-                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-semibold">Pour grossistes expérimentés</span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                {alibabaFeatures.map(({ Icon, label, value }) => (
-                  <div key={label} className="flex gap-2 text-sm">
-                    <div className="flex items-center gap-1.5 w-32 flex-shrink-0">
-                      <Icon size={13} color="#9ca3af" />
-                      <span className="text-gray-500 text-xs">{label}</span>
+                    <div>
+                      <p className="font-extrabold text-[#1a2a4a] text-sm">AliExpress</p>
+                      <span className="badge-green text-[10px]">Idéal pour débuter</span>
                     </div>
-                    <span className="text-gray-800 text-xs">{value}</span>
                   </div>
-                ))}
+                  <ul className="space-y-2 text-xs text-gray-600">
+                    {[
+                      'Commandes à l\'unité (1 pièce minimum)',
+                      'Protection acheteur intégrée (60 jours)',
+                      'Livraison gérée par le vendeur',
+                      'Prix légèrement plus élevé qu\'Alibaba',
+                      'Pas de négociation nécessaire',
+                      'Remboursement facilité en cas de problème',
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <CheckCircle size={11} className="text-green-600 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 p-3 bg-orange-50 rounded-xl">
+                    <p className="text-[11px] font-bold text-orange-700">Idéal pour :</p>
+                    <p className="text-[11px] text-orange-600 mt-0.5">Débutants · Petites quantités · Tests produit · Budgets limités</p>
+                  </div>
+                </div>
+
+                {/* Alibaba */}
+                <div className="card p-5 border-2 border-blue-200 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                      <Building2 size={18} className="text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="font-extrabold text-[#1a2a4a] text-sm">Alibaba</p>
+                      <span className="badge-navy text-[10px]">Pour les grossistes</span>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 text-xs text-gray-600">
+                    {[
+                      'Minimum de commande (MOQ) souvent 50-500 pièces',
+                      'Prix de gros nettement plus bas',
+                      'Fabricants directs — produits personnalisables',
+                      'Transport à gérer soi-même (transitaire)',
+                      'Négociation prix, délais, emballage',
+                      'Plus risqué sans expérience',
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <Info size={11} className="text-blue-500 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 p-3 bg-blue-50 rounded-xl">
+                    <p className="text-[11px] font-bold text-blue-700">Idéal pour :</p>
+                    <p className="text-[11px] text-blue-600 mt-0.5">Grossistes · Gros volumes · Entrepreneurs expérimentés</p>
+                  </div>
+                </div>
               </div>
+            </motion.div>
+
+            {/* AliExpress protection */}
+            <motion.div variants={fadeUp} custom={2}>
+              <div className="card p-6 shadow-sm">
+                <div className="flex items-center gap-2 mb-4">
+                  <Shield size={18} className="text-blue-600" />
+                  <h2 className="text-base font-bold text-[#1a2a4a]">Protection Acheteur AliExpress (2025)</h2>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                  La protection acheteur est l&apos;un des grands avantages d&apos;AliExpress. 
+                  Voici comment elle fonctionne en pratique :
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { color: 'green', icon: CheckCircle, text: 'Durée de protection : 60 à 75 jours à compter de l\'expédition (varie selon la commande)', iconClass: 'text-green-600' },
+                    { color: 'green', icon: CheckCircle, text: 'Après confirmation de réception : 15 jours pour ouvrir un litige (délai strict)', iconClass: 'text-green-600' },
+                    { color: 'orange', icon: AlertTriangle, text: 'Remboursement sous 1 à 10 jours ouvrés selon le mode de paiement', iconClass: 'text-orange-500' },
+                    { color: 'blue', icon: Info, text: 'Vous pouvez prolonger la protection acheteur depuis votre commande si la livraison approche', iconClass: 'text-blue-500' },
+                  ].map(({ color, icon: Icon, text, iconClass }) => (
+                    <div key={text} className={`flex items-start gap-2.5 p-3 rounded-xl bg-${color}-50 border border-${color}-100`}>
+                      <Icon size={13} className={`${iconClass} shrink-0 mt-0.5`} />
+                      <p className="text-xs text-gray-700 leading-relaxed">{text}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="warning-box mt-4">
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle size={14} className="text-orange-500 shrink-0 mt-0.5" />
+                    <p className="text-xs text-orange-800 leading-relaxed">
+                      <strong>Important :</strong> Ne confirmez jamais la réception d&apos;un colis 
+                      que vous n&apos;avez pas encore reçu ou inspecté ! Une fois confirmé, la protection 
+                      du vendeur s&apos;active et votre fenêtre de litige est limitée à 15 jours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Tips for buying well */}
+            <motion.div variants={fadeUp} custom={3}>
+              <div className="card p-6 shadow-sm">
+                <div className="flex items-center gap-2 mb-4">
+                  <Lightbulb size={18} className="text-[#f2994a]" />
+                  <h2 className="text-base font-bold text-[#1a2a4a]">Conseils pour bien acheter sur AliExpress</h2>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {[
+                    { icon: Star, title: 'Choisissez des vendeurs notés', desc: 'Minimum 4,5/5 étoiles, plus de 100 commandes passées' },
+                    { icon: Camera, title: 'Lisez les avis avec photos', desc: 'Les avis avec photos de vrais clients sont les plus fiables' },
+                    { icon: MessageCircle, title: 'Contactez le vendeur avant', desc: 'Demandez des photos réelles, confirmez les spécifications' },
+                    { icon: Package, title: 'Commandez un échantillon', desc: 'Testez avec 1-3 pièces avant de faire une grosse commande' },
+                    { icon: Truck, title: 'Comparez les modes de livraison', desc: 'AliExpress Standard Shipping est souvent le meilleur rapport qualité/délai' },
+                    { icon: Users, title: 'Vérifiez le type de vendeur', desc: 'Préférez les boutiques officielles aux vendeurs particuliers' },
+                  ].map(({ icon: Icon, title, desc }) => (
+                    <div key={title} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100">
+                      <div className="w-7 h-7 rounded-lg bg-[#1a2a4a] flex items-center justify-center shrink-0">
+                        <Icon size={13} className="text-[#f2994a]" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-[#1a2a4a]">{title}</p>
+                        <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">{desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} custom={4} className="flex flex-col sm:flex-row gap-3">
+              <button onClick={() => setActiveTab('simulator')} className="btn-secondary flex-1">
+                <ShoppingCart size={17} /> Quiz mise en situation
+              </button>
+              <button onClick={onStartQuiz} className="btn-primary flex-1">
+                Passer le quiz officiel <ArrowRight size={17} />
+              </button>
+            </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+            <div className="mb-4">
+              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1a2a4a] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
+                <ArrowLeft size={13} /> Retour au contenu
+              </button>
             </div>
-          </div>
-        </motion.div>
-
-        {/* Conseils AliExpress */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-4">
-            <IconCheckCircle size={18} color="#1a2a4a" />
-            <h2 className="font-bold text-[#1a2a4a] text-base">Conseils pour bien acheter sur AliExpress</h2>
-          </div>
-          <div className="space-y-4">
-            {tips.map(({ Icon, title, desc }) => (
-              <div key={title} className="flex gap-3">
-                <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Icon size={16} color="#f2994a" />
-                </div>
-                <div>
-                  <p className="font-semibold text-[#1a2a4a] text-sm">{title}</p>
-                  <p className="text-gray-600 text-xs mt-0.5">{desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Scénarios */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="bg-orange-50 border border-orange-200 rounded-2xl p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <IconTarget size={18} color="#1a2a4a" />
-            <h3 className="font-bold text-[#1a2a4a] text-base">AliExpress ou Alibaba — choix rapide</h3>
-          </div>
-          <div className="space-y-3">
-            {[
-              { scenario: "Tu débutes, tu veux tester 3 articles différents", answer: "AliExpress", why: "Petites quantités, protection acheteur, pas de négociation" },
-              { scenario: "Tu veux commander 500 paires de chaussures pour ta boutique", answer: "Alibaba", why: "Grosses quantités, négociation directe avec le fabricant" },
-              { scenario: "Tu veux un remboursement si le colis n'arrive pas", answer: "AliExpress", why: "Protection acheteur 60 jours facile à activer" },
-            ].map((s, i) => (
-              <div key={i} className="bg-white rounded-xl p-3 border border-orange-100">
-                <p className="text-sm text-gray-700 mb-1.5"><strong>Situation :</strong> {s.scenario}</p>
-                <div className="flex items-center gap-1.5">
-                  <IconArrowRight size={14} color="#f2994a" />
-                  <span className="text-[#f2994a] font-bold text-sm">{s.answer}</span>
-                  <span className="text-gray-500 text-xs">— {s.why}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.button
-          onClick={onStartQuiz}
-          whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-          className="w-full bg-gradient-to-r from-[#f2994a] to-[#f5af4d] text-white font-bold py-4 rounded-2xl text-base shadow-lg flex items-center justify-center gap-2"
-        >
-          <span>Passer le quiz du Module 2</span>
-          <IconArrowRight size={18} color="white" />
-        </motion.button>
+            <AlibabaAliexpressQuiz />
+            <div className="mt-6">
+              <button onClick={onStartQuiz} className="btn-primary w-full">
+                <Zap size={17} /> Passer le quiz officiel du module 2 <ArrowRight size={17} />
+              </button>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );

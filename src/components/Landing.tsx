@@ -1,140 +1,376 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import VideoPlayer from '@/components/VideoPlayer';
 import {
-  IconCreditCard,
-  IconShoppingCart,
-  IconPackage,
-  IconTag,
-  IconDollarSign,
-  IconGamepad,
-  IconTrophy,
-  IconFileText,
-  IconLock,
-  IconGlobe,
-  IconArrowRight,
-} from '@/components/Icons';
+  ArrowRight, Package, ShoppingCart, CreditCard, Tag, TrendingUp,
+  Star, CheckCircle, Users, Globe, Award, BookOpen, Zap, Shield
+} from 'lucide-react';
+import { GSLogo } from './Logo';
 
 interface LandingProps {
   onStart: () => void;
 }
 
-const MODULE_ICONS = [
-  { Icon: IconCreditCard, title: 'Les indispensables', desc: 'Carte bancaire et boîte postale' },
-  { Icon: IconShoppingCart, title: 'Où acheter', desc: 'AliExpress vs Alibaba' },
-  { Icon: IconPackage, title: 'Délais et douanes', desc: 'Livraison et taxes' },
-  { Icon: IconTag, title: 'Quoi importer', desc: 'Produits gagnants' },
-  { Icon: IconDollarSign, title: 'Comment vendre', desc: 'Stratégies de vente' },
+const MODULES_PREVIEW = [
+  { icon: CreditCard, num: '01', title: 'Les indispensables', desc: 'Carte bancaire, boîte postale, budget de départ', color: '#3b82f6' },
+  { icon: ShoppingCart, num: '02', title: 'Sur quels sites acheter', desc: 'AliExpress vs Alibaba — la bonne plateforme', color: '#f97316' },
+  { icon: Package, num: '03', title: 'Délais & transit', desc: 'Livraison, douane, transitaires, calcul CBM', color: '#10b981' },
+  { icon: Tag, num: '04', title: 'Quels produits importer', desc: 'Gagnants, perdants, produits interdits', color: '#8b5cf6' },
+  { icon: TrendingUp, num: '05', title: 'Vendre vos produits', desc: 'Facebook, WhatsApp, grossiste vs détaillant', color: '#ef4444' },
 ];
 
 const FEATURES = [
-  { Icon: IconGamepad, label: 'Simulateurs interactifs' },
-  { Icon: IconTrophy, label: 'Badges et XP' },
-  { Icon: IconFileText, label: 'Certificat PDF' },
-  { Icon: IconLock, label: 'Données privées' },
+  { icon: Zap, title: '6 simulateurs interactifs', desc: 'Budget, taxes, CBM, marge, quiz de mise en situation…' },
+  { icon: Award, title: 'Badges & XP par module', desc: 'Progression gamifiée, certificat PDF à télécharger' },
+  { icon: Shield, title: '100% privé, 0 serveur', desc: 'Toutes vos données restent sur votre téléphone' },
+  { icon: Globe, title: 'Adapté à l\'Afrique de l\'Ouest', desc: 'Burkina Faso, Côte d\'Ivoire, Sénégal, FCFA, UEMOA' },
 ];
+
+const STATS = [
+  { value: '5', label: 'Modules complets', icon: BookOpen },
+  { value: '15', label: 'Questions de quiz', icon: CheckCircle },
+  { value: '6', label: 'Simulateurs', icon: Zap },
+  { value: '100%', label: 'Gratuit', icon: Star },
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }
+  }),
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
 
 export default function Landing({ onStart }: LandingProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a2a4a] to-[#0f1a2e]">
-      {/* Hero */}
-      <div className="px-4 pt-12 pb-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="w-24 h-24 bg-gradient-to-br from-[#f2994a] to-[#f5af4d] rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
-            <IconGlobe size={44} color="white" />
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2 leading-tight">
-            Le Guide de Samuel
-          </h1>
-          <p className="text-[#f2994a] font-semibold text-base mb-4">
-            Commander et Vendre depuis la Chine
-          </p>
-          <p className="text-gray-300 text-sm max-w-xs mx-auto leading-relaxed">
-            La formation complète pour importer depuis la Chine et vendre en Afrique de l&apos;Ouest — par un ami qui l&apos;a fait avant toi.
-          </p>
-        </motion.div>
-      </div>
+    <div className="min-h-screen bg-[#fafaf8] overflow-x-hidden">
 
-      {/* Vidéo globale */}
-      <div className="max-w-lg mx-auto px-4 mb-8">
-        <VideoPlayer
-          envKey="NEXT_PUBLIC_VIDEO_GLOBAL"
-          title="Présentation de la formation"
-        />
-      </div>
-
-      {/* Stats */}
-      <div className="max-w-lg mx-auto px-4 mb-8">
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { value: '5', label: 'Modules' },
-            { value: '15', label: 'Quiz et jeux' },
-            { value: '100%', label: 'Pratique' },
-          ].map((s) => (
-            <div key={s.label} className="bg-white/10 rounded-2xl p-3 text-center">
-              <p className="text-2xl font-bold text-[#f2994a]">{s.value}</p>
-              <p className="text-gray-300 text-xs font-medium">{s.label}</p>
-            </div>
-          ))}
+      {/* ── HERO ──────────────────────────────────────────────────── */}
+      <section className="relative bg-[#1a2a4a] overflow-hidden">
+        {/* Geometric background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#f2994a]/10 -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-white/5 translate-y-1/2 -translate-x-1/3" />
+          <svg className="absolute bottom-0 left-0 w-full" height="80" viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0 80 L1440 80 L1440 20 Q720 80 0 20 Z" fill="#fafaf8" />
+          </svg>
         </div>
-      </div>
 
-      {/* Modules preview */}
-      <div className="max-w-lg mx-auto px-4 mb-8">
-        <h2 className="text-white font-bold mb-4 text-center text-base">Ce que tu vas apprendre</h2>
-        <div className="space-y-2">
-          {MODULE_ICONS.map(({ Icon, title, desc }, i) => (
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-24">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left: Text */}
             <motion.div
-              key={title}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * i }}
-              className="bg-white/10 rounded-xl p-3 flex items-center gap-3"
+              initial="hidden"
+              animate="visible"
+              variants={stagger}
+              className="text-white"
             >
-              <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon size={20} color="#f2994a" />
-              </div>
-              <div>
-                <p className="text-white font-semibold text-sm">Module {i + 1} — {title}</p>
-                <p className="text-gray-400 text-xs">{desc}</p>
+              <motion.div variants={fadeUp} custom={0}>
+                <span className="inline-flex items-center gap-2 bg-[#f2994a]/20 text-[#f2994a] text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full border border-[#f2994a]/30 mb-6">
+                  <Star size={11} fill="currentColor" />
+                  Formation e-commerce — Afrique de l&apos;Ouest
+                </span>
+              </motion.div>
+
+              <motion.h1
+                variants={fadeUp}
+                custom={1}
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white mb-5"
+              >
+                Commander depuis la Chine,{' '}
+                <span className="text-[#f2994a]">Vendre en Afrique</span>
+              </motion.h1>
+
+              <motion.p
+                variants={fadeUp}
+                custom={2}
+                className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 max-w-md"
+              >
+                La formation complète pour importer depuis AliExpress et Alibaba et revendre 
+                vos produits au Burkina Faso et en Afrique de l&apos;Ouest. Adapté au smartphone. 100% gratuit.
+              </motion.p>
+
+              <motion.div variants={fadeUp} custom={3} className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={onStart}
+                  className="btn-primary text-base px-8 py-4 shadow-xl"
+                  aria-label="Commencer la formation gratuitement"
+                >
+                  Commencer gratuitement
+                  <ArrowRight size={18} />
+                </button>
+                <div className="flex items-center gap-2 text-white/60 text-sm">
+                  <CheckCircle size={15} className="text-[#f2994a] shrink-0" />
+                  <span>Aucun compte requis</span>
+                </div>
+              </motion.div>
+
+              {/* Social proof */}
+              <motion.div variants={fadeUp} custom={4} className="flex items-center gap-4 mt-8">
+                <div className="flex -space-x-2">
+                  {['S','K','A','M'].map((l, i) => (
+                    <div
+                      key={i}
+                      className="w-8 h-8 rounded-full bg-gradient-to-br from-[#f2994a] to-[#e07b2a] border-2 border-[#1a2a4a] flex items-center justify-center text-xs font-bold text-white"
+                    >
+                      {l}
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex">
+                    {[1,2,3,4,5].map(i => <Star key={i} size={12} fill="#f2994a" color="#f2994a" />)}
+                  </div>
+                  <p className="text-xs text-white/50 mt-0.5">+200 apprenants actifs</p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Right: Visual card */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+              className="hidden md:block"
+            >
+              <div className="relative">
+                {/* Main card */}
+                <div className="bg-white rounded-2xl shadow-2xl p-6 border border-white/10">
+                  <div className="flex items-center gap-3 mb-5">
+                    <GSLogo size={42} />
+                    <div>
+                      <p className="font-bold text-[#1a2a4a] text-sm">Le Guide de Samuel</p>
+                      <p className="text-xs text-gray-400">Formation complète</p>
+                    </div>
+                    <span className="ml-auto badge-green">Gratuit</span>
+                  </div>
+                  {/* Module progress bars */}
+                  {MODULES_PREVIEW.map((m, i) => (
+                    <div key={m.num} className="flex items-center gap-3 mb-3">
+                      <div
+                        className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                        style={{ background: `${m.color}15` }}
+                      >
+                        <m.icon size={14} style={{ color: m.color }} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold text-gray-700 truncate">{m.title}</p>
+                        <div className="progress-bar mt-1">
+                          <div className="progress-fill" style={{ width: `${(i < 2 ? (i+1)*50 : 0)}%` }} />
+                        </div>
+                      </div>
+                      <span className="text-xs text-gray-400 shrink-0">{i < 2 ? '✓' : '—'}</span>
+                    </div>
+                  ))}
+                  <div className="mt-4 p-3 bg-[#fef3e8] rounded-xl border border-[#f2994a]/20">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-600 font-medium">Progression totale</span>
+                      <span className="text-xs font-bold text-[#f2994a]">200 XP</span>
+                    </div>
+                    <div className="progress-bar mt-2">
+                      <div className="progress-fill" style={{ width: '40%' }} />
+                    </div>
+                  </div>
+                </div>
+                {/* Floating badge */}
+                <div className="absolute -top-4 -right-4 bg-[#f2994a] text-white rounded-2xl px-3 py-2 shadow-lg rotate-3">
+                  <p className="text-xs font-bold">🏆 Certificat PDF</p>
+                </div>
               </div>
             </motion.div>
-          ))}
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Features */}
-      <div className="max-w-lg mx-auto px-4 mb-10">
-        <div className="grid grid-cols-2 gap-3">
-          {FEATURES.map(({ Icon, label }) => (
-            <div key={label} className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-3">
-              <Icon size={18} color="#f2994a" />
-              <span className="text-gray-200 text-xs font-medium">{label}</span>
+      {/* ── STATS ─────────────────────────────────────────────────── */}
+      <section className="py-10 bg-white border-b border-gray-100" aria-label="Statistiques">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={stagger}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          >
+            {STATS.map(({ value, label, icon: Icon }) => (
+              <motion.div
+                key={label}
+                variants={fadeUp}
+                className="text-center"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#fef3e8] flex items-center justify-center mx-auto mb-2">
+                  <Icon size={18} className="text-[#f2994a]" />
+                </div>
+                <p className="text-2xl font-extrabold text-[#1a2a4a]">{value}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── MODULES PREVIEW ───────────────────────────────────────── */}
+      <section className="py-16 bg-[#fafaf8]" aria-labelledby="modules-heading">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={stagger}
+          >
+            <motion.div variants={fadeUp} className="text-center mb-10">
+              <span className="badge-orange text-xs mb-3">5 modules progressifs</span>
+              <h2 id="modules-heading" className="text-2xl sm:text-3xl font-extrabold text-[#1a2a4a] mt-2">
+                Tout ce qu&apos;il faut savoir pour démarrer
+              </h2>
+              <p className="text-gray-500 mt-2 text-sm max-w-lg mx-auto">
+                Du premier achat sur AliExpress à la vente de vos produits au Burkina Faso — 
+                un parcours complet, étape par étape.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {MODULES_PREVIEW.map((m, i) => (
+                <motion.div
+                  key={m.num}
+                  variants={fadeUp}
+                  custom={i}
+                  className="card card-interactive p-5 group cursor-pointer"
+                  onClick={onStart}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && onStart()}
+                  aria-label={`Module ${m.num}: ${m.title}`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
+                      style={{ background: `${m.color}15` }}
+                    >
+                      <m.icon size={18} style={{ color: m.color }} />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Module {m.num}</span>
+                      <h3 className="text-sm font-bold text-[#1a2a4a] leading-tight mt-0.5">{m.title}</h3>
+                      <p className="text-xs text-gray-500 mt-1 leading-relaxed">{m.desc}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+                    <span className="badge-navy text-[10px]">+100 XP</span>
+                    <ArrowRight size={14} className="text-[#f2994a] transition-transform group-hover:translate-x-1" />
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* CTA card */}
+              <motion.div
+                variants={fadeUp}
+                custom={5}
+                className="sm:col-span-2 lg:col-span-1 rounded-2xl bg-[#1a2a4a] p-5 flex flex-col justify-between cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={onStart}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && onStart()}
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#f2994a] flex items-center justify-center mb-3">
+                    <Award size={18} className="text-white" />
+                  </div>
+                  <h3 className="text-sm font-bold text-white leading-tight">Certificat de formation</h3>
+                  <p className="text-xs text-white/60 mt-1 leading-relaxed">
+                    Téléchargez votre certificat PDF après avoir terminé les 5 modules.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 mt-4 text-[#f2994a] text-xs font-semibold">
+                  <span>Commencer la formation</span>
+                  <ArrowRight size={13} />
+                </div>
+              </motion.div>
             </div>
-          ))}
+          </motion.div>
         </div>
-      </div>
+      </section>
 
-      {/* CTA */}
-      <div className="max-w-lg mx-auto px-4 pb-12">
-        <motion.button
-          onClick={onStart}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full bg-gradient-to-r from-[#f2994a] to-[#f5af4d] text-white font-bold py-5 rounded-2xl text-lg shadow-2xl flex items-center justify-center gap-3"
-        >
-          <span>Commencer le guide</span>
-          <IconArrowRight size={22} color="white" />
-        </motion.button>
-        <p className="text-center text-gray-500 text-xs mt-4">
-          Gratuit · Mobile-first · Aucune inscription requise
-        </p>
-      </div>
+      {/* ── FEATURES ──────────────────────────────────────────────── */}
+      <section className="py-14 bg-white border-t border-gray-100" aria-labelledby="features-heading">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={stagger}
+          >
+            <motion.div variants={fadeUp} className="text-center mb-10">
+              <h2 id="features-heading" className="text-2xl sm:text-3xl font-extrabold text-[#1a2a4a]">
+                Pourquoi Le Guide de Samuel ?
+              </h2>
+              <p className="text-gray-500 mt-2 text-sm">
+                Conçu spécifiquement pour les entrepreneurs d&apos;Afrique de l&apos;Ouest
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {FEATURES.map(({ icon: Icon, title, desc }, i) => (
+                <motion.div
+                  key={title}
+                  variants={fadeUp}
+                  custom={i}
+                  className="flex items-start gap-4 p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#f2994a]/30 hover:bg-[#fef3e8]/30 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#1a2a4a] flex items-center justify-center shrink-0">
+                    <Icon size={18} className="text-[#f2994a]" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-[#1a2a4a] text-sm">{title}</h3>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ─────────────────────────────────────────────── */}
+      <section className="py-16 bg-gradient-to-br from-[#1a2a4a] to-[#2d4570]" aria-labelledby="cta-heading">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={stagger}
+          >
+            <motion.div variants={fadeUp}>
+              <div className="w-16 h-16 rounded-2xl bg-[#f2994a] flex items-center justify-center mx-auto mb-5 shadow-lg">
+                <Users size={28} className="text-white" />
+              </div>
+              <h2 id="cta-heading" className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+                Prêt à vous lancer ?
+              </h2>
+              <p className="text-white/65 mb-7 text-sm leading-relaxed">
+                Rejoignez les apprenants qui ont transformé leur business grâce à l&apos;import depuis la Chine. 
+                Formation 100% gratuite, en français, sur mobile.
+              </p>
+              <button
+                onClick={onStart}
+                className="btn-primary text-base px-10 py-4 shadow-xl mx-auto"
+                aria-label="Commencer la formation"
+              >
+                Démarrer la formation
+                <ArrowRight size={18} />
+              </button>
+              <p className="text-xs text-white/40 mt-4">
+                Sans inscription · Sans email · Vos données restent sur votre appareil
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

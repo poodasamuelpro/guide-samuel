@@ -1,148 +1,122 @@
 import type { Metadata } from 'next';
-import LegalPage from '@/components/LegalPage';
 
 export const metadata: Metadata = {
   title: 'Mentions légales — Le Guide de Samuel',
-  description: 'Mentions légales de la plateforme de formation Le Guide de Samuel.',
+  description: 'Mentions légales de la plateforme Le Guide de Samuel.',
+  robots: { index: false, follow: false },
 };
 
 export default function MentionsLegalesPage() {
   return (
-    <LegalPage
-      title="Mentions légales"
-      subtitle="Informations légales relatives à la plateforme Le Guide de Samuel"
-      lastUpdated="15 juillet 2025"
-      sections={[
-        {
-          title: '1. Éditeur du site',
-          content: (
-            <>
-              <p>
-                Le site <strong>Le Guide de Samuel</strong> (ci-après « la Plateforme ») est édité par une personne physique à titre personnel et non commercial.
-              </p>
-              <p className="mt-2">
-                <strong>Responsable de la publication :</strong> Samuel Pooda<br />
-                <strong>Pays de résidence :</strong> Burkina Faso<br />
-                <strong>Contact :</strong>{' '}
-                <a href="mailto:contact@leguidededsamuel.com" className="text-[#f2994a] hover:underline">
-                  contact@leguidededsamuel.com
-                </a>
-              </p>
-              <p className="mt-2 text-gray-600 text-xs italic">
-                Cette plateforme est une initiative éducative privée et indépendante, sans objet commercial direct.
-                Elle ne collecte pas de paiement et ne vend pas de biens ou services.
-              </p>
-            </>
-          ),
-        },
-        {
-          title: '2. Hébergement',
-          content: (
-            <>
-              <p>La Plateforme est hébergée par :</p>
-              <div className="mt-2 bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="font-semibold text-[#1a2a4a]">Vercel Inc.</p>
-                <p className="text-gray-600 text-xs mt-1">
-                  440 N Barranca Ave #4133<br />
-                  Covina, CA 91723, États-Unis<br />
-                  Site web :{' '}
-                  <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-[#f2994a] hover:underline">
-                    vercel.com
-                  </a>
-                </p>
-              </div>
-            </>
-          ),
-        },
-        {
-          title: '3. Nature de la plateforme',
-          content: (
-            <>
-              <p>
-                Le Guide de Samuel est une <strong>plateforme de formation en ligne gratuite</strong> destinée aux entrepreneurs d&apos;Afrique de l&apos;Ouest souhaitant apprendre à importer des marchandises depuis la Chine.
-              </p>
-              <ul className="mt-3 space-y-2 list-none">
-                {[
-                  'La plateforme ne collecte aucun paiement.',
-                  'Aucune inscription avec e-mail ou mot de passe n\'est requise.',
-                  'Les données saisies (prénom, nom, ville) sont stockées uniquement dans le navigateur de l\'utilisateur (localStorage).',
-                  'Aucune donnée personnelle n\'est transmise à des tiers.',
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-[#f2994a] rounded-full mt-2 flex-shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ),
-        },
-        {
-          title: '4. Propriété intellectuelle',
-          content: (
-            <>
-              <p>
-                L&apos;ensemble du contenu de la Plateforme — textes, données pédagogiques, simulateurs interactifs, structure des modules, design — est la propriété intellectuelle exclusive de Samuel Pooda, sauf mention contraire.
-              </p>
-              <p className="mt-2">
-                Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l&apos;autorisation préalable et écrite de l&apos;éditeur.
-              </p>
-              <p className="mt-2">
-                Les marques et noms commerciaux mentionnés dans le contenu pédagogique (AliExpress, Alibaba, UBA, Ecobank, Orange Money, La Poste, etc.) appartiennent à leurs détenteurs respectifs. Leur mention est uniquement à titre d&apos;information éducative.
-              </p>
-            </>
-          ),
-        },
-        {
-          title: '5. Limitation de responsabilité',
-          content: (
-            <>
-              <p>
-                Les informations contenues dans cette plateforme sont fournies à titre <strong>purement indicatif et éducatif</strong>. Elles ne constituent en aucun cas un conseil juridique, fiscal ou commercial.
-              </p>
-              <p className="mt-2">
-                Samuel Pooda s&apos;efforce de maintenir les informations à jour, mais ne peut garantir l&apos;exactitude, l&apos;exhaustivité ou l&apos;actualité des informations publiées. Les tarifs (cartes bancaires, boîte postale, taxes douanières) peuvent évoluer sans préavis.
-              </p>
-              <p className="mt-2">
-                L&apos;utilisateur est seul responsable des décisions commerciales qu&apos;il prend sur la base des informations consultées sur la Plateforme.
-              </p>
-            </>
-          ),
-        },
-        {
-          title: '6. Liens hypertextes',
-          content: (
-            <>
-              <p>
-                La Plateforme peut contenir des liens vers des sites tiers (AliExpress, Alibaba, sites des banques, etc.). Ces liens sont fournis uniquement à titre informatif. Samuel Pooda n&apos;est pas responsable du contenu de ces sites ni de leur politique de confidentialité.
-              </p>
-            </>
-          ),
-        },
-        {
-          title: '7. Droit applicable',
-          content: (
-            <>
-              <p>
-                La Plateforme est régie par le droit en vigueur au Burkina Faso. En cas de litige, et à défaut d&apos;accord amiable, les tribunaux compétents de Ouagadougou seront seuls compétents.
-              </p>
-            </>
-          ),
-        },
-        {
-          title: '8. Contact',
-          content: (
-            <>
-              <p>Pour toute question relative à ces mentions légales, vous pouvez nous contacter à :</p>
-              <p className="mt-2">
-                <a href="mailto:contact@leguidededsamuel.com" className="text-[#f2994a] font-semibold hover:underline">
-                  contact@leguidededsamuel.com
-                </a>
-              </p>
-            </>
-          ),
-        },
-      ]}
-    />
+    <div className="min-h-screen bg-[#fafaf8] py-20 px-4">
+      <div className="max-w-3xl mx-auto">
+
+        {/* Header */}
+        <div className="bg-[#1a2a4a] rounded-2xl p-8 mb-8 text-white">
+          <a href="/" className="text-[#f2994a] text-sm hover:underline mb-4 block">
+            ← Retour à l&apos;accueil
+          </a>
+          <h1 className="text-2xl font-extrabold">Mentions légales</h1>
+          <p className="text-white/60 mt-2 text-sm">Dernière mise à jour : Juillet 2025</p>
+        </div>
+
+        <div className="legal-content space-y-6">
+
+          <div className="card p-6">
+            <h2>1. Éditeur de la plateforme</h2>
+            <p>
+              La plateforme <strong>Le Guide de Samuel</strong> est un projet éducatif non commercial,
+              édité à titre personnel par son créateur résidant à Ouagadougou, Burkina Faso.
+            </p>
+            <ul>
+              <li><strong>Nom de la plateforme :</strong> Le Guide de Samuel</li>
+              <li><strong>Contact :</strong> contact@guide-samuel.app</li>
+              <li><strong>Nature :</strong> Formation privée, non commerciale, gratuite</li>
+              <li><strong>Pays d&apos;origine :</strong> Burkina Faso</li>
+            </ul>
+          </div>
+
+          <div className="card p-6">
+            <h2>2. Hébergement</h2>
+            <p>
+              La plateforme est hébergée sur l&apos;infrastructure de <strong>Vercel Inc.</strong>
+            </p>
+            <ul>
+              <li><strong>Entreprise :</strong> Vercel Inc.</li>
+              <li><strong>Adresse :</strong> 340 S Lemon Ave #4133, Walnut, CA 91789, USA</li>
+              <li><strong>Site :</strong> <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">vercel.com</a></li>
+            </ul>
+          </div>
+
+          <div className="card p-6">
+            <h2>3. Nature de la plateforme</h2>
+            <p>
+              Le Guide de Samuel est une plateforme éducative interactive permettant aux 
+              entrepreneurs d&apos;Afrique de l&apos;Ouest d&apos;apprendre à importer depuis la Chine 
+              et à vendre leurs produits localement. Elle est entièrement gratuite.
+            </p>
+            <ul>
+              <li>Aucun achat ou abonnement n&apos;est requis</li>
+              <li>Aucun compte utilisateur n&apos;est créé sur des serveurs</li>
+              <li>Les données (prénom, nom, progression) sont stockées uniquement sur l&apos;appareil de l&apos;utilisateur</li>
+            </ul>
+          </div>
+
+          <div className="card p-6">
+            <h2>4. Propriété intellectuelle</h2>
+            <p>
+              Tout le contenu de cette plateforme (textes, simulateurs, design, code source, 
+              certificat) est la propriété exclusive de son créateur. Toute reproduction, 
+              distribution ou utilisation commerciale sans autorisation écrite préalable est interdite.
+            </p>
+          </div>
+
+          <div className="card p-6">
+            <h2>5. Limitation de responsabilité</h2>
+            <p>
+              Les informations fournies sur cette plateforme ont un but éducatif uniquement. 
+              Les chiffres présentés (tarifs bancaires, coûts de fret, taxes douanières) sont 
+              des estimations indicatives susceptibles de variation. L&apos;éditeur ne peut être 
+              tenu responsable de décisions commerciales prises sur la base de ces informations.
+            </p>
+            <p>
+              Pour toute décision d&apos;investissement, consultez les sources officielles :
+              votre banque, La Poste du Burkina Faso, la Direction Générale des Douanes du Burkina Faso.
+            </p>
+          </div>
+
+          <div className="card p-6">
+            <h2>6. Liens hypertextes</h2>
+            <p>
+              Cette plateforme peut contenir des liens vers des sites tiers (AliExpress, Alibaba, 
+              La Poste BF, etc.). Ces liens sont fournis à titre informatif. L&apos;éditeur n&apos;est pas 
+              responsable du contenu de ces sites externes.
+            </p>
+          </div>
+
+          <div className="card p-6">
+            <h2>7. Droit applicable</h2>
+            <p>
+              Les présentes mentions légales sont soumises au droit burkinabè. 
+              Tout litige sera soumis aux juridictions compétentes de Ouagadougou, Burkina Faso.
+            </p>
+          </div>
+
+          <div className="card p-6">
+            <h2>8. Contact</h2>
+            <p>
+              Pour toute question ou signalement : <a href="mailto:contact@guide-samuel.app">contact@guide-samuel.app</a>
+            </p>
+          </div>
+        </div>
+
+        {/* Footer nav */}
+        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+          <a href="/legal/cgu" className="badge-navy text-sm">CGU</a>
+          <a href="/legal/confidentialite" className="badge-navy text-sm">Confidentialité</a>
+          <a href="/" className="badge-orange text-sm">Retour à la formation</a>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,56 +1,96 @@
-# Le Guide de Samuel
+# Le Guide de Samuel 🚀
 
-## Présentation du projet
-- **Nom** : Le Guide de Samuel — Commander et Vendre en Chine
-- **Technologie** : Next.js 14 (App Router) + TypeScript + Tailwind CSS + Framer Motion
-- **Hébergement cible** : Vercel (déploiement standard Next.js)
-- **Public** : Entrepreneurs Burkina Faso / Afrique de l'Ouest, mobile-first
+Formation e-learning complète pour **importer depuis la Chine** et **vendre en Afrique de l'Ouest** (Burkina Faso / UEMOA).
+
+🌐 **Live** → [guide-samuel.vercel.app](https://guide-samuel.vercel.app)
 
 ---
 
-## ✅ Fonctionnalités implémentées
+## ✨ Fonctionnalités
 
-### Navigation & UX
-- **Landing page** : présentation chaleureuse, aperçu des 5 modules, stats, CTA
-- **Onboarding** : formulaire Nom + Prénom + Ville (optionnel), stocké en localStorage, validation XSS
-- **Dashboard** : progression globale, barre XP, badges débloqués, modules verrouillés en séquence
-- **Navigation** : progression guidée module → quiz → déblocage suivant
+| Fonctionnalité | Détail |
+|---|---|
+| 📚 **5 modules** | Contenu vérifié et actualisé (UBA Africard, AliExpress, transit, TEC CEDEAO) |
+| 🎮 **7 simulateurs** | BudgetSimulator, AlibabaAliexpressQuiz, TaxSimulator, CBMCalculator, LitigeTimeline, SortingGame, MarginSimulator |
+| 🏆 **XP & badges** | 100 XP par module + 6 badges + badge Champion |
+| 📜 **Certificat PDF** | Généré côté client (jsPDF), téléchargeable après validation des 5 modules |
+| 🎥 **Vidéos résumé** | Par module (YouTube non répertorié, via variables d'environnement) |
+| 🔐 **Zéro collecte** | Données en localStorage uniquement, aucun serveur externe |
+| 📱 **Mobile-first** | Menu burger, simulateurs tactiles, responsive complet |
+| 🔍 **SEO complet** | Metadata, Open Graph, sitemap.xml, robots.txt, manifest PWA |
 
-### 5 Modules de contenu (actualisés 2025)
-| Module | Contenu |
-|--------|---------|
-| 1 | Carte UBA (10 000 FCFA), boîte postale (17 200 FCFA), budget de départ |
-| 2 | AliExpress vs Alibaba, conseils d'achat |
-| 3 | Délais DHL/EMS (7-15j) vs Standard (20-45j), protection 60 jours, douanes |
-| 4 | 3 types de produits gagnants, produits à éviter |
-| 5 | Méthodes grossiste/détaillant, Facebook, WhatsApp, Jumia |
+---
 
-### Gamification
-- **Simulateur budget** (Module 1) : choix carte + boîte postale → total FCFA
-- **Checklist démarrage** (Module 1) : 6 étapes avec barre de progression
-- **Simulateur taxes** (Module 3) : curseurs quantité/prix → estimation douane
-- **Chronologie litige** (Module 3) : timeline visuelle commande → remboursement
-- **Jeu de tri** (Module 4) : "Importer ou pas ?" — 8 produits avec feedback
-- **Simulateur marge** (Module 5) : achat + frais → vente → bénéfice + %
-- **Quiz 3 questions** par module (15 questions au total)
-- **Système XP** : 100 XP par module validé (500 XP max)
-- **Badges** : 1 badge par module + badge Champion
+## 📦 Stack technique
 
-### Certificat PDF
-- Généré côté client via **jsPDF** (aucun serveur requis)
-- Design soigné : fond bleu marine, bordure dorée, sceau, signature
-- Nommage automatique : `certificat-guide-samuel-[prenom]-[nom].pdf`
-- Accessible depuis le dashboard une fois tous les modules validés
+- **Next.js 14** (App Router, TypeScript)
+- **Tailwind CSS v4** (`@import "tailwindcss"`, pas de config)
+- **Framer Motion 12** (animations par page et par module)
+- **lucide-react** (icônes SVG vectorielles, style cohérent)
+- **jsPDF** (certificat client-side)
+- **localStorage** (`guide_samuel_v1`) — seule couche de persistance
 
-### Vidéos (variables d'environnement)
-- Composant `<VideoPlayer envKey="..." />` — retourne `null` si URL absente
-- 6 variables : `NEXT_PUBLIC_VIDEO_GLOBAL`, `NEXT_PUBLIC_VIDEO_MODULE_1` à `_5`
-- Fichier `.env.example` fourni
+---
 
-### Sécurité
-- Données uniquement en localStorage (jamais envoyées)
-- Validation + sanitisation des champs onboarding
-- Headers : `CSP`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `X-XSS-Protection`
+## 🚀 Déploiement Vercel (recommandé)
+
+### 1. Fork / Clone
+
+```bash
+git clone https://github.com/poodasamuelpros/guide-samuel.git
+cd guide-samuel
+npm install
+```
+
+### 2. Variables d'environnement
+
+Copiez `.env.example` en `.env.local` et renseignez vos URLs YouTube :
+
+```bash
+cp .env.example .env.local
+```
+
+```env
+NEXT_PUBLIC_VIDEO_GLOBAL=https://www.youtube.com/embed/VOTRE_ID
+NEXT_PUBLIC_VIDEO_MODULE_1=https://www.youtube.com/embed/VOTRE_ID_MODULE_1
+NEXT_PUBLIC_VIDEO_MODULE_2=https://www.youtube.com/embed/VOTRE_ID_MODULE_2
+NEXT_PUBLIC_VIDEO_MODULE_3=https://www.youtube.com/embed/VOTRE_ID_MODULE_3
+NEXT_PUBLIC_VIDEO_MODULE_4=https://www.youtube.com/embed/VOTRE_ID_MODULE_4
+NEXT_PUBLIC_VIDEO_MODULE_5=https://www.youtube.com/embed/VOTRE_ID_MODULE_5
+```
+
+> ⚠️ Si une variable est absente/vide, le composant `<VideoPlayer>` retourne `null` sans erreur — le reste de la page est inchangé.
+
+### 3. Développement local
+
+```bash
+npm run dev
+# → http://localhost:3000
+```
+
+### 4. Build de production
+
+```bash
+npm run build
+npm start
+```
+
+### 5. Déployer sur Vercel
+
+#### Via CLI
+
+```bash
+npx vercel --prod
+```
+
+#### Via interface Vercel
+
+1. Connectez votre repo GitHub sur [vercel.com](https://vercel.com)
+2. **Framework Preset** : Next.js (détecté automatiquement)
+3. **Build Command** : `npm run build`
+4. **Output Directory** : `.next`
+5. Ajoutez les variables d'environnement dans *Settings → Environment Variables*
+6. Cliquez **Deploy**
 
 ---
 
@@ -60,78 +100,88 @@
 guide-samuel/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx        # Layout + métadonnées SEO
-│   │   ├── page.tsx          # Entry point → <App />
-│   │   └── globals.css
+│   │   ├── globals.css          # Système de design (CSS custom properties, utilities)
+│   │   ├── layout.tsx           # Layout racine (Inter font, metadata, OG)
+│   │   ├── page.tsx             # Entrée → <App />
+│   │   ├── sitemap.ts           # Sitemap automatique
+│   │   ├── robots.ts            # robots.txt automatique
+│   │   └── legal/
+│   │       ├── layout.tsx
+│   │       ├── mentions-legales/
+│   │       ├── cgu/
+│   │       └── confidentialite/
 │   ├── components/
-│   │   ├── App.tsx           # Routeur principal (état global)
-│   │   ├── Landing.tsx       # Page d'accueil
-│   │   ├── Onboarding.tsx    # Formulaire d'inscription
-│   │   ├── Dashboard.tsx     # Tableau de bord
-│   │   ├── Quiz.tsx          # Composant quiz générique
-│   │   ├── VideoPlayer.tsx   # Lecteur YouTube conditionnel
-│   │   ├── Simulators.tsx    # Tous les simulateurs/jeux
+│   │   ├── Logo.tsx             # GSLogo (SVG monogram) + BrandMark
+│   │   ├── Header.tsx           # Header fixe, mobile menu, XP indicator
+│   │   ├── Footer.tsx           # Footer complet (nav, légal, social, année)
+│   │   ├── App.tsx              # Routeur principal
+│   │   ├── Landing.tsx          # Page d'accueil (hero, stats, modules, CTA)
+│   │   ├── Onboarding.tsx       # Formulaire nom/prénom/ville
+│   │   ├── Dashboard.tsx        # Progression, badges, certificat
+│   │   ├── Quiz.tsx             # Quiz animé (slide + lettered options)
+│   │   ├── Simulators.tsx       # 7 simulateurs gamifiés
+│   │   ├── VideoPlayer.tsx      # YouTube embed (retourne null si var absente)
 │   │   └── modules/
-│   │       ├── Module1.tsx à Module5.tsx
+│   │       ├── Module1.tsx      # Éléments indispensables + BudgetSimulator
+│   │       ├── Module2.tsx      # AliExpress/Alibaba + AlibabaAliexpressQuiz
+│   │       ├── Module3.tsx      # Transit/taxes + TaxSim + CBMCalc + LitigeTimeline
+│   │       ├── Module4.tsx      # Produits + SortingGame
+│   │       └── Module5.tsx      # Vente + MarginSimulator
 │   ├── lib/
-│   │   ├── storage.ts        # localStorage helpers
-│   │   ├── modules.ts        # Données des modules
-│   │   ├── quizData.ts       # 15 questions de quiz
-│   │   └── certificate.ts    # Génération PDF jsPDF
-│   └── types/index.ts
-├── .env.example               # Variables vidéo à renseigner
-├── next.config.js             # Security headers
-├── package.json
-└── README.md
+│   │   ├── storage.ts           # localStorage: loadState, saveUser, markModuleComplete
+│   │   ├── modules.ts           # Définition des 5 modules
+│   │   ├── quizData.ts          # Questions QCM (5 modules × 3 questions min)
+│   │   └── certificate.ts       # Génération certificat jsPDF
+│   └── types/
+│       └── index.ts             # AppState, UserProfile, ModuleData
+├── public/
+│   ├── manifest.json            # PWA manifest
+│   └── favicon.ico
+├── .env.example                 # Variables d'environnement (modèle)
+├── next.config.js               # Config Next.js + security headers
+├── tailwind.config.ts           # (Tailwind v4 — inutilisé)
+└── package.json
 ```
 
 ---
 
-## 🚀 Déploiement sur Vercel
+## 🗺️ Contenu des modules
 
-### 1. Pousser sur GitHub
-```bash
-git remote add origin https://github.com/TON-COMPTE/guide-samuel.git
-git push -u origin main
-```
-
-### 2. Importer sur Vercel
-- Aller sur [vercel.com](https://vercel.com) → "Import Project"
-- Sélectionner le repo GitHub
-- Framework : **Next.js** (détecté automatiquement)
-- Cliquer **Deploy**
-
-### 3. Configurer les variables d'environnement (optionnel)
-Dans Vercel → Settings → Environment Variables :
-```
-NEXT_PUBLIC_VIDEO_GLOBAL=https://youtu.be/VOTRE_ID
-NEXT_PUBLIC_VIDEO_MODULE_1=https://youtu.be/VOTRE_ID
-NEXT_PUBLIC_VIDEO_MODULE_2=https://youtu.be/VOTRE_ID
-NEXT_PUBLIC_VIDEO_MODULE_3=https://youtu.be/VOTRE_ID
-NEXT_PUBLIC_VIDEO_MODULE_4=https://youtu.be/VOTRE_ID
-NEXT_PUBLIC_VIDEO_MODULE_5=https://youtu.be/VOTRE_ID
-```
-**Si non renseignées → les sections vidéo n'apparaissent pas (aucune erreur).**
+| # | Titre | Simulateur |
+|---|---|---|
+| 1 | Les éléments indispensables pour importer de Chine | BudgetSimulator |
+| 2 | Sur quels sites acheter (AliExpress vs Alibaba) | AlibabaAliexpressQuiz |
+| 3 | Délais de livraison, transit et taxes douanières | TaxSimulator + CBMCalculator + LitigeTimeline |
+| 4 | Les types de produits à importer | SortingGame |
+| 5 | Comment vendre ses produits importés | MarginSimulator |
 
 ---
 
-## 🌐 URLs de test (sandbox)
-- **Application** : https://3000-i045r0y2dipp1dtveppl7-3c7ff1b5.sandbox.novita.ai
+## 🏗️ Données vérifiées
+
+| Donnée | Valeur | Source |
+|---|---|---|
+| UBA Africard | ~10 000 FCFA | UBA Burkina Faso |
+| Boîte postale La Poste BF | ~15 200 FCFA/an | laposte.bf |
+| Fret aérien Chine → BF | 9 000–13 000 FCFA/kg (estimatif) | Transitaires locaux |
+| Protection acheteur AliExpress | 60 jours (litige 15j après réception) | AliExpress Help Center |
+| TEC CEDEAO | 0%, 5%, 10%, 20% | UEMOA/CEDEAO officiel |
+| CBM | L × W × H (en mètres) | Standard logistique |
 
 ---
 
-## 📦 Dépendances principales
-- `next` 16.x, `react` 19.x, `typescript`
-- `tailwindcss`, `framer-motion`
-- `jspdf` (certificat PDF)
-- `lucide-react`, `@radix-ui/*`
+## 🔒 Sécurité & vie privée
+
+- **Aucune donnée serveur** : nom, prénom, ville et progression restent dans le `localStorage` du navigateur
+- **Aucun tracking tiers** ni cookie publicitaire
+- **En-têtes HTTP sécurisés** : CSP, X-Frame-Options, HSTS, Permissions-Policy (voir `next.config.js`)
+- **XSS basique** : sanitisation des entrées utilisateur via `src/lib/storage.ts`
 
 ---
 
-## ⚠️ Limitations connues
-- Accents dans les textes remplacés par équivalents ASCII dans quelques endroits (compatibilité parser JS)
-- Les données de prix (cartes, douanes) sont indicatives — à vérifier auprès des sources officielles
-- Aucun backend : tout en localStorage (données perdues si l'utilisateur vide son cache)
+## 📄 Licence
+
+Contenu et code © Samuel — Usage personnel et éducatif.
 
 ---
 
