@@ -8,9 +8,9 @@ interface GSLogoProps {
 }
 
 export function GSLogo({ size = 40, variant = 'color', className = '' }: GSLogoProps) {
-  const bg = variant === 'color' ? '#1a2a4a' : variant === 'white' ? 'white' : '#1a2a4a';
-  const accent = variant === 'color' ? '#f2994a' : variant === 'white' ? '#f2994a' : '#f2994a';
-  const text = variant === 'white' ? '#1a2a4a' : 'white';
+  const bg = variant === 'color' ? '#1e3a5f' : variant === 'white' ? 'white' : '#1e3a5f';
+  const accent = variant === 'color' ? '#f6932a' : variant === 'white' ? '#f6932a' : '#f6932a';
+  const text = variant === 'white' ? '#1e3a5f' : 'white';
 
   return (
     <svg
@@ -66,7 +66,7 @@ export function BrandMark({ size = 'md', variant = 'dark', className = '' }: Bra
   const logoSize = size === 'sm' ? 32 : size === 'lg' ? 48 : 38;
   const titleSize = size === 'sm' ? 'text-sm' : size === 'lg' ? 'text-xl' : 'text-base';
   const subSize = size === 'sm' ? 'text-[9px]' : size === 'lg' ? 'text-xs' : 'text-[10px]';
-  const titleColor = variant === 'light' ? 'text-white' : 'text-[#1a2a4a]';
+  const titleColor = variant === 'light' ? 'text-white' : 'text-[#1e3a5f]';
   const subColor = variant === 'light' ? 'text-white/70' : 'text-gray-500';
 
   return (
@@ -77,7 +77,7 @@ export function BrandMark({ size = 'md', variant = 'dark', className = '' }: Bra
           Le Guide de Samuel
         </span>
         <span className={`font-medium uppercase tracking-widest ${subSize} ${subColor}`}>
-          Formation · Import · Vente
+          Importer depuis la Chine
         </span>
       </div>
     </div>

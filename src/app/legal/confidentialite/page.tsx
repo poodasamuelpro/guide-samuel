@@ -11,8 +11,8 @@ export default function ConfidentialitePage() {
     <div className="min-h-screen bg-[#fafaf8] py-20 px-4">
       <div className="max-w-3xl mx-auto">
 
-        <div className="bg-[#1a2a4a] rounded-2xl p-8 mb-8 text-white">
-          <a href="/" className="text-[#f2994a] text-sm hover:underline mb-4 block">
+        <div className="bg-[#1e3a5f] rounded-2xl p-8 mb-8 text-white">
+          <a href="/" className="text-[#f6932a] text-sm hover:underline mb-4 block">
             ← Retour à l&apos;accueil
           </a>
           <h1 className="text-2xl font-extrabold">Politique de confidentialité</h1>

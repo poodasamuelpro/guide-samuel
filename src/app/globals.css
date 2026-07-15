@@ -2,17 +2,26 @@
 
 /* ── Custom properties ─────────────────────────────────────────────── */
 :root {
-  --brand-navy: #1a2a4a;
-  --brand-navy-light: #2d4570;
-  --brand-orange: #f2994a;
-  --brand-orange-dark: #e07b2a;
-  --brand-orange-light: #fef3e8;
-  --brand-cream: #fafaf8;
+  /* Palette principale — navy adouci + orange chaud */
+  --brand-navy: #1e3a5f;          /* navy plus lisible (moins sombre) */
+  --brand-navy-dark: #152d4a;     /* pour les fonds sombres importants */
+  --brand-navy-light: #2d5282;    /* accents navy clairs */
+  --brand-orange: #f6932a;        /* orange principal */
+  --brand-orange-dark: #d97a1a;   /* orange hover */
+  --brand-orange-light: #fff4e6;  /* fond orange très léger */
+  --brand-cream: #f8f7f4;         /* fond général chaleureux */
   --brand-white: #ffffff;
-  --shadow-sm: 0 1px 3px rgba(26,42,74,0.08), 0 1px 2px rgba(26,42,74,0.06);
-  --shadow-md: 0 4px 16px rgba(26,42,74,0.10), 0 2px 6px rgba(26,42,74,0.08);
-  --shadow-lg: 0 10px 40px rgba(26,42,74,0.12), 0 4px 16px rgba(26,42,74,0.08);
-  --shadow-orange: 0 4px 20px rgba(242,153,74,0.30);
+
+  /* Couleurs de texte sur fonds sombres — toujours lisibles */
+  --text-on-dark: #ffffff;
+  --text-on-dark-muted: rgba(255,255,255,0.85); /* ≥ 4.5:1 sur navy */
+  --text-on-dark-subtle: rgba(255,255,255,0.70);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(30,58,95,0.10), 0 1px 2px rgba(30,58,95,0.07);
+  --shadow-md: 0 4px 20px rgba(30,58,95,0.12), 0 2px 8px rgba(30,58,95,0.09);
+  --shadow-lg: 0 10px 44px rgba(30,58,95,0.14), 0 4px 18px rgba(30,58,95,0.09);
+  --shadow-orange: 0 4px 20px rgba(246,147,42,0.35);
 }
 
 /* ── Base reset ────────────────────────────────────────────────────── */
@@ -114,9 +123,9 @@ input::placeholder, textarea::placeholder {
 /* ── Card component ────────────────────────────────────────────────── */
 .card {
   background: white;
-  border-radius: 16px;
+  border-radius: 18px;
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(26,42,74,0.06);
+  border: 1px solid rgba(30,58,95,0.07);
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
@@ -137,10 +146,10 @@ input::placeholder, textarea::placeholder {
   gap: 8px;
   background: var(--brand-orange);
   color: white;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.95rem;
-  padding: 12px 24px;
-  border-radius: 12px;
+  padding: 13px 26px;
+  border-radius: 14px;
   border: none;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
@@ -152,7 +161,7 @@ input::placeholder, textarea::placeholder {
 .btn-primary:hover {
   background: var(--brand-orange-dark);
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(242,153,74,0.40);
+  box-shadow: 0 6px 28px rgba(246,147,42,0.42);
 }
 
 .btn-primary:active {
@@ -168,9 +177,9 @@ input::placeholder, textarea::placeholder {
   color: var(--brand-navy);
   font-weight: 600;
   font-size: 0.95rem;
-  padding: 12px 24px;
-  border-radius: 12px;
-  border: 2px solid rgba(26,42,74,0.15);
+  padding: 13px 26px;
+  border-radius: 14px;
+  border: 2px solid rgba(30,58,95,0.18);
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, transform 0.15s;
   min-height: 48px;
@@ -192,20 +201,20 @@ input::placeholder, textarea::placeholder {
   background: var(--brand-orange-light);
   color: var(--brand-orange-dark);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(242,153,74,0.25);
+  border: 1px solid rgba(246,147,42,0.28);
 }
 
 .badge-navy {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: rgba(26,42,74,0.08);
+  background: rgba(30,58,95,0.09);
   color: var(--brand-navy);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
 }
@@ -217,7 +226,7 @@ input::placeholder, textarea::placeholder {
   background: #f0fdf4;
   color: #15803d;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
   border: 1px solid #bbf7d0;
@@ -225,7 +234,7 @@ input::placeholder, textarea::placeholder {
 
 /* ── Progress bar ──────────────────────────────────────────────────── */
 .progress-bar {
-  background: #f1f5f9;
+  background: #e5e7eb;
   border-radius: 999px;
   overflow: hidden;
   height: 8px;
@@ -241,7 +250,7 @@ input::placeholder, textarea::placeholder {
 /* ── Section divider ───────────────────────────────────────────────── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(26,42,74,0.10), transparent);
+  background: linear-gradient(90deg, transparent, rgba(30,58,95,0.12), transparent);
   margin: 32px 0;
 }
 
@@ -264,15 +273,15 @@ input::placeholder, textarea::placeholder {
 .tip-box {
   background: #fffbeb;
   border-left: 4px solid var(--brand-orange);
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 14px 14px 0;
   padding: 16px 20px;
   margin: 16px 0;
 }
 
 .info-box {
-  background: #eff6ff;
-  border-left: 4px solid #3b82f6;
-  border-radius: 0 12px 12px 0;
+  background: #f0f9ff;
+  border-left: 4px solid #0ea5e9;
+  border-radius: 0 14px 14px 0;
   padding: 16px 20px;
   margin: 16px 0;
 }
@@ -280,7 +289,7 @@ input::placeholder, textarea::placeholder {
 .warning-box {
   background: #fff7ed;
   border-left: 4px solid #f97316;
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 14px 14px 0;
   padding: 16px 20px;
   margin: 16px 0;
 }
@@ -288,7 +297,7 @@ input::placeholder, textarea::placeholder {
 .success-box {
   background: #f0fdf4;
   border-left: 4px solid #22c55e;
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 14px 14px 0;
   padding: 16px 20px;
   margin: 16px 0;
 }
@@ -307,9 +316,9 @@ input::placeholder, textarea::placeholder {
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(242,153,74,0.4); }
-  70% { box-shadow: 0 0 0 12px rgba(242,153,74,0); }
-  100% { box-shadow: 0 0 0 0 rgba(242,153,74,0); }
+  0% { box-shadow: 0 0 0 0 rgba(246,147,42,0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(246,147,42,0); }
+  100% { box-shadow: 0 0 0 0 rgba(246,147,42,0); }
 }
 
 @keyframes shimmer {
@@ -328,9 +337,15 @@ input::placeholder, textarea::placeholder {
   100% { stroke-dashoffset: 0; }
 }
 
+@keyframes wave {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-pulse-ring { animation: pulse-ring 2s cubic-bezier(0.455,0.03,0.515,0.955) infinite; }
 .animate-badge-pop { animation: badge-pop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
+.animate-wave { animation: wave 8s linear infinite; }
 
 .shimmer {
   background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
@@ -348,26 +363,26 @@ input::placeholder, textarea::placeholder {
   }
 }
 
-/* ── Header ────────────────────────────────────────────────────────── */
+/* ── Header glass ──────────────────────────────────────────────────── */
 .header-glass {
   background: rgba(255,255,255,0.97);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(26,42,74,0.08);
+  border-bottom: 1px solid rgba(30,58,95,0.08);
 }
 
 /* ── Quiz specific ─────────────────────────────────────────────────── */
 .quiz-option {
   background: white;
   border: 2px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 14px 18px;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, transform 0.15s;
   text-align: left;
   width: 100%;
   font-size: 0.95rem;
-  color: #374151;
+  color: #1f2937;
   min-height: 52px;
 }
 
@@ -379,7 +394,7 @@ input::placeholder, textarea::placeholder {
 
 .quiz-option.selected {
   border-color: var(--brand-navy);
-  background: rgba(26,42,74,0.04);
+  background: rgba(30,58,95,0.05);
 }
 
 .quiz-option.correct {
@@ -407,7 +422,7 @@ input::placeholder, textarea::placeholder {
 .sim-input:focus {
   outline: none;
   border-color: var(--brand-orange);
-  box-shadow: 0 0 0 3px rgba(242,153,74,0.15);
+  box-shadow: 0 0 0 3px rgba(246,147,42,0.15);
 }
 
 /* ── CBM Calculator specific ───────────────────────────────────────── */
@@ -449,3 +464,27 @@ input::placeholder, textarea::placeholder {
 }
 
 .legal-content li { margin-bottom: 6px; }
+
+/* ── Dark background text helpers ─────────────────────────────────── */
+/* Utiliser ces classes sur fond navy pour garantir la lisibilité */
+.on-dark { color: var(--text-on-dark); }
+.on-dark-muted { color: var(--text-on-dark-muted); }
+.on-dark-subtle { color: var(--text-on-dark-subtle); }
+
+/* ── Module hero bands ─────────────────────────────────────────────── */
+/* Fond de header de module — gradient navy-to-slate pour plus de contraste */
+.module-hero {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5282 60%, #1e3a5f 100%);
+}
+
+/* ── Illustration card ─────────────────────────────────────────────── */
+.illus-card {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5282 100%);
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

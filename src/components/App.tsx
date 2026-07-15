@@ -95,10 +95,10 @@ export default function App() {
   // Loading
   if (!state) {
     return (
-      <div className="min-h-screen bg-[#1a2a4a] flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-[#1e3a5f] flex flex-col items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#f2994a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white/60 text-sm">Chargement de la formation…</p>
+          <div className="w-12 h-12 border-4 border-[#f6932a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-white/85 text-sm">Chargement de la formation…</p>
         </div>
       </div>
     );

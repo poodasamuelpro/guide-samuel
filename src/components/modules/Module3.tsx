@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import VideoPlayer from '@/components/VideoPlayer';
 import { TaxSimulator, LitigeTimeline, CBMCalculator } from '@/components/Simulators';
+import { DualIllustration } from '@/components/IllustrationBanner';
 
 interface Props {
   onStartQuiz: () => void;
@@ -76,8 +77,8 @@ function ShipmentTimeline() {
   return (
     <div ref={ref} className="card p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-2">
-        <Plane size={18} className="text-[#f2994a]" />
-        <h2 className="text-base font-bold text-[#1a2a4a]">Itinéraire de ta marchandise</h2>
+        <Plane size={18} className="text-[#f6932a]" />
+        <h2 className="text-base font-bold text-[#1e3a5f]">Itinéraire de ta marchandise</h2>
       </div>
       <p className="text-xs text-gray-500 mb-5">
         Lance l&apos;animation pour voir le trajet de ta commande depuis la Chine jusqu&apos;au Burkina Faso
@@ -219,7 +220,7 @@ function DeliveryTable() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <p className="text-sm font-bold text-[#1a2a4a]">{mode}</p>
+              <p className="text-sm font-bold text-[#1e3a5f]">{mode}</p>
               {recommended && <span className="badge-green text-[10px]">Conseillé débutant</span>}
             </div>
             <div className="flex gap-4 mt-1 flex-wrap">
@@ -245,7 +246,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
 
   return (
     <div className="min-h-screen bg-[#fafaf8]">
-      <div className="bg-[#1a2a4a] pt-6 pb-8">
+      <div className="bg-[#1e3a5f] pt-6 pb-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <button
             onClick={onBack}
@@ -263,7 +264,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
               <Package size={22} className="text-green-400" />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-[#f2994a] uppercase tracking-widest">Module 03</p>
+              <p className="text-[10px] font-bold text-[#f6932a] uppercase tracking-widest">Module 03</p>
               <h1 className="text-xl sm:text-2xl font-extrabold text-white">Délais, transit et douane</h1>
             </div>
           </motion.div>
@@ -273,7 +274,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all min-h-0 ${
-                  activeTab === tab.id ? 'bg-[#f2994a] text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
+                  activeTab === tab.id ? 'bg-[#f6932a] text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
                 }`}
               >
                 {tab.label}
@@ -290,6 +291,11 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
               <VideoPlayer envKey="NEXT_PUBLIC_VIDEO_MODULE_3" />
             </ScrollSection>
 
+            {/* Illustrations réelles — avion + bateau */}
+            <ScrollSection delay={0.02}>
+              <DualIllustration left="mod3_air" right="mod3_sea" />
+            </ScrollSection>
+
             {/* ANIMATED TIMELINE — star */}
             <ScrollSection delay={0.05}>
               <ShipmentTimeline />
@@ -300,7 +306,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
                   <Clock size={18} className="text-green-600" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">Modes de livraison depuis la Chine</h2>
+                  <h2 className="text-base font-bold text-[#1e3a5f]">Modes de livraison depuis la Chine</h2>
                 </div>
                 <DeliveryTable />
               </div>
@@ -310,8 +316,8 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <Plane size={18} className="text-[#f2994a]" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">Transitaire — Pour les grosses commandes</h2>
+                  <Plane size={18} className="text-[#f6932a]" />
+                  <h2 className="text-base font-bold text-[#1e3a5f]">Transitaire — Pour les grosses commandes</h2>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   Pour les gros volumes (plusieurs kg à des centaines de kg), passer par 
@@ -320,13 +326,13 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
                 </p>
 
                 {/* Route */}
-                <div className="rounded-xl bg-[#fef3e8] border border-[#f2994a]/30 p-4 mb-5">
-                  <p className="text-xs font-bold text-[#1a2a4a] mb-2 flex items-center gap-1.5">
-                    <MapPin size={13} className="text-[#f2994a]" /> Route typique : Chine → Burkina Faso
+                <div className="rounded-xl bg-[#fef3e8] border border-[#f6932a]/30 p-4 mb-5">
+                  <p className="text-xs font-bold text-[#1e3a5f] mb-2 flex items-center gap-1.5">
+                    <MapPin size={13} className="text-[#f6932a]" /> Route typique : Chine → Burkina Faso
                   </p>
                   <div className="flex items-center gap-2 flex-wrap text-xs text-gray-600">
                     {['Guangzhou / Shenzhen', '→', 'Port Abidjan ou Lomé', '→', 'Ouagadougou (route)'].map((step, i) => (
-                      <span key={i} className={step === '→' ? 'text-[#f2994a] font-bold' : 'bg-white rounded-lg px-2 py-1 border border-gray-100'}>
+                      <span key={i} className={step === '→' ? 'text-[#f6932a] font-bold' : 'bg-white rounded-lg px-2 py-1 border border-gray-100'}>
                         {step}
                       </span>
                     ))}
@@ -377,7 +383,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
                   <Calculator size={18} className="text-purple-600" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">Le CBM — Volume facturable en fret maritime</h2>
+                  <h2 className="text-base font-bold text-[#1e3a5f]">Le CBM — Volume facturable en fret maritime</h2>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   En fret maritime, on facture au <strong>CBM (Cubic Meter)</strong> — le volume occupé par votre colis en m³.
@@ -414,8 +420,8 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <FileText size={18} className="text-[#1a2a4a]" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">Douane et taxes — Zone UEMOA</h2>
+                  <FileText size={18} className="text-[#1e3a5f]" />
+                  <h2 className="text-base font-bold text-[#1e3a5f]">Douane et taxes — Zone UEMOA</h2>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   Les marchandises importées sont soumises au tarif extérieur commun (TEC) de la CEDEAO.
@@ -472,7 +478,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
         ) : activeTab === 'tax' ? (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <div className="mb-4">
-              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1a2a4a] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
+              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1e3a5f] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
                 <ArrowLeft size={13} /> Retour au contenu
               </button>
             </div>
@@ -486,7 +492,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
         ) : activeTab === 'cbm' ? (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <div className="mb-4">
-              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1a2a4a] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
+              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1e3a5f] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
                 <ArrowLeft size={13} /> Retour au contenu
               </button>
             </div>
@@ -500,7 +506,7 @@ export default function Module3({ onStartQuiz, onBack }: Props) {
         ) : (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <div className="mb-4">
-              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1a2a4a] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
+              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1e3a5f] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
                 <ArrowLeft size={13} /> Retour au contenu
               </button>
             </div>

@@ -33,7 +33,7 @@ export function BudgetSimulator() {
           <Calculator size={18} className="text-blue-600" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#1a2a4a]">Simulateur de budget de départ</h3>
+          <h3 className="text-sm font-bold text-[#1e3a5f]">Simulateur de budget de départ</h3>
           <p className="text-[11px] text-gray-500">Estimez votre investissement initial</p>
         </div>
       </div>
@@ -41,7 +41,7 @@ export function BudgetSimulator() {
       <div className="space-y-4">
         {/* Card choice */}
         <div>
-          <label className="block text-xs font-semibold text-[#1a2a4a] mb-2">Votre carte bancaire</label>
+          <label className="block text-xs font-semibold text-[#1e3a5f] mb-2">Votre carte bancaire</label>
           <div className="space-y-2">
             {Object.entries(cardCosts).map(([key, val]) => (
               <button
@@ -49,14 +49,14 @@ export function BudgetSimulator() {
                 onClick={() => setCard(key as typeof card)}
                 className={`w-full flex items-center justify-between p-3 rounded-xl border-2 text-left transition-all min-h-0 ${
                   card === key
-                    ? 'border-[#f2994a] bg-[#fef3e8]'
+                    ? 'border-[#f6932a] bg-[#fef3e8]'
                     : 'border-gray-200 bg-white hover:border-gray-300'
                 }`}
               >
                 <span className="text-xs font-medium text-gray-700">{val.name}</span>
                 <div className="flex items-center gap-2 text-right">
-                  <span className="text-xs font-bold text-[#1a2a4a]">{val.acquisition.toLocaleString()} FCFA</span>
-                  {card === key && <Check size={13} className="text-[#f2994a]" />}
+                  <span className="text-xs font-bold text-[#1e3a5f]">{val.acquisition.toLocaleString()} FCFA</span>
+                  {card === key && <Check size={13} className="text-[#f6932a]" />}
                 </div>
               </button>
             ))}
@@ -68,12 +68,12 @@ export function BudgetSimulator() {
         <div>
           <label className="flex items-center justify-between cursor-pointer">
             <div>
-              <p className="text-xs font-semibold text-[#1a2a4a]">Boîte postale La Poste</p>
+              <p className="text-xs font-semibold text-[#1e3a5f]">Boîte postale La Poste</p>
               <p className="text-[11px] text-gray-500">~15 000 FCFA/an + 200 FCFA timbre</p>
             </div>
             <div
               onClick={() => setIncludePoBox(!includePoBox)}
-              className={`w-11 h-6 rounded-full relative transition-colors cursor-pointer ${includePoBox ? 'bg-[#f2994a]' : 'bg-gray-200'}`}
+              className={`w-11 h-6 rounded-full relative transition-colors cursor-pointer ${includePoBox ? 'bg-[#f6932a]' : 'bg-gray-200'}`}
             >
               <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${includePoBox ? 'translate-x-5.5 left-0.5' : 'left-0.5'}`} />
             </div>
@@ -82,7 +82,7 @@ export function BudgetSimulator() {
 
         {/* First order */}
         <div>
-          <label className="block text-xs font-semibold text-[#1a2a4a] mb-2">
+          <label className="block text-xs font-semibold text-[#1e3a5f] mb-2">
             Montant de votre première commande test
           </label>
           <input
@@ -99,9 +99,9 @@ export function BudgetSimulator() {
       </div>
 
       {/* Result */}
-      <div className="mt-5 rounded-xl bg-[#1a2a4a] p-4">
-        <p className="text-xs text-white/60 mb-2">Budget total estimé</p>
-        <p className="text-3xl font-extrabold text-[#f2994a]">{total.toLocaleString()} FCFA</p>
+      <div className="mt-5 rounded-xl bg-[#1e3a5f] p-4">
+        <p className="text-xs text-white/85 mb-2">Budget total estimé</p>
+        <p className="text-3xl font-extrabold text-[#f6932a]">{total.toLocaleString()} FCFA</p>
         <div className="mt-3 space-y-1.5 text-xs text-white/70">
           <div className="flex justify-between">
             <span>Carte bancaire</span>
@@ -198,8 +198,8 @@ export function AlibabaAliexpressQuiz() {
         <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${correctCount >= 4 ? 'bg-green-100' : 'bg-orange-100'}`}>
           {correctCount >= 4 ? <CheckCircle size={30} className="text-green-600" /> : <AlertTriangle size={30} className="text-orange-500" />}
         </div>
-        <h3 className="text-lg font-extrabold text-[#1a2a4a] mb-1">Quiz terminé !</h3>
-        <p className="text-3xl font-extrabold text-[#f2994a] my-3">{correctCount}/{SCENARIOS.length}</p>
+        <h3 className="text-lg font-extrabold text-[#1e3a5f] mb-1">Quiz terminé !</h3>
+        <p className="text-3xl font-extrabold text-[#f6932a] my-3">{correctCount}/{SCENARIOS.length}</p>
         <p className="text-sm text-gray-500 mb-5">{correctCount >= 4 ? 'Excellent ! Vous maîtrisez la différence.' : 'Relisez le module pour améliorer votre score.'}</p>
         <button onClick={handleReset} className="btn-secondary mx-auto">
           <RotateCcw size={15} /> Rejouer
@@ -215,17 +215,17 @@ export function AlibabaAliexpressQuiz() {
           <ShoppingCart size={18} className="text-orange-500" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#1a2a4a]">Mise en situation : AliExpress ou Alibaba ?</h3>
+          <h3 className="text-sm font-bold text-[#1e3a5f]">Mise en situation : AliExpress ou Alibaba ?</h3>
           <p className="text-[11px] text-gray-500">Scénario {current + 1}/{SCENARIOS.length}</p>
         </div>
       </div>
 
       <div className="h-1.5 bg-gray-100 rounded-full mb-5">
-        <div className="h-full bg-[#f2994a] rounded-full transition-all" style={{ width: `${((current + 1) / SCENARIOS.length) * 100}%` }} />
+        <div className="h-full bg-[#f6932a] rounded-full transition-all" style={{ width: `${((current + 1) / SCENARIOS.length) * 100}%` }} />
       </div>
 
-      <div className="rounded-xl bg-[#1a2a4a]/5 border border-[#1a2a4a]/10 p-4 mb-5">
-        <p className="text-sm font-semibold text-[#1a2a4a] leading-relaxed">{q.scenario}</p>
+      <div className="rounded-xl bg-[#1e3a5f]/5 border border-[#1e3a5f]/10 p-4 mb-5">
+        <p className="text-sm font-semibold text-[#1e3a5f] leading-relaxed">{q.scenario}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -247,7 +247,7 @@ export function AlibabaAliexpressQuiz() {
           return (
             <button key={key} onClick={() => handleAnswer(key)} disabled={!!answer} className={btnClass}>
               <Icon size={22} className={answer ? (correct ? 'text-green-600' : selected ? 'text-red-500' : 'text-gray-400') : iconColor} />
-              <span className={`text-sm font-bold ${answer ? (correct ? 'text-green-700' : selected ? 'text-red-600' : 'text-gray-400') : 'text-[#1a2a4a]'}`}>{label}</span>
+              <span className={`text-sm font-bold ${answer ? (correct ? 'text-green-700' : selected ? 'text-red-600' : 'text-gray-400') : 'text-[#1e3a5f]'}`}>{label}</span>
             </button>
           );
         })}
@@ -312,31 +312,31 @@ export function TaxSimulator() {
           <Calculator size={18} className="text-green-600" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#1a2a4a]">Simulateur de taxes douanières</h3>
+          <h3 className="text-sm font-bold text-[#1e3a5f]">Simulateur de taxes douanières</h3>
           <p className="text-[11px] text-gray-500">Estimation basée sur le TEC CEDEAO</p>
         </div>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">Valeur de la marchandise (FCFA)</label>
+          <label className="block text-xs font-semibold text-[#1e3a5f] mb-1.5">Valeur de la marchandise (FCFA)</label>
           <input type="number" value={value} onChange={e => setValue(Math.max(0, parseInt(e.target.value) || 0))} step={5000} min={0} className="sim-input" />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">Nombre de pièces</label>
+          <label className="block text-xs font-semibold text-[#1e3a5f] mb-1.5">Nombre de pièces</label>
           <input type="number" value={quantity} onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} min={1} className="sim-input" />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">Catégorie du produit</label>
+          <label className="block text-xs font-semibold text-[#1e3a5f] mb-1.5">Catégorie du produit</label>
           <div className="space-y-2">
             {TAX_CATEGORIES.map(c => (
               <button
                 key={c.id}
                 onClick={() => setCategory(c.id)}
                 className={`w-full flex items-center justify-between p-3 rounded-xl border-2 text-left transition-all min-h-0 ${
-                  category === c.id ? 'border-[#f2994a] bg-[#fef3e8]' : 'border-gray-200 bg-white hover:border-gray-300'
+                  category === c.id ? 'border-[#f6932a] bg-[#fef3e8]' : 'border-gray-200 bg-white hover:border-gray-300'
                 }`}
               >
                 <span className="text-xs text-gray-700">{c.label}</span>
@@ -344,7 +344,7 @@ export function TaxSimulator() {
                   <span className={`text-xs font-bold ${c.rate === 0 ? 'text-green-600' : c.rate <= 0.1 ? 'text-blue-600' : 'text-orange-600'}`}>
                     {(c.rate * 100).toFixed(0)}%
                   </span>
-                  {category === c.id && <Check size={12} className="text-[#f2994a]" />}
+                  {category === c.id && <Check size={12} className="text-[#f6932a]" />}
                 </div>
               </button>
             ))}
@@ -353,7 +353,7 @@ export function TaxSimulator() {
       </div>
 
       {/* Result */}
-      <div className="mt-5 rounded-xl bg-[#1a2a4a] p-4">
+      <div className="mt-5 rounded-xl bg-[#1e3a5f] p-4">
         <div className="flex items-start gap-2 mb-3">
           <Icon size={15} className={`${iconColor} shrink-0 mt-0.5`} />
           <p className="text-xs text-white/70 leading-relaxed">
@@ -365,7 +365,7 @@ export function TaxSimulator() {
           <div className="flex justify-between"><span>Droits de douane ({(cat.rate*100).toFixed(0)}%)</span><span className="font-semibold text-white">{Math.round(customs).toLocaleString()} FCFA</span></div>
           <div className="flex justify-between"><span>TVA (18% — indicatif)</span><span className="font-semibold text-white">{Math.round(tva).toLocaleString()} FCFA</span></div>
           <div className="h-px bg-white/20 my-2" />
-          <div className="flex justify-between text-sm"><span className="font-bold text-white">Total estimé</span><span className="font-extrabold text-[#f2994a]">{Math.round(total).toLocaleString()} FCFA</span></div>
+          <div className="flex justify-between text-sm"><span className="font-bold text-white">Total estimé</span><span className="font-extrabold text-[#f6932a]">{Math.round(total).toLocaleString()} FCFA</span></div>
           <div className="flex justify-between"><span>Coût par pièce</span><span className="font-bold text-white">{Math.round(perUnit).toLocaleString()} FCFA</span></div>
         </div>
       </div>
@@ -392,7 +392,7 @@ export function CBMCalculator() {
           <Package size={18} className="text-purple-600" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#1a2a4a]">Calculateur CBM (fret maritime)</h3>
+          <h3 className="text-sm font-bold text-[#1e3a5f]">Calculateur CBM (fret maritime)</h3>
           <p className="text-[11px] text-gray-500">CBM = Longueur × Largeur × Hauteur en mètres</p>
         </div>
       </div>
@@ -404,7 +404,7 @@ export function CBMCalculator() {
           { label: 'Hauteur (cm)', value: height, setter: setHeight },
         ].map(({ label, value, setter }) => (
           <div key={label}>
-            <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">{label}</label>
+            <label className="block text-xs font-semibold text-[#1e3a5f] mb-1.5">{label}</label>
             <input
               type="number"
               value={value}
@@ -417,7 +417,7 @@ export function CBMCalculator() {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">
+        <label className="block text-xs font-semibold text-[#1e3a5f] mb-1.5">
           Tarif maritime estimatif (FCFA/CBM)
           <span className="text-[10px] text-gray-400 ml-1 font-normal">— à demander à votre transitaire</span>
         </label>
@@ -431,11 +431,11 @@ export function CBMCalculator() {
         />
       </div>
 
-      <div className="mt-5 rounded-xl bg-[#1a2a4a] p-4 text-center">
-        <p className="text-xs text-white/60 mb-1">Volume calculé</p>
-        <p className="text-3xl font-extrabold text-[#f2994a]">{cbm.toFixed(4)} CBM</p>
+      <div className="mt-5 rounded-xl bg-[#1e3a5f] p-4 text-center">
+        <p className="text-xs text-white/85 mb-1">Volume calculé</p>
+        <p className="text-3xl font-extrabold text-[#f6932a]">{cbm.toFixed(4)} CBM</p>
         <p className="text-lg font-bold text-white mt-2">≈ {Math.round(cost).toLocaleString()} FCFA</p>
-        <p className="text-[11px] text-white/50 mt-1">
+        <p className="text-[11px] text-white/80 mt-1">
           {length}cm × {width}cm × {height}cm = {(length/100).toFixed(2)}m × {(width/100).toFixed(2)}m × {(height/100).toFixed(2)}m
         </p>
       </div>
@@ -476,7 +476,7 @@ export function LitigeTimeline() {
           <Clock size={18} className="text-red-500" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#1a2a4a]">Chronologie de la protection acheteur</h3>
+          <h3 className="text-sm font-bold text-[#1e3a5f]">Chronologie de la protection acheteur</h3>
           <p className="text-[11px] text-gray-500">Cliquez sur une étape pour les détails</p>
         </div>
       </div>
@@ -508,7 +508,7 @@ export function LitigeTimeline() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${c.badge}`}>{step.day}</span>
-                  <p className="text-xs font-bold text-[#1a2a4a]">{step.title}</p>
+                  <p className="text-xs font-bold text-[#1e3a5f]">{step.title}</p>
                 </div>
                 <AnimatePresence>
                   {isActive && (
@@ -584,8 +584,8 @@ export function SortingGame() {
         <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${correctCount >= 6 ? 'bg-green-100' : 'bg-orange-100'}`}>
           {correctCount >= 6 ? <CheckCircle size={30} className="text-green-600" /> : <AlertTriangle size={30} className="text-orange-500" />}
         </div>
-        <h3 className="text-lg font-extrabold text-[#1a2a4a] mb-1">Score final</h3>
-        <p className="text-3xl font-extrabold text-[#f2994a] my-3">{correctCount}/{PRODUCTS.length}</p>
+        <h3 className="text-lg font-extrabold text-[#1e3a5f] mb-1">Score final</h3>
+        <p className="text-3xl font-extrabold text-[#f6932a] my-3">{correctCount}/{PRODUCTS.length}</p>
         <p className="text-sm text-gray-500 mb-5">{correctCount >= 6 ? 'Excellent œil ! Vous savez sélectionner les bons produits.' : 'Relisez les critères de sélection dans le module.'}</p>
         <button onClick={handleReset} className="btn-secondary mx-auto"><RotateCcw size={15} /> Rejouer</button>
       </motion.div>
@@ -599,7 +599,7 @@ export function SortingGame() {
           <Tag size={18} className="text-purple-600" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#1a2a4a]">Jeu de tri : Importer ou pas ?</h3>
+          <h3 className="text-sm font-bold text-[#1e3a5f]">Jeu de tri : Importer ou pas ?</h3>
           <p className="text-[11px] text-gray-500">Produit {current + 1}/{PRODUCTS.length}</p>
         </div>
       </div>
@@ -608,8 +608,8 @@ export function SortingGame() {
         <div className="h-full bg-purple-500 rounded-full transition-all" style={{ width: `${((current + 1) / PRODUCTS.length) * 100}%` }} />
       </div>
 
-      <div className="rounded-xl bg-[#1a2a4a] text-white p-5 text-center mb-5">
-        <p className="text-[10px] text-white/50 uppercase tracking-widest mb-2">Produit</p>
+      <div className="rounded-xl bg-[#1e3a5f] text-white p-5 text-center mb-5">
+        <p className="text-[10px] text-white/80 uppercase tracking-widest mb-2">Produit</p>
         <p className="text-lg font-extrabold">{product.name}</p>
       </div>
 
@@ -688,7 +688,7 @@ export function MarginSimulator() {
           <TrendingUp size={18} className="text-red-500" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#1a2a4a]">Simulateur de marge commerciale</h3>
+          <h3 className="text-sm font-bold text-[#1e3a5f]">Simulateur de marge commerciale</h3>
           <p className="text-[11px] text-gray-500">Calculez la rentabilité de votre importation</p>
         </div>
       </div>
@@ -702,7 +702,7 @@ export function MarginSimulator() {
           { label: 'Prix de vente/pièce (FCFA)', value: sellingPrice, setter: setSellingPrice, step: 500 },
         ].map(({ label, value, setter, step, min = 0 }) => (
           <div key={label}>
-            <label className="block text-xs font-semibold text-[#1a2a4a] mb-1.5">{label}</label>
+            <label className="block text-xs font-semibold text-[#1e3a5f] mb-1.5">{label}</label>
             <input
               type="number"
               value={value}
@@ -715,24 +715,24 @@ export function MarginSimulator() {
         ))}
       </div>
 
-      <div className="rounded-xl bg-[#1a2a4a] p-4">
+      <div className="rounded-xl bg-[#1e3a5f] p-4">
         <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
           <div className="bg-white/10 rounded-xl p-3">
-            <p className="text-white/60">Coût de revient/pièce</p>
+            <p className="text-white/85">Coût de revient/pièce</p>
             <p className="text-base font-extrabold text-white mt-1">{unitCost.toLocaleString()} FCFA</p>
           </div>
           <div className="bg-white/10 rounded-xl p-3">
-            <p className="text-white/60">Marge/pièce</p>
-            <p className={`text-base font-extrabold mt-1 ${unitMargin > 0 ? 'text-[#f2994a]' : 'text-red-400'}`}>
+            <p className="text-white/85">Marge/pièce</p>
+            <p className={`text-base font-extrabold mt-1 ${unitMargin > 0 ? 'text-[#f6932a]' : 'text-red-400'}`}>
               {unitMargin > 0 ? '+' : ''}{unitMargin.toLocaleString()} FCFA
             </p>
           </div>
           <div className="bg-white/10 rounded-xl p-3">
-            <p className="text-white/60">Chiffre d&apos;affaires total</p>
+            <p className="text-white/85">Chiffre d&apos;affaires total</p>
             <p className="text-base font-extrabold text-white mt-1">{totalRevenue.toLocaleString()} FCFA</p>
           </div>
           <div className={`rounded-xl p-3 ${isGood ? 'bg-green-500/20' : isOk ? 'bg-orange-500/20' : 'bg-red-500/20'}`}>
-            <p className="text-white/60">Marge nette totale</p>
+            <p className="text-white/85">Marge nette totale</p>
             <p className={`text-base font-extrabold mt-1 ${isGood ? 'text-green-400' : isOk ? 'text-orange-400' : 'text-red-400'}`}>
               {totalMargin > 0 ? '+' : ''}{totalMargin.toLocaleString()} FCFA
             </p>
@@ -741,13 +741,13 @@ export function MarginSimulator() {
 
         {/* Margin bar */}
         <div>
-          <div className="flex justify-between text-xs text-white/60 mb-1.5">
+          <div className="flex justify-between text-xs text-white/85 mb-1.5">
             <span>Marge : {marginPercent.toFixed(1)}%</span>
             <span>{isGood ? 'Excellent' : isOk ? 'Correct' : 'Trop faible'}</span>
           </div>
           <div className="h-3 bg-white/10 rounded-full overflow-hidden">
             <motion.div
-              className={`h-full rounded-full ${isGood ? 'bg-green-500' : isOk ? 'bg-[#f2994a]' : 'bg-red-500'}`}
+              className={`h-full rounded-full ${isGood ? 'bg-green-500' : isOk ? 'bg-[#f6932a]' : 'bg-red-500'}`}
               initial={{ width: '0%' }}
               animate={{ width: `${Math.max(0, Math.min(100, marginPercent))}%` }}
               transition={{ duration: 0.5 }}
@@ -765,7 +765,7 @@ export function MarginSimulator() {
       {!isGood && (
         <div className="tip-box mt-4">
           <div className="flex items-start gap-2">
-            <Info size={13} className="text-[#f2994a] shrink-0 mt-0.5" />
+            <Info size={13} className="text-[#f6932a] shrink-0 mt-0.5" />
             <p className="text-xs text-gray-700 leading-relaxed">
               {totalMargin <= 0
                 ? 'Opération non rentable. Augmentez le prix de vente ou réduisez le fret (commandez en plus grande quantité).'

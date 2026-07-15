@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import VideoPlayer from '@/components/VideoPlayer';
 import { AlibabaAliexpressQuiz } from '@/components/Simulators';
+import IllustrationBanner from '@/components/IllustrationBanner';
 
 interface Props {
   onStartQuiz: () => void;
@@ -97,12 +98,12 @@ function VersusFlipCards() {
   return (
     <div ref={ref} className="card p-6 shadow-sm">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-base font-bold text-[#1a2a4a]">AliExpress vs Alibaba — Le duel</h2>
+        <h2 className="text-base font-bold text-[#1e3a5f]">AliExpress vs Alibaba — Le duel</h2>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setVsMode(!vsMode)}
-          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-[#1a2a4a] text-[#1a2a4a] hover:bg-[#1a2a4a] hover:text-white transition-all"
+          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white transition-all"
         >
           <RefreshCw size={12} />
           {vsMode ? 'Vue cartes' : 'Vue comparaison'}
@@ -149,7 +150,7 @@ function VersusFlipCards() {
                       <p className="text-xl font-extrabold mb-1">{name}</p>
                       <p className="text-xs text-white/80 mb-4">{subtitle}</p>
                       <span className={`px-3 py-1 rounded-full text-xs font-bold ${badgeClass}`}>{badge}</span>
-                      <p className="text-[10px] text-white/60 mt-4 flex items-center gap-1">
+                      <p className="text-[10px] text-white/85 mt-4 flex items-center gap-1">
                         <ChevronRight size={10} /> Clique pour voir les détails
                       </p>
                     </div>
@@ -161,7 +162,7 @@ function VersusFlipCards() {
                     >
                       <div className="flex items-center gap-2 mb-3">
                         <Icon size={16} className="text-gray-700" />
-                        <p className="font-bold text-[#1a2a4a] text-sm">{name}</p>
+                        <p className="font-bold text-[#1e3a5f] text-sm">{name}</p>
                       </div>
                       <div className="space-y-1.5 mb-3">
                         {pros.map((p, i) => (
@@ -201,7 +202,7 @@ function VersusFlipCards() {
             exit={{ opacity: 0 }}
           >
             <div className="rounded-xl overflow-hidden border border-gray-100">
-              <div className="grid grid-cols-3 bg-[#1a2a4a]">
+              <div className="grid grid-cols-3 bg-[#1e3a5f]">
                 <div className="px-3 py-2 text-xs font-bold text-white/70">Critère</div>
                 <div className="px-3 py-2 text-xs font-bold text-orange-300 text-center">🛒 AliExpress</div>
                 <div className="px-3 py-2 text-xs font-bold text-blue-300 text-center">🏭 Alibaba</div>
@@ -240,7 +241,7 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
 
   return (
     <div className="min-h-screen bg-[#fafaf8]">
-      <div className="bg-[#1a2a4a] pt-6 pb-8">
+      <div className="bg-[#1e3a5f] pt-6 pb-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <button
             onClick={onBack}
@@ -258,7 +259,7 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
               <ShoppingCart size={22} className="text-orange-400" />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-[#f2994a] uppercase tracking-widest">Module 02</p>
+              <p className="text-[10px] font-bold text-[#f6932a] uppercase tracking-widest">Module 02</p>
               <h1 className="text-xl sm:text-2xl font-extrabold text-white">Sur quels sites acheter</h1>
             </div>
           </motion.div>
@@ -268,7 +269,7 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all min-h-0 ${
-                  activeTab === tab ? 'bg-[#f2994a] text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
+                  activeTab === tab ? 'bg-[#f6932a] text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
                 }`}
               >
                 {tab === 'content' ? 'Contenu' : 'Quiz mise en situation'}
@@ -286,6 +287,11 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
               <VideoPlayer envKey="NEXT_PUBLIC_VIDEO_MODULE_2" />
             </ScrollSection>
 
+            {/* Illustration réelle — AliExpress shopping */}
+            <ScrollSection delay={0.02}>
+              <IllustrationBanner moduleKey="mod2" />
+            </ScrollSection>
+
             {/* VERSUS FLIP CARDS — animation phare */}
             <ScrollSection delay={0.05}>
               <VersusFlipCards />
@@ -298,7 +304,7 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
                   <motion.div whileHover={{ scale: 1.15, rotate: 5 }}>
                     <Shield size={18} className="text-blue-600" />
                   </motion.div>
-                  <h2 className="text-base font-bold text-[#1a2a4a]">Protection Acheteur AliExpress (2025)</h2>
+                  <h2 className="text-base font-bold text-[#1e3a5f]">Protection Acheteur AliExpress (2025)</h2>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   La protection acheteur est l&apos;un des grands avantages d&apos;AliExpress. 
@@ -325,7 +331,7 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
                         <Icon size={14} className={`text-${color}-600`} />
                       </div>
                       <div className="flex-1 pb-3 border-b border-gray-100 last:border-0">
-                        <p className="text-xs font-bold text-[#1a2a4a]">{title}</p>
+                        <p className="text-xs font-bold text-[#1e3a5f]">{title}</p>
                         <p className="text-xs text-gray-500 mt-0.5">{text}</p>
                       </div>
                     </motion.div>
@@ -349,8 +355,8 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <Lightbulb size={18} className="text-[#f2994a]" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">6 conseils pour bien acheter sur AliExpress</h2>
+                  <Lightbulb size={18} className="text-[#f6932a]" />
+                  <h2 className="text-base font-bold text-[#1e3a5f]">6 conseils pour bien acheter sur AliExpress</h2>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {[
@@ -367,11 +373,11 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
                       transition={{ duration: 0.2 }}
                       className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100"
                     >
-                      <div className="w-7 h-7 rounded-lg bg-[#1a2a4a] flex items-center justify-center shrink-0">
-                        <Icon size={13} className="text-[#f2994a]" />
+                      <div className="w-7 h-7 rounded-lg bg-[#1e3a5f] flex items-center justify-center shrink-0">
+                        <Icon size={13} className="text-[#f6932a]" />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-[#1a2a4a]">{title}</p>
+                        <p className="text-xs font-bold text-[#1e3a5f]">{title}</p>
                         <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">{desc}</p>
                       </div>
                     </motion.div>
@@ -382,8 +388,8 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
 
             {/* Récapitulatif */}
             <ScrollSection delay={0.05}>
-              <div className="rounded-xl bg-[#1a2a4a] p-5 text-white">
-                <p className="text-xs font-bold text-[#f2994a] uppercase tracking-widest mb-3">Récapitulatif</p>
+              <div className="rounded-xl bg-[#1e3a5f] p-5 text-white">
+                <p className="text-xs font-bold text-[#f6932a] uppercase tracking-widest mb-3">Récapitulatif</p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="rounded-xl bg-white/10 p-3">
                     <p className="text-sm font-bold text-white mb-1">Tu débutes ? → AliExpress</p>
@@ -395,7 +401,7 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
                   </div>
                 </div>
                 <div className="mt-3 flex items-start gap-2">
-                  <Info size={13} className="text-[#f2994a] shrink-0 mt-0.5" />
+                  <Info size={13} className="text-[#f6932a] shrink-0 mt-0.5" />
                   <p className="text-xs text-white/70">Les deux plateformes appartiennent au groupe Alibaba. Commencez toujours par AliExpress pour vous faire la main.</p>
                 </div>
               </div>
@@ -415,7 +421,7 @@ export default function Module2({ onStartQuiz, onBack }: Props) {
         ) : (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <div className="mb-4">
-              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1a2a4a] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
+              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1e3a5f] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
                 <ArrowLeft size={13} /> Retour au contenu
               </button>
             </div>

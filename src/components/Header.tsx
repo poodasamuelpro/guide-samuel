@@ -52,8 +52,8 @@ export default function Header({ currentView, totalXP = 0, modulesCompleted = 0,
                 onClick={() => onNavigate?.(id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all min-h-0 ${
                   currentView === id
-                    ? 'bg-[#1a2a4a] text-white'
-                    : 'text-gray-600 hover:text-[#1a2a4a] hover:bg-gray-100'
+                    ? 'bg-[#1e3a5f] text-white'
+                    : 'text-gray-600 hover:text-[#1e3a5f] hover:bg-gray-100'
                 }`}
               >
                 <Icon size={15} />
@@ -65,11 +65,11 @@ export default function Header({ currentView, totalXP = 0, modulesCompleted = 0,
           {/* XP indicator (visible if user started) */}
           <div className="hidden md:flex items-center gap-3">
             {totalXP > 0 && (
-              <div className="flex items-center gap-2 bg-[#1a2a4a]/5 rounded-full px-3 py-1.5">
-                <div className="w-5 h-5 rounded-full bg-[#f2994a] flex items-center justify-center">
+              <div className="flex items-center gap-2 bg-[#1e3a5f]/5 rounded-full px-3 py-1.5">
+                <div className="w-5 h-5 rounded-full bg-[#f6932a] flex items-center justify-center">
                   <span className="text-[9px] font-bold text-white">XP</span>
                 </div>
-                <span className="text-sm font-bold text-[#1a2a4a]">{totalXP}</span>
+                <span className="text-sm font-bold text-[#1e3a5f]">{totalXP}</span>
                 <span className="text-xs text-gray-500">{modulesCompleted}/5 modules</span>
               </div>
             )}
@@ -78,7 +78,7 @@ export default function Header({ currentView, totalXP = 0, modulesCompleted = 0,
           {/* Mobile burger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-lg text-[#1a2a4a] hover:bg-gray-100 min-h-0 min-w-0 w-10 h-10 flex items-center justify-center"
+            className="md:hidden p-2 rounded-lg text-[#1e3a5f] hover:bg-gray-100 min-h-0 min-w-0 w-10 h-10 flex items-center justify-center"
             aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={menuOpen}
           >
@@ -104,7 +104,7 @@ export default function Header({ currentView, totalXP = 0, modulesCompleted = 0,
                   onClick={() => { onNavigate?.(id); setMenuOpen(false); }}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-left min-h-0 ${
                     currentView === id
-                      ? 'bg-[#1a2a4a] text-white'
+                      ? 'bg-[#1e3a5f] text-white'
                       : 'text-gray-700 hover:bg-gray-50'
                   }`}
                 >
@@ -114,10 +114,10 @@ export default function Header({ currentView, totalXP = 0, modulesCompleted = 0,
               ))}
               {totalXP > 0 && (
                 <div className="flex items-center gap-2 px-4 py-3 bg-[#fef3e8] rounded-xl mt-1">
-                  <div className="w-6 h-6 rounded-full bg-[#f2994a] flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-[#f6932a] flex items-center justify-center">
                     <span className="text-[10px] font-bold text-white">XP</span>
                   </div>
-                  <span className="text-sm font-bold text-[#1a2a4a]">{totalXP} XP</span>
+                  <span className="text-sm font-bold text-[#1e3a5f]">{totalXP} XP</span>
                   <span className="text-xs text-gray-500">· {modulesCompleted}/5 modules</span>
                 </div>
               )}

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import VideoPlayer from '@/components/VideoPlayer';
 import { MarginSimulator } from '@/components/Simulators';
+import IllustrationBanner from '@/components/IllustrationBanner';
 
 interface Props {
   onStartQuiz: () => void;
@@ -74,8 +75,8 @@ function LiveMarginChart() {
     <div ref={ref} className="card p-6 shadow-sm">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <BarChart size={18} className="text-[#f2994a]" />
-          <h2 className="text-base font-bold text-[#1a2a4a]">Calculateur de marge en temps réel</h2>
+          <BarChart size={18} className="text-[#f6932a]" />
+          <h2 className="text-base font-bold text-[#1e3a5f]">Calculateur de marge en temps réel</h2>
         </div>
         <AnimatePresence>
           {isGood && animated && (
@@ -108,7 +109,7 @@ function LiveMarginChart() {
           <button
             key={p.name}
             onClick={() => { setBuyPrice(p.buy); setFreight(p.freight); setCustoms(p.customs); setSellPrice(p.sell); setQty(p.qty); }}
-            className="px-3 py-1.5 rounded-full text-xs font-semibold border border-gray-200 text-gray-600 hover:border-[#f2994a] hover:text-[#f2994a] transition-all"
+            className="px-3 py-1.5 rounded-full text-xs font-semibold border border-gray-200 text-gray-600 hover:border-[#f6932a] hover:text-[#f6932a] transition-all"
           >
             {p.name}
           </button>
@@ -175,10 +176,10 @@ function LiveMarginChart() {
       </div>
 
       {/* ROI */}
-      <div className="flex items-center gap-2 p-3 rounded-xl bg-[#1a2a4a]/5 border border-[#1a2a4a]/10 mb-5">
-        <TrendingUp size={14} className="text-[#1a2a4a] shrink-0" />
-        <p className="text-xs text-[#1a2a4a]">
-          <strong>ROI :</strong> Pour 1 FCFA investi, tu gagnes <strong className="text-[#f2994a]">{roi > 0 ? roi : 0}%</strong> de retour sur investissement
+      <div className="flex items-center gap-2 p-3 rounded-xl bg-[#1e3a5f]/5 border border-[#1e3a5f]/10 mb-5">
+        <TrendingUp size={14} className="text-[#1e3a5f] shrink-0" />
+        <p className="text-xs text-[#1e3a5f]">
+          <strong>ROI :</strong> Pour 1 FCFA investi, tu gagnes <strong className="text-[#f6932a]">{roi > 0 ? roi : 0}%</strong> de retour sur investissement
         </p>
       </div>
 
@@ -195,7 +196,7 @@ function LiveMarginChart() {
             <div key={label}>
               <div className="flex justify-between mb-1">
                 <label className="text-xs text-gray-600">{label}</label>
-                <span className="text-xs font-bold text-[#1a2a4a]">{value.toLocaleString()} FCFA</span>
+                <span className="text-xs font-bold text-[#1e3a5f]">{value.toLocaleString()} FCFA</span>
               </div>
               <input
                 type="range"
@@ -205,7 +206,7 @@ function LiveMarginChart() {
                 value={value}
                 onChange={(e) => setter(Number(e.target.value))}
                 className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-                style={{ accentColor: '#f2994a' }}
+                style={{ accentColor: '#f6932a' }}
               />
             </div>
           ))}
@@ -214,7 +215,7 @@ function LiveMarginChart() {
         <div>
           <div className="flex justify-between mb-1">
             <label className="text-xs text-gray-600">Quantité commandée</label>
-            <span className="text-xs font-bold text-[#1a2a4a]">{qty} pièces</span>
+            <span className="text-xs font-bold text-[#1e3a5f]">{qty} pièces</span>
           </div>
           <input
             type="range"
@@ -224,7 +225,7 @@ function LiveMarginChart() {
             value={qty}
             onChange={(e) => setQty(Number(e.target.value))}
             className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-            style={{ accentColor: '#f2994a' }}
+            style={{ accentColor: '#f6932a' }}
           />
         </div>
       </div>
@@ -263,7 +264,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
 
   return (
     <div className="min-h-screen bg-[#fafaf8]">
-      <div className="bg-[#1a2a4a] pt-6 pb-8">
+      <div className="bg-[#1e3a5f] pt-6 pb-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <button
             onClick={onBack}
@@ -281,7 +282,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
               <TrendingUp size={22} className="text-red-400" />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-[#f2994a] uppercase tracking-widest">Module 05</p>
+              <p className="text-[10px] font-bold text-[#f6932a] uppercase tracking-widest">Module 05</p>
               <h1 className="text-xl sm:text-2xl font-extrabold text-white">Comment vendre vos produits</h1>
             </div>
           </motion.div>
@@ -291,7 +292,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all min-h-0 ${
-                  activeTab === tab ? 'bg-[#f2994a] text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
+                  activeTab === tab ? 'bg-[#f6932a] text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
                 }`}
               >
                 {tab === 'content' ? 'Contenu' : 'Simulateur de marge'}
@@ -308,6 +309,11 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
               <VideoPlayer envKey="NEXT_PUBLIC_VIDEO_MODULE_5" />
             </ScrollSection>
 
+            {/* Illustration réelle — livraison / vente */}
+            <ScrollSection delay={0.02}>
+              <IllustrationBanner moduleKey="mod5" />
+            </ScrollSection>
+
             {/* LIVE CHART — star of module 5 */}
             <ScrollSection delay={0.05}>
               <LiveMarginChart />
@@ -316,7 +322,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
             {/* Wholesale vs Retail */}
             <ScrollSection delay={0.05}>
               <div className="card p-6 shadow-sm">
-                <h2 className="text-base font-bold text-[#1a2a4a] mb-3">Grossiste ou Détaillant ?</h2>
+                <h2 className="text-base font-bold text-[#1e3a5f] mb-3">Grossiste ou Détaillant ?</h2>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   Une fois vos produits reçus, deux grandes stratégies s&apos;offrent à vous. Choisissez 
                   selon votre stock et votre temps disponible.
@@ -325,7 +331,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
                   <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }} className="card p-5 border-2 border-blue-200 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
                       <Users size={18} className="text-blue-600" />
-                      <p className="font-bold text-[#1a2a4a] text-sm">Grossiste</p>
+                      <p className="font-bold text-[#1e3a5f] text-sm">Grossiste</p>
                     </div>
                     <p className="text-xs text-gray-600 mb-3 leading-relaxed">
                       Vous vendez en volume à des détaillants.
@@ -347,7 +353,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
                   <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }} className="card p-5 border-2 border-green-200 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
                       <Store size={18} className="text-green-600" />
-                      <p className="font-bold text-[#1a2a4a] text-sm">Détaillant direct</p>
+                      <p className="font-bold text-[#1e3a5f] text-sm">Détaillant direct</p>
                     </div>
                     <p className="text-xs text-gray-600 mb-3 leading-relaxed">
                       Vous vendez directement au consommateur final.
@@ -373,8 +379,8 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <BarChart size={18} className="text-[#f2994a]" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">Les canaux de vente en Afrique de l&apos;Ouest (2025)</h2>
+                  <BarChart size={18} className="text-[#f6932a]" />
+                  <h2 className="text-base font-bold text-[#1e3a5f]">Les canaux de vente en Afrique de l&apos;Ouest (2025)</h2>
                 </div>
                 <div className="space-y-3">
                   {[
@@ -394,7 +400,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="text-xs font-bold text-[#1a2a4a]">{name}</p>
+                          <p className="text-xs font-bold text-[#1e3a5f]">{name}</p>
                           {recommended && <span className="badge-green text-[10px]">Recommandé</span>}
                         </div>
                         <div className="flex gap-3 mt-0.5 flex-wrap">
@@ -413,8 +419,8 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <Lightbulb size={18} className="text-[#f2994a]" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">Les 6 clés pour vendre rapidement</h2>
+                  <Lightbulb size={18} className="text-[#f6932a]" />
+                  <h2 className="text-base font-bold text-[#1e3a5f]">Les 6 clés pour vendre rapidement</h2>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {[
@@ -431,8 +437,8 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
                       transition={{ duration: 0.2 }}
                       className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100"
                     >
-                      <div className="w-7 h-7 rounded-lg bg-[#1a2a4a] flex items-center justify-center shrink-0">
-                        <Icon size={13} className="text-[#f2994a]" />
+                      <div className="w-7 h-7 rounded-lg bg-[#1e3a5f] flex items-center justify-center shrink-0">
+                        <Icon size={13} className="text-[#f6932a]" />
                       </div>
                       <p className="text-xs text-gray-700 leading-relaxed">{text}</p>
                     </motion.div>
@@ -443,18 +449,18 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
 
             {/* Pricing formula */}
             <ScrollSection delay={0.05}>
-              <div className="card p-6 shadow-sm border-2 border-[#f2994a]/30">
+              <div className="card p-6 shadow-sm border-2 border-[#f6932a]/30">
                 <div className="flex items-center gap-2 mb-4">
-                  <BarChart size={18} className="text-[#f2994a]" />
-                  <h2 className="text-base font-bold text-[#1a2a4a]">La formule de prix de vente</h2>
+                  <BarChart size={18} className="text-[#f6932a]" />
+                  <h2 className="text-base font-bold text-[#1e3a5f]">La formule de prix de vente</h2>
                 </div>
                 <motion.div
                   animate={{ boxShadow: ['0 0 0 0 rgba(242,153,74,0)', '0 0 0 8px rgba(242,153,74,0.15)', '0 0 0 0 rgba(242,153,74,0)'] }}
                   transition={{ repeat: Infinity, duration: 3 }}
-                  className="rounded-xl bg-[#1a2a4a] p-4 text-white text-center mb-4"
+                  className="rounded-xl bg-[#1e3a5f] p-4 text-white text-center mb-4"
                 >
                   <p className="text-sm font-bold text-white/70 mb-2">Prix de vente recommandé</p>
-                  <p className="text-base font-extrabold text-[#f2994a]">
+                  <p className="text-base font-extrabold text-[#f6932a]">
                     (Prix achat + Frais transit + Taxes) × 2 à 3
                   </p>
                 </motion.div>
@@ -464,9 +470,9 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
                     <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-indigo-400 shrink-0" />Achat sur AliExpress : 2 000 FCFA/pièce</li>
                     <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />Fret aérien : 1 500 FCFA/pièce (estimatif)</li>
                     <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-gray-300 shrink-0" />Douane : 0 FCFA (petite quantité)</li>
-                    <li className="flex items-center gap-2 font-bold text-[#1a2a4a]"><span className="w-2 h-2 rounded-full bg-[#1a2a4a] shrink-0" />Prix de revient total : 3 500 FCFA</li>
+                    <li className="flex items-center gap-2 font-bold text-[#1e3a5f]"><span className="w-2 h-2 rounded-full bg-[#1e3a5f] shrink-0" />Prix de revient total : 3 500 FCFA</li>
                     <li className="flex items-center gap-2 font-bold text-green-700"><span className="w-2 h-2 rounded-full bg-green-500 shrink-0" />Prix de vente conseillé : 7 000 à 10 500 FCFA</li>
-                    <li className="flex items-center gap-2 font-bold text-[#f2994a]"><span className="w-2 h-2 rounded-full bg-[#f2994a] shrink-0" />Marge nette : 3 500 à 7 000 FCFA/pièce</li>
+                    <li className="flex items-center gap-2 font-bold text-[#f6932a]"><span className="w-2 h-2 rounded-full bg-[#f6932a] shrink-0" />Marge nette : 3 500 à 7 000 FCFA/pièce</li>
                   </ul>
                 </div>
               </div>
@@ -476,9 +482,9 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="tip-box">
                 <div className="flex items-start gap-2">
-                  <Lightbulb size={15} className="text-[#f2994a] shrink-0 mt-0.5" />
+                  <Lightbulb size={15} className="text-[#f6932a] shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-xs font-bold text-[#1a2a4a] mb-2">Les pièges à éviter quand on vend</p>
+                    <p className="text-xs font-bold text-[#1e3a5f] mb-2">Les pièges à éviter quand on vend</p>
                     <ul className="space-y-1.5 text-xs text-gray-700">
                       {[
                         'Ne vendez pas avant d\'avoir reçu et inspecté votre commande',
@@ -511,7 +517,7 @@ export default function Module5({ onStartQuiz, onBack }: Props) {
         ) : (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <div className="mb-4">
-              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1a2a4a] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
+              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1e3a5f] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
                 <ArrowLeft size={13} /> Retour au contenu
               </button>
             </div>

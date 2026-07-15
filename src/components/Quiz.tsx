@@ -6,7 +6,7 @@ import {
   ArrowLeft, ArrowRight, Check, X, CheckCircle,
   XCircle, Trophy, RotateCcw, BookOpen, Zap
 } from 'lucide-react';
-import { QUIZ_DATA } from '@/lib/quizData';
+import { getQuizQuestions } from '@/lib/quizData';
 import { MODULES } from '@/lib/modules';
 
 interface QuizProps {
@@ -18,10 +18,10 @@ interface QuizProps {
 const PASS_THRESHOLD = 0.66;
 
 export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
-  const questions = QUIZ_DATA[moduleId] ?? [];
+  const [questions, setQuestions] = useState(() => getQuizQuestions(moduleId));
   const module = MODULES.find((m) => m.id === moduleId);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(5).fill(null));
   const [showExplanation, setShowExplanation] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -58,7 +58,9 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
   };
 
   const handleRetry = () => {
-    setAnswers(Array(questions.length).fill(null));
+    const newQuestions = getQuizQuestions(moduleId); // nouveau set aléatoire anti-triche
+    setQuestions(newQuestions);
+    setAnswers(Array(5).fill(null));
     setCurrentIndex(0);
     setShowExplanation(false);
     setSubmitted(false);
@@ -90,13 +92,13 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
               )}
             </div>
 
-            <h2 className={`text-2xl font-extrabold mb-2 ${passed ? 'text-green-700' : 'text-[#1a2a4a]'}`}>
+            <h2 className={`text-2xl font-extrabold mb-2 ${passed ? 'text-green-700' : 'text-[#1e3a5f]'}`}>
               {passed ? 'Bravo, réussi !' : 'Presque ! Encore un effort'}
             </h2>
 
             {/* Score */}
             <div className="my-5">
-              <div className={`text-5xl font-extrabold ${passed ? 'text-green-600' : 'text-[#f2994a]'}`}>
+              <div className={`text-5xl font-extrabold ${passed ? 'text-green-600' : 'text-[#f6932a]'}`}>
                 {scorePercent}%
               </div>
               <p className="text-gray-500 text-sm mt-1">
@@ -126,9 +128,9 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
 
             {passed ? (
               <div>
-                <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-[#fef3e8] rounded-xl border border-[#f2994a]/30">
-                  <Zap size={16} className="text-[#f2994a]" />
-                  <span className="text-sm font-bold text-[#1a2a4a]">+100 XP gagnés !</span>
+                <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-[#fef3e8] rounded-xl border border-[#f6932a]/30">
+                  <Zap size={16} className="text-[#f6932a]" />
+                  <span className="text-sm font-bold text-[#1e3a5f]">+100 XP gagnés !</span>
                   <span className="text-xs text-gray-500">Badge «{module?.badgeLabel}» débloqué</span>
                 </div>
                 <button onClick={onPass} className="btn-primary w-full">
@@ -160,30 +162,30 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
   return (
     <div className="min-h-screen bg-[#fafaf8] flex flex-col">
       {/* Header */}
-      <div className="bg-[#1a2a4a] pt-4 pb-6">
+      <div className="bg-[#1e3a5f] pt-4 pb-6">
         <div className="max-w-xl mx-auto px-4">
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={onBack}
-              className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm transition-colors min-h-0 p-0 bg-transparent border-none"
+              className="flex items-center gap-1.5 text-white/85 hover:text-white text-sm transition-colors min-h-0 p-0 bg-transparent border-none"
               aria-label="Retour au module"
             >
               <ArrowLeft size={16} />
               Retour
             </button>
             <div className="text-center">
-              <p className="text-[10px] text-white/50 uppercase tracking-widest">Quiz — Module {moduleId}</p>
+              <p className="text-[10px] text-white/80 uppercase tracking-widest">Quiz — Module {moduleId}</p>
               <p className="text-white font-bold text-sm">{module?.title}</p>
             </div>
             <div className="text-right">
-              <span className="text-[#f2994a] font-bold text-sm">{currentIndex + 1}</span>
-              <span className="text-white/40 text-sm">/{questions.length}</span>
+              <span className="text-[#f6932a] font-bold text-sm">{currentIndex + 1}</span>
+              <span className="text-white/75 text-sm">/{questions.length}</span>
             </div>
           </div>
           {/* Progress */}
           <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-[#f2994a] rounded-full"
+              className="h-full bg-[#f6932a] rounded-full"
               initial={{ width: '0%' }}
               animate={{ width: `${((currentIndex + (submitted ? 1 : 0)) / questions.length) * 100}%` }}
               transition={{ duration: 0.4 }}
@@ -205,10 +207,10 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
             >
               {/* Question text */}
               <div className="card p-5 mb-4 shadow-md">
-                <p className="text-[11px] font-bold text-[#f2994a] uppercase tracking-widest mb-2">
+                <p className="text-[11px] font-bold text-[#f6932a] uppercase tracking-widest mb-2">
                   Question {currentIndex + 1} sur {questions.length}
                 </p>
-                <p className="text-[#1a2a4a] font-bold text-base leading-relaxed">
+                <p className="text-[#1e3a5f] font-bold text-base leading-relaxed">
                   {current.question}
                 </p>
               </div>
@@ -240,7 +242,7 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
                             : showExplanation && i === selectedAnswer && i !== current.correctIndex
                             ? 'border-red-400 bg-red-400 text-white'
                             : selectedAnswer === i
-                            ? 'border-[#1a2a4a] bg-[#1a2a4a] text-white'
+                            ? 'border-[#1e3a5f] bg-[#1e3a5f] text-white'
                             : 'border-gray-300 text-gray-400'
                         }`}>
                           {showExplanation && i === current.correctIndex ? (
