@@ -139,7 +139,7 @@ export default function CGUPage() {
           <div className="card p-6">
             <h2>11. Contact</h2>
             <p>
-              Pour toute question relative aux présentes CGU : <a href="mailto:contact@guide-samuel.app">contact@guide-samuel.app</a>
+              Pour toute question relative aux présentes CGU : <a href="mailto:poodasamuelpro@gmail.com">poodasamuelpro@gmail.com</a>
             </p>
           </div>
         </div>

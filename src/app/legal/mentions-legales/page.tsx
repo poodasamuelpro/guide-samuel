@@ -30,7 +30,7 @@ export default function MentionsLegalesPage() {
             </p>
             <ul>
               <li><strong>Nom de la plateforme :</strong> Le Guide de Samuel</li>
-              <li><strong>Contact :</strong> contact@guide-samuel.app</li>
+              <li><strong>Contact :</strong> poodasamuelpro@gmail.com</li>
               <li><strong>Nature :</strong> Formation privée, non commerciale, gratuite</li>
               <li><strong>Pays d&apos;origine :</strong> Burkina Faso</li>
             </ul>
@@ -105,7 +105,7 @@ export default function MentionsLegalesPage() {
           <div className="card p-6">
             <h2>8. Contact</h2>
             <p>
-              Pour toute question ou signalement : <a href="mailto:contact@guide-samuel.app">contact@guide-samuel.app</a>
+              Pour toute question ou signalement : <a href="mailto:poodasamuelpro@gmail.com">poodasamuelpro@gmail.com</a>
             </p>
           </div>
         </div>

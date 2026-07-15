@@ -35,7 +35,7 @@ export default function ConfidentialitePage() {
             <h2>1. Responsable du traitement</h2>
             <p>
               Le Guide de Samuel, formation éducative privée, Ouagadougou, Burkina Faso.<br />
-              Contact : <a href="mailto:contact@guide-samuel.app">contact@guide-samuel.app</a>
+              Contact : <a href="mailto:poodasamuelpro@gmail.com">poodasamuelpro@gmail.com</a>
             </p>
           </div>
 
@@ -154,7 +154,7 @@ export default function ConfidentialitePage() {
           <div className="card p-6">
             <h2>12. Contact</h2>
             <p>
-              Pour toute question relative à cette politique : <a href="mailto:contact@guide-samuel.app">contact@guide-samuel.app</a>
+              Pour toute question relative à cette politique : <a href="mailto:poodasamuelpro@gmail.com">poodasamuelpro@gmail.com</a>
             </p>
           </div>
         </div>
