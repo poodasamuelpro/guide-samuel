@@ -128,8 +128,9 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
                         <span>Frais de gestion mensuels : ~500 FCFA</span>
                       </li>
                     </ul>
-                    <div className="mt-2 text-[10px] text-gray-400 italic">
-                      ⚠️ Tarifs indicatifs — vérifiez auprès de votre agence UBA la plus proche.
+                    <div className="mt-2 text-[10px] text-gray-400 italic flex items-center gap-1">
+                      <AlertTriangle size={10} className="text-orange-400 shrink-0" />
+                      Tarifs indicatifs — vérifiez auprès de votre agence UBA la plus proche.
                     </div>
                   </div>
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, BookOpen, LayoutDashboard, Home, Info, Mail } from 'lucide-react';
+import { Menu, X, LayoutDashboard, Home } from 'lucide-react';
 import { BrandMark } from './Logo';
 
 interface HeaderProps {
@@ -24,8 +24,7 @@ export default function Header({ currentView, totalXP = 0, modulesCompleted = 0,
 
   const navItems = [
     { id: 'landing', label: 'Accueil', Icon: Home },
-    { id: 'dashboard', label: 'Modules', Icon: BookOpen },
-    { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
+    { id: 'dashboard', label: 'Ma progression', Icon: LayoutDashboard },
   ];
 
   return (

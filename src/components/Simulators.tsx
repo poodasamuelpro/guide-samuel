@@ -225,14 +225,14 @@ export function AlibabaAliexpressQuiz() {
       </div>
 
       <div className="rounded-xl bg-[#1a2a4a]/5 border border-[#1a2a4a]/10 p-4 mb-5">
-        <p className="text-sm font-semibold text-[#1a2a4a] leading-relaxed">🎯 {q.scenario}</p>
+        <p className="text-sm font-semibold text-[#1a2a4a] leading-relaxed">{q.scenario}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         {[
-          { key: 'aliexpress' as const, label: 'AliExpress', icon: ShoppingCart, color: 'orange' },
-          { key: 'alibaba' as const, label: 'Alibaba', icon: Building2, color: 'blue' },
-        ].map(({ key, label, icon: Icon, color }) => {
+          { key: 'aliexpress' as const, label: 'AliExpress', icon: ShoppingCart, baseClass: 'border-orange-200 bg-orange-50 hover:border-orange-400', iconColor: 'text-orange-500' },
+          { key: 'alibaba' as const, label: 'Alibaba', icon: Building2, baseClass: 'border-blue-200 bg-blue-50 hover:border-blue-400', iconColor: 'text-blue-500' },
+        ].map(({ key, label, icon: Icon, baseClass, iconColor }) => {
           const selected = answer === key;
           const correct = q.correct === key;
           let btnClass = `flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all cursor-pointer min-h-0`;
@@ -241,12 +241,12 @@ export function AlibabaAliexpressQuiz() {
             else if (selected && !correct) btnClass += ' border-red-400 bg-red-50';
             else btnClass += ' border-gray-200 bg-gray-50 opacity-60';
           } else {
-            btnClass += ` border-${color}-200 bg-${color}-50 hover:border-${color}-400`;
+            btnClass += ` ${baseClass}`;
           }
 
           return (
             <button key={key} onClick={() => handleAnswer(key)} disabled={!!answer} className={btnClass}>
-              <Icon size={22} className={answer ? (correct ? 'text-green-600' : selected ? 'text-red-500' : 'text-gray-400') : `text-${color}-500`} />
+              <Icon size={22} className={answer ? (correct ? 'text-green-600' : selected ? 'text-red-500' : 'text-gray-400') : iconColor} />
               <span className={`text-sm font-bold ${answer ? (correct ? 'text-green-700' : selected ? 'text-red-600' : 'text-gray-400') : 'text-[#1a2a4a]'}`}>{label}</span>
             </button>
           );
@@ -261,7 +261,7 @@ export function AlibabaAliexpressQuiz() {
             className={`rounded-xl p-3 mb-4 border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-orange-50 border-orange-200'}`}
           >
             <p className={`text-xs font-bold mb-1 ${isCorrect ? 'text-green-700' : 'text-orange-700'}`}>
-              {isCorrect ? '✓ Bonne réponse !' : '✗ Pas cette fois'}
+              {isCorrect ? <Check size={12} className="mr-1" /> : <AlertTriangle size={12} className="mr-1" />}{isCorrect ? 'Bonne réponse !'  : 'Pas cette fois…'}
             </p>
             <p className={`text-xs leading-relaxed ${isCorrect ? 'text-green-800' : 'text-orange-800'}`}>{q.explanation}</p>
           </motion.div>
@@ -615,21 +615,22 @@ export function SortingGame() {
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         {[
-          { choice: true, label: 'Importer ✓', color: 'green' },
-          { choice: false, label: 'Éviter ✗', color: 'red' },
-        ].map(({ choice, label, color }) => {
+          { choice: true, label: 'Importer', icon: CheckCircle, baseClass: 'border-green-200 bg-green-50 text-green-700 hover:border-green-400' },
+          { choice: false, label: 'Éviter', icon: AlertTriangle, baseClass: 'border-red-200 bg-red-50 text-red-700 hover:border-red-400' },
+        ].map(({ choice, label, icon: BtnIcon, baseClass }) => {
           const selected = answer === choice;
           const correct = product.correct === choice;
-          let cls = `flex items-center justify-center gap-2 p-4 rounded-xl border-2 font-bold text-sm transition-all min-h-0 `;
+          let cls = `flex items-center justify-center gap-2 p-4 rounded-xl border-2 font-bold text-sm transition-all min-h-0 cursor-pointer `;
           if (showFeedback) {
             if (correct) cls += 'border-green-400 bg-green-50 text-green-700';
             else if (selected) cls += 'border-red-400 bg-red-50 text-red-600';
             else cls += 'border-gray-200 bg-gray-50 text-gray-400';
           } else {
-            cls += `border-${color}-200 bg-${color}-50 text-${color}-700 hover:border-${color}-400 cursor-pointer`;
+            cls += baseClass;
           }
           return (
             <button key={String(choice)} onClick={() => handleAnswer(choice)} disabled={showFeedback} className={cls}>
+              <BtnIcon size={16} />
               {label}
             </button>
           );
@@ -644,7 +645,7 @@ export function SortingGame() {
             className={`rounded-xl p-3 mb-4 border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-orange-50 border-orange-200'}`}
           >
             <p className={`text-xs font-bold mb-1 ${isCorrect ? 'text-green-700' : 'text-orange-700'}`}>
-              {isCorrect ? '✓ Correct !' : `✗ Réponse : ${product.correct ? 'Importer' : 'Éviter'}`}
+              {isCorrect ? <Check size={12} className="mr-1" /> : <AlertTriangle size={12} className="mr-1" />}{isCorrect ? 'Correct !' : `Réponse : ${product.correct ? 'Importer' : 'Éviter'}`}
             </p>
             <p className={`text-xs leading-relaxed ${isCorrect ? 'text-green-800' : 'text-orange-800'}`}>{product.reason}</p>
           </motion.div>
@@ -767,8 +768,8 @@ export function MarginSimulator() {
             <Info size={13} className="text-[#f2994a] shrink-0 mt-0.5" />
             <p className="text-xs text-gray-700 leading-relaxed">
               {totalMargin <= 0
-                ? '⚠️ Opération non rentable. Augmentez le prix de vente ou réduisez le fret (commandez en plus grande quantité).'
-                : '💡 Marge faible. Visez au minimum 50% de marge pour couvrir les imprévus et les frais de vente.'}
+                ? 'Opération non rentable. Augmentez le prix de vente ou réduisez le fret (commandez en plus grande quantité).'
+                : 'Marge faible. Visez au minimum 50% de marge pour couvrir les imprévus et les frais de vente.'}
             </p>
           </div>
         </div>

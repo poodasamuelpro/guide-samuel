@@ -164,7 +164,12 @@ export default function Landing({ onStart }: LandingProps) {
                           <div className="progress-fill" style={{ width: `${(i < 2 ? (i+1)*50 : 0)}%` }} />
                         </div>
                       </div>
-                      <span className="text-xs text-gray-400 shrink-0">{i < 2 ? '✓' : '—'}</span>
+                      <span className="text-xs shrink-0">
+                        {i < 2
+                          ? <CheckCircle size={13} className="text-green-500" />
+                          : <span className="text-gray-300">·</span>
+                        }
+                      </span>
                     </div>
                   ))}
                   <div className="mt-4 p-3 bg-[#fef3e8] rounded-xl border border-[#f2994a]/20">
@@ -178,8 +183,9 @@ export default function Landing({ onStart }: LandingProps) {
                   </div>
                 </div>
                 {/* Floating badge */}
-                <div className="absolute -top-4 -right-4 bg-[#f2994a] text-white rounded-2xl px-3 py-2 shadow-lg rotate-3">
-                  <p className="text-xs font-bold">🏆 Certificat PDF</p>
+                <div className="absolute -top-4 -right-4 bg-[#f2994a] text-white rounded-2xl px-3 py-2 shadow-lg rotate-3 flex items-center gap-1.5">
+                  <Award size={13} className="text-white" />
+                  <p className="text-xs font-bold">Certificat PDF</p>
                 </div>
               </div>
             </motion.div>

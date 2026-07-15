@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   CreditCard, ShoppingCart, Package, Tag, TrendingUp,
   Lock, CheckCircle, Trophy, Download, Star, Zap, Award,
-  ArrowRight, BookOpen
+  ArrowRight, BookOpen, MapPin
 } from 'lucide-react';
 import { AppState } from '@/types';
 import { MODULES } from '@/lib/modules';
@@ -80,7 +80,10 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                   {firstName} {state.user?.lastName || ''}
                 </h1>
                 {state.user?.city && (
-                  <p className="text-white/50 text-sm mt-1">📍 {state.user.city}</p>
+                  <p className="text-white/50 text-sm mt-1 flex items-center gap-1">
+                    <MapPin size={12} className="text-[#f2994a]" />
+                    {state.user.city}
+                  </p>
                 )}
               </div>
               {/* XP display */}
