@@ -44,9 +44,11 @@ export async function generateCertificate(state: AppState): Promise<void> {
   doc.circle(W / 2, 60, 18, 'F');
   doc.setFillColor(26, 42, 74);
   doc.circle(W / 2, 60, 15, 'F');
+  // Seal star symbol (text-based, no emoji)
   doc.setTextColor(242, 153, 74);
-  doc.setFontSize(22);
-  doc.text('🏆', W / 2, 65, { align: 'center' });
+  doc.setFontSize(16);
+  doc.setFont('helvetica', 'bold');
+  doc.text('★', W / 2, 64, { align: 'center' });
 
   // ── Title ─────────────────────────────────────────────────────────────────
   doc.setTextColor(255, 255, 255);
