@@ -95,9 +95,9 @@ export default function App() {
   // Loading
   if (!state) {
     return (
-      <div className="min-h-screen bg-[#1e3a5f] flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-[#073b4c] flex flex-col items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#f6932a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-12 h-12 border-4 border-[#8bd346] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-white/85 text-sm">Chargement de la formation…</p>
         </div>
       </div>
