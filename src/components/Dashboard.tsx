@@ -64,7 +64,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
   return (
     <div className="min-h-screen bg-[#fafaf8]">
       {/* ── HERO BANNER ─────────────────────────────────────── */}
-      <div className="bg-[#1e3a5f] pt-20 pb-10">
+      <div className="bg-[#073b4c] pt-20 pb-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -73,7 +73,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <p className="text-[#f6932a] text-sm font-semibold mb-1">
+                <p className="text-[#6ba832] text-sm font-semibold mb-1">
                   Bon retour,
                 </p>
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -81,7 +81,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                 </h1>
                 {state.user?.city && (
                   <p className="text-white/80 text-sm mt-1 flex items-center gap-1">
-                    <MapPin size={12} className="text-[#f6932a]" />
+                    <MapPin size={12} className="text-[#6ba832]" />
                     {state.user.city}
                   </p>
                 )}
@@ -89,7 +89,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
               {/* XP display */}
               <div className="flex items-center gap-3">
                 <div className="bg-white/10 rounded-2xl px-5 py-3 border border-white/10 text-center">
-                  <p className="text-2xl font-extrabold text-[#f6932a]">{state.totalXP}</p>
+                  <p className="text-2xl font-extrabold text-[#6ba832]">{state.totalXP}</p>
                   <p className="text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Points XP</p>
                 </div>
                 <div className="bg-white/10 rounded-2xl px-5 py-3 border border-white/10 text-center">
@@ -103,12 +103,12 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
             <div className="mt-6">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-white/85">Progression globale</span>
-                <span className="text-xs font-bold text-[#f6932a]">{completedCount * 20}%</span>
+                <span className="text-xs font-bold text-[#6ba832]">{completedCount * 20}%</span>
               </div>
               <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
                 <motion.div
                   className="h-full rounded-full"
-                  style={{ background: 'linear-gradient(90deg, #f6932a, #d97a1a)' }}
+                  style={{ background: 'linear-gradient(90deg, #8bd346, #6ba832)' }}
                   initial={{ width: '0%' }}
                   animate={{ width: `${progressPercent}%` }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.3 }}
@@ -133,8 +133,8 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                 animate={{ opacity: 1, scale: 1 }}
                 className="mb-6 rounded-2xl overflow-hidden"
               >
-                <div className="bg-gradient-to-r from-[#1e3a5f] to-[#2d4570] p-5 flex flex-col sm:flex-row items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-[#f6932a] flex items-center justify-center shrink-0">
+                <div className="bg-gradient-to-r from-[#073b4c] to-[#0f5468] p-5 flex flex-col sm:flex-row items-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-[#8bd346] flex items-center justify-center shrink-0">
                     <Trophy size={24} className="text-white" />
                   </div>
                   <div className="flex-1 text-center sm:text-left">
@@ -158,8 +158,8 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
 
           {/* ── MODULES GRID ────────────────────────────────── */}
           <motion.div variants={fadeUp} className="mb-2">
-            <h2 className="text-lg font-extrabold text-[#1e3a5f] flex items-center gap-2">
-              <BookOpen size={18} className="text-[#f6932a]" />
+            <h2 className="text-lg font-extrabold text-[#073b4c] flex items-center gap-2">
+              <BookOpen size={18} className="text-[#6ba832]" />
               Les modules
             </h2>
             <p className="text-sm text-gray-500 mt-0.5">Complétez chaque module dans l&apos;ordre pour débloquer le suivant.</p>
@@ -182,7 +182,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                   <div
                     className={`card p-5 h-full flex flex-col transition-all duration-200 ${
                       unlocked && !done
-                        ? 'card-interactive cursor-pointer border-2 border-transparent hover:border-[#f6932a]/40'
+                        ? 'card-interactive cursor-pointer border-2 border-transparent hover:border-[#8bd346]/40'
                         : done
                         ? 'border-2 border-green-200 bg-green-50/30'
                         : 'opacity-60 cursor-not-allowed'
@@ -220,7 +220,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                             <span className="badge-navy text-[10px]">Verrouillé</span>
                           )}
                         </div>
-                        <h3 className="text-sm font-bold text-[#1e3a5f] leading-tight mt-0.5 line-clamp-2">
+                        <h3 className="text-sm font-bold text-[#073b4c] leading-tight mt-0.5 line-clamp-2">
                           {mod.title}
                         </h3>
                       </div>
@@ -239,7 +239,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                         </span>
                       </div>
                       {unlocked && !done ? (
-                        <div className="flex items-center gap-1 text-[#f6932a]">
+                        <div className="flex items-center gap-1 text-[#6ba832]">
                           <span className="text-xs font-semibold">Commencer</span>
                           <ArrowRight size={13} />
                         </div>
@@ -259,8 +259,8 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
           {/* ── BADGES ──────────────────────────────────────── */}
           {state.badges.length > 0 && (
             <motion.div variants={fadeUp} className="mb-8">
-              <h2 className="text-lg font-extrabold text-[#1e3a5f] flex items-center gap-2 mb-4">
-                <Award size={18} className="text-[#f6932a]" />
+              <h2 className="text-lg font-extrabold text-[#073b4c] flex items-center gap-2 mb-4">
+                <Award size={18} className="text-[#6ba832]" />
                 Vos badges
               </h2>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
@@ -276,16 +276,16 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                       transition={{ type: 'spring', bounce: 0.5 }}
                       className={`flex flex-col items-center gap-1.5 p-3 rounded-2xl border text-center ${
                         isChampion
-                          ? 'bg-gradient-to-br from-[#1e3a5f] to-[#2d4570] border-[#f6932a]/40'
-                          : 'bg-white border-[#f6932a]/30'
+                          ? 'bg-gradient-to-br from-[#073b4c] to-[#0f5468] border-[#8bd346]/40'
+                          : 'bg-white border-[#8bd346]/30'
                       }`}
                     >
                       <div className={`w-9 h-9 rounded-full flex items-center justify-center ${
-                        isChampion ? 'bg-[#f6932a]' : 'bg-[#fef3e8]'
+                        isChampion ? 'bg-[#8bd346]' : 'bg-[#eef9de]'
                       }`}>
-                        <BadgeIcon size={16} className={isChampion ? 'text-white' : 'text-[#f6932a]'} />
+                        <BadgeIcon size={16} className={isChampion ? 'text-white' : 'text-[#6ba832]'} />
                       </div>
-                      <span className={`text-[10px] font-bold ${isChampion ? 'text-white' : 'text-[#1e3a5f]'}`}>
+                      <span className={`text-[10px] font-bold ${isChampion ? 'text-white' : 'text-[#073b4c]'}`}>
                         {label}
                       </span>
                     </motion.div>
@@ -299,16 +299,16 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
           <motion.div variants={fadeUp}>
             <div className={`rounded-2xl p-5 border-2 flex flex-col sm:flex-row items-center gap-4 ${
               allDone
-                ? 'bg-[#fef3e8] border-[#f6932a]/40'
+                ? 'bg-[#eef9de] border-[#8bd346]/40'
                 : 'bg-gray-50 border-dashed border-gray-200'
             }`}>
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-                allDone ? 'bg-[#f6932a]' : 'bg-gray-200'
+                allDone ? 'bg-[#8bd346]' : 'bg-gray-200'
               }`}>
                 <Download size={20} className={allDone ? 'text-white' : 'text-gray-400'} />
               </div>
               <div className="flex-1 text-center sm:text-left">
-                <p className={`font-bold text-sm ${allDone ? 'text-[#1e3a5f]' : 'text-gray-400'}`}>
+                <p className={`font-bold text-sm ${allDone ? 'text-[#073b4c]' : 'text-gray-400'}`}>
                   {allDone ? 'Certificat disponible !' : 'Certificat de formation'}
                 </p>
                 <p className={`text-xs mt-0.5 ${allDone ? 'text-gray-600' : 'text-gray-400'}`}>
