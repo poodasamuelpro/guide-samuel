@@ -8,15 +8,15 @@ export const metadata: Metadata = {
 
 export default function CGUPage() {
   return (
-    <div className="min-h-screen bg-[#fafaf8] py-20 px-4">
+    <div className="min-h-screen bg-[#f5faf9] py-20 px-4">
       <div className="max-w-3xl mx-auto">
 
-        <div className="bg-[#1e3a5f] rounded-2xl p-8 mb-8 text-white">
-          <a href="/" className="text-[#f6932a] text-sm hover:underline mb-4 block">
+        <div className="bg-[#073b4c] rounded-2xl p-8 mb-8 text-white">
+          <a href="/" className="text-[#8bd346] text-sm hover:underline mb-4 block">
             ← Retour à l&apos;accueil
           </a>
           <h1 className="text-2xl font-extrabold">Conditions Générales d&apos;Utilisation</h1>
-          <p className="text-white/60 mt-2 text-sm">Dernière mise à jour : Juillet 2025</p>
+          <p className="text-white/85 mt-2 text-sm">Dernière mise à jour : Juillet 2025</p>
         </div>
 
         <div className="legal-content space-y-6">

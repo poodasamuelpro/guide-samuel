@@ -18,7 +18,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#073b4c] text-white" role="contentinfo">
+    <footer style={{ background: 'var(--brand-deep)', color: '#ffffff' }} role="contentinfo">
       {/* Main footer */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -26,20 +26,32 @@ export default function Footer() {
           {/* Brand column */}
           <div className="md:col-span-1">
             <BrandMark size="sm" variant="light" />
-            <p className="mt-4 text-sm text-white/80 leading-relaxed max-w-xs">
+            <p className="mt-4 text-sm leading-relaxed max-w-xs" style={{ color: 'rgba(255,255,255,0.88)' }}>
               La formation de référence pour importer depuis la Chine et vendre 
               en Afrique de l&apos;Ouest. Accessible sur mobile, 100% gratuit.
             </p>
             <div className="flex items-center gap-1.5 mt-4">
-              <MapPin size={13} className="text-[#6ba832] shrink-0" />
-              <span className="text-xs text-white/70">Ouagadougou, Burkina Faso</span>
+              <MapPin size={13} style={{ color: 'var(--brand-accent)' }} className="shrink-0" />
+              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.80)' }}>Ouagadougou, Burkina Faso</span>
             </div>
             {/* Contact email */}
             <div className="flex items-center gap-2 mt-5">
               <a
                 href="mailto:poodasamuelpro@gmail.com"
                 aria-label="Envoyer un email"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-[#8bd346] transition-colors text-sm text-white/90 hover:text-white"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl transition-colors text-sm"
+                style={{
+                  background: 'rgba(255,255,255,0.10)',
+                  color: 'rgba(255,255,255,0.92)',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = 'var(--brand-accent)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = '#073b4c';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.10)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.92)';
+                }}
               >
                 <Mail size={15} />
                 <span>poodasamuelpro@gmail.com</span>
@@ -57,9 +69,12 @@ export default function Footer() {
                 <li key={label}>
                   <a
                     href={href}
-                    className="text-sm text-white/80 hover:text-[#6ba832] transition-colors flex items-center gap-1.5 min-h-0"
+                    className="text-sm flex items-center gap-1.5 min-h-0 transition-colors"
+                    style={{ color: 'rgba(255,255,255,0.85)' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--brand-accent)'}
+                    onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.85)'}
                   >
-                    <span className="w-1 h-1 rounded-full bg-[#8bd346] shrink-0" />
+                    <span className="w-1 h-1 rounded-full shrink-0" style={{ background: 'var(--brand-accent)' }} />
                     {label}
                   </a>
                 </li>
@@ -77,16 +92,19 @@ export default function Footer() {
                 <li key={label}>
                   <a
                     href={href}
-                    className="text-sm text-white/80 hover:text-[#6ba832] transition-colors flex items-center gap-1.5 min-h-0"
+                    className="text-sm flex items-center gap-1.5 min-h-0 transition-colors"
+                    style={{ color: 'rgba(255,255,255,0.85)' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--brand-accent)'}
+                    onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.85)'}
                   >
-                    <span className="w-1 h-1 rounded-full bg-[#8bd346] shrink-0" />
+                    <span className="w-1 h-1 rounded-full shrink-0" style={{ background: 'var(--brand-accent)' }} />
                     {label}
                   </a>
                 </li>
               ))}
             </ul>
-            <div className="mt-6 p-3 bg-white/5 rounded-xl border border-white/10">
-              <p className="text-xs text-white/70 leading-relaxed">
+            <div className="mt-6 p-3 rounded-xl border" style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.10)' }}>
+              <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.78)' }}>
                 Aucune donnée personnelle collectée. Toutes les informations 
                 restent sur votre appareil (localStorage).
               </p>
@@ -96,13 +114,13 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10">
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.10)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/85">
+          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.88)' }}>
             © {year} Le Guide de Samuel · Tous droits réservés
           </p>
-          <p className="text-xs text-white/85">
-            Formation privée, non commerciale · Fait avec <span className="text-[#6ba832]">♥</span> au Burkina Faso
+          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.88)' }}>
+            Formation privée, non commerciale · Burkina Faso
           </p>
         </div>
       </div>

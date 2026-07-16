@@ -97,7 +97,7 @@ function SwipeCardGame() {
     <div className="card p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-2">
         <Tag size={18} className="text-purple-600" />
-        <h2 className="text-base font-bold text-[#1e3a5f]">Jeu : Importer ou pas ?</h2>
+        <h2 className="text-base font-bold text-[#073b4c]">Jeu : Importer ou pas ?</h2>
       </div>
       <p className="text-xs text-gray-500 mb-5">
         Glisse la carte à droite si tu importerais ce produit, à gauche si non !
@@ -125,7 +125,7 @@ function SwipeCardGame() {
       <div className="flex items-center gap-2 mb-5">
         <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-[#f6932a] rounded-full"
+            className="h-full bg-[#8bd346] rounded-full"
             animate={{ width: `${(results.length / SWIPE_CARDS.length) * 100}%` }}
             transition={{ duration: 0.3 }}
           />
@@ -174,7 +174,7 @@ function SwipeCardGame() {
               {/* Card content */}
               <div className="relative z-10 text-center">
                 <div className="text-5xl mb-3">{card.emoji}</div>
-                <p className="text-sm font-bold text-[#1e3a5f] leading-tight">{card.product}</p>
+                <p className="text-sm font-bold text-[#073b4c] leading-tight">{card.product}</p>
                 <p className="text-[10px] text-gray-400 mt-2">Carte {current + 1} sur {SWIPE_CARDS.length}</p>
               </div>
             </motion.div>
@@ -234,7 +234,7 @@ function SwipeCardGame() {
           <div className="text-5xl mb-3">
             {score >= 8 ? '🏆' : score >= 5 ? '👍' : '📚'}
           </div>
-          <p className="text-xl font-extrabold text-[#1e3a5f] mb-1">
+          <p className="text-xl font-extrabold text-[#073b4c] mb-1">
             {score}/{SWIPE_CARDS.length} bonnes réponses
           </p>
           <p className="text-sm text-gray-500 mb-4">
@@ -253,7 +253,7 @@ function SwipeCardGame() {
 
           <button
             onClick={reset}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#1e3a5f] text-white text-sm font-bold hover:bg-[#243d6a] transition-colors mx-auto"
+            className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#073b4c] text-white text-sm font-bold hover:bg-[#0b87ab] transition-colors mx-auto"
           >
             <RotateCcw size={15} /> Rejouer
           </button>
@@ -267,8 +267,8 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
   const [activeTab, setActiveTab] = useState<'content' | 'game'>('content');
 
   return (
-    <div className="min-h-screen bg-[#fafaf8]">
-      <div className="bg-[#1e3a5f] pt-6 pb-8">
+    <div className="min-h-screen bg-[#f5faf9]">
+      <div className="bg-[#073b4c] pt-6 pb-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <button
             onClick={onBack}
@@ -286,7 +286,7 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
               <Tag size={22} className="text-purple-400" />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-[#f6932a] uppercase tracking-widest">Module 04</p>
+              <p className="text-[10px] font-bold text-[#8bd346] uppercase tracking-widest">Module 04</p>
               <h1 className="text-xl sm:text-2xl font-extrabold text-white">Quels produits importer</h1>
             </div>
           </motion.div>
@@ -296,7 +296,7 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all min-h-0 ${
-                  activeTab === tab ? 'bg-[#f6932a] text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
+                  activeTab === tab ? 'bg-[#8bd346] text-[#073b4c] font-bold' : 'bg-white/10 text-white/80 hover:bg-white/20'
                 }`}
               >
                 {tab === 'content' ? 'Contenu' : 'Jeu de tri'}
@@ -328,7 +328,7 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
                   <Trophy size={18} className="text-yellow-500" />
-                  <h2 className="text-base font-bold text-[#1e3a5f]">Les 3 types de produits gagnants</h2>
+                  <h2 className="text-base font-bold text-[#073b4c]">Les 3 types de produits gagnants</h2>
                 </div>
                 <div className="space-y-4">
                   {[
@@ -383,7 +383,7 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
               <div className="card p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
                   <Ban size={18} className="text-red-500" />
-                  <h2 className="text-base font-bold text-[#1e3a5f]">Produits à éviter absolument</h2>
+                  <h2 className="text-base font-bold text-[#073b4c]">Produits à éviter absolument</h2>
                 </div>
                 <p className="text-gray-500 text-xs mb-4">
                   Basé sur la réglementation douanière du Burkina Faso et zone UEMOA/CEDEAO. Liste non exhaustive.
@@ -431,9 +431,9 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="tip-box">
                 <div className="flex items-start gap-2">
-                  <Lightbulb size={15} className="text-[#f6932a] shrink-0 mt-0.5" />
+                  <Lightbulb size={15} className="text-[#8bd346] shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-xs font-bold text-[#1e3a5f] mb-2">La méthode pour valider un produit</p>
+                    <p className="text-xs font-bold text-[#073b4c] mb-2">La méthode pour valider un produit</p>
                     <ul className="space-y-1.5 text-xs text-gray-700">
                       {[
                         'Est-ce que mes proches cherchent ce produit et ne le trouvent pas facilement ?',
@@ -442,7 +442,7 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
                         'Commandez 3-5 pièces test avant d\'investir dans un gros stock',
                       ].map((tip, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <Star size={10} className="text-[#f6932a] shrink-0 mt-0.5" />
+                          <Star size={10} className="text-[#8bd346] shrink-0 mt-0.5" />
                           <span>{tip}</span>
                         </li>
                       ))}
@@ -454,8 +454,8 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
 
             {/* Products best-sellers */}
             <ScrollSection delay={0.05}>
-              <div className="rounded-xl bg-[#1e3a5f] p-5 text-white">
-                <p className="text-xs font-bold text-[#f6932a] uppercase tracking-widest mb-3">Produits populaires Burkina Faso 2025</p>
+              <div className="rounded-xl bg-[#073b4c] p-5 text-white">
+                <p className="text-xs font-bold text-[#8bd346] uppercase tracking-widest mb-3">Produits populaires Burkina Faso 2025</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
                     { name: 'Chargeurs solaires', emoji: '☀️', hot: true },
@@ -469,7 +469,7 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
                       <span className="text-lg">{emoji}</span>
                       <div>
                         <p className="text-[11px] font-bold text-white leading-tight">{name}</p>
-                        {hot && <span className="text-[9px] text-[#f6932a]">Tendance</span>}
+                        {hot && <span className="text-[9px] text-[#8bd346]">Tendance</span>}
                       </div>
                     </div>
                   ))}
@@ -491,7 +491,7 @@ export default function Module4({ onStartQuiz, onBack }: Props) {
         ) : (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <div className="mb-4">
-              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#1e3a5f] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
+              <button onClick={() => setActiveTab('content')} className="text-sm text-gray-500 hover:text-[#073b4c] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none">
                 <ArrowLeft size={13} /> Retour au contenu
               </button>
             </div>

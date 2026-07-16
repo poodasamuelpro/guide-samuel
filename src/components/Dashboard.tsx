@@ -62,7 +62,7 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
   const firstName = state.user?.firstName || 'Apprenant';
 
   return (
-    <div className="min-h-screen bg-[#fafaf8]">
+    <div className="min-h-screen bg-[#f5faf9]">
       {/* ── HERO BANNER ─────────────────────────────────────── */}
       <div className="bg-[#073b4c] pt-20 pb-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
@@ -134,12 +134,12 @@ export default function Dashboard({ state, onStartModule, onDownloadCertificate 
                 className="mb-6 rounded-2xl overflow-hidden"
               >
                 <div className="bg-gradient-to-r from-[#073b4c] to-[#0f5468] p-5 flex flex-col sm:flex-row items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-[#8bd346] flex items-center justify-center shrink-0">
-                    <Trophy size={24} className="text-white" />
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0" style={{ background: 'var(--brand-accent)' }}>
+                    <Trophy size={24} style={{ color: 'var(--brand-deep)' }} />
                   </div>
                   <div className="flex-1 text-center sm:text-left">
                     <p className="font-extrabold text-white text-lg">Félicitations, Champion !</p>
-                    <p className="text-white/65 text-sm mt-0.5">
+                    <p className="text-white/88 text-sm mt-0.5">
                       Vous avez terminé les 5 modules. Votre certificat est prêt.
                     </p>
                   </div>

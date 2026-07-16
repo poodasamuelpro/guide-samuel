@@ -1,4 +1,4 @@
-// Professional "GS" monogram logo for Le Guide de Samuel
+// Professional turquoise "GS" monogram logo for Le Guide de Samuel
 // Usage: <GSLogo size={40} /> or <GSLogo size={32} variant="white" />
 
 interface GSLogoProps {
@@ -8,9 +8,9 @@ interface GSLogoProps {
 }
 
 export function GSLogo({ size = 40, variant = 'color', className = '' }: GSLogoProps) {
-  const bg = variant === 'color' ? '#1e3a5f' : variant === 'white' ? 'white' : '#1e3a5f';
-  const accent = variant === 'color' ? '#f6932a' : variant === 'white' ? '#f6932a' : '#f6932a';
-  const text = variant === 'white' ? '#1e3a5f' : 'white';
+  const bg = variant === 'white' ? 'white' : '#073b4c';
+  const accent = variant === 'white' ? '#8bd346' : '#8bd346';
+  const text = variant === 'white' ? '#073b4c' : 'white';
 
   return (
     <svg
@@ -25,8 +25,10 @@ export function GSLogo({ size = 40, variant = 'color', className = '' }: GSLogoP
     >
       {/* Background rounded square */}
       <rect width="40" height="40" rx="10" fill={bg} />
-      {/* Orange accent top-right corner triangle */}
-      <path d="M26 0 L40 0 L40 14" fill={accent} opacity="0.8" />
+      {/* Turquoise accent top-right corner triangle */}
+      <path d="M26 0 L40 0 L40 14" fill="#0ea8d4" opacity="0.85" />
+      {/* Lime accent bottom-left */}
+      <path d="M0 30 L10 40 L0 40 Z" fill={accent} opacity="0.7" />
       {/* G letter */}
       <text
         x="7"
@@ -55,7 +57,7 @@ export function GSLogo({ size = 40, variant = 'color', className = '' }: GSLogoP
   );
 }
 
-// Full brand wordmark: logo + text
+// Full brand wordmark: logo + text only (NO subtitle/tagline)
 interface BrandMarkProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'dark' | 'light';
@@ -65,21 +67,14 @@ interface BrandMarkProps {
 export function BrandMark({ size = 'md', variant = 'dark', className = '' }: BrandMarkProps) {
   const logoSize = size === 'sm' ? 32 : size === 'lg' ? 48 : 38;
   const titleSize = size === 'sm' ? 'text-sm' : size === 'lg' ? 'text-xl' : 'text-base';
-  const subSize = size === 'sm' ? 'text-[9px]' : size === 'lg' ? 'text-xs' : 'text-[10px]';
-  const titleColor = variant === 'light' ? 'text-white' : 'text-[#1e3a5f]';
-  const subColor = variant === 'light' ? 'text-white/70' : 'text-gray-500';
+  const titleColor = variant === 'light' ? 'text-white' : 'text-[#073b4c]';
 
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <GSLogo size={logoSize} variant={variant === 'light' ? 'white' : 'color'} />
-      <div className="flex flex-col leading-tight">
-        <span className={`font-extrabold tracking-tight ${titleSize} ${titleColor}`}>
-          Le Guide de Samuel
-        </span>
-        <span className={`font-medium uppercase tracking-widest ${subSize} ${subColor}`}>
-          Importer depuis la Chine
-        </span>
-      </div>
+      <span className={`font-extrabold tracking-tight ${titleSize} ${titleColor}`}>
+        Guide Samuel
+      </span>
     </div>
   );
 }

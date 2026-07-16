@@ -14,10 +14,10 @@ interface LandingProps {
 
 const MODULES_PREVIEW = [
   { icon: CreditCard, num: '01', title: 'Les indispensables', desc: 'Carte bancaire, boîte postale, budget de départ', color: '#3b82f6' },
-  { icon: ShoppingCart, num: '02', title: 'Sur quels sites acheter', desc: 'AliExpress vs Alibaba — la bonne plateforme', color: '#f97316' },
-  { icon: Package, num: '03', title: 'Délais & transit', desc: 'Livraison, douane, transitaires, calcul CBM', color: '#10b981' },
+  { icon: ShoppingCart, num: '02', title: 'Sur quels sites acheter', desc: 'AliExpress vs Alibaba — la bonne plateforme', color: '#10b981' },
+  { icon: Package, num: '03', title: 'Délais & transit', desc: 'Livraison, douane, transitaires, calcul CBM', color: '#0ea8d4' },
   { icon: Tag, num: '04', title: 'Quels produits importer', desc: 'Gagnants, perdants, produits interdits', color: '#8b5cf6' },
-  { icon: TrendingUp, num: '05', title: 'Vendre vos produits', desc: 'Facebook, WhatsApp, grossiste vs détaillant', color: '#ef4444' },
+  { icon: TrendingUp, num: '05', title: 'Vendre vos produits', desc: 'Facebook, WhatsApp, grossiste vs détaillant', color: '#8bd346' },
 ];
 
 const FEATURES = [
@@ -49,10 +49,10 @@ const stagger = {
 
 export default function Landing({ onStart }: LandingProps) {
   return (
-    <div className="min-h-screen bg-[#fafaf8] overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden" style={{ background: 'var(--brand-cream)' }}>
 
       {/* ── HERO ──────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{background: '#1e3a5f'}}>
+      <section className="relative overflow-hidden" style={{ background: 'var(--brand-deep)' }}>
         {/* Image de fond — porte-conteneurs réel */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
@@ -63,13 +63,13 @@ export default function Landing({ onStart }: LandingProps) {
             unoptimized
             priority
           />
-          {/* Overlay navy fort pour lisibilité texte */}
+          {/* Overlay deep fort pour lisibilité texte — WCAG AA garanti */}
           <div className="absolute inset-0" style={{
-            background: 'linear-gradient(135deg, rgba(30,58,95,0.92) 0%, rgba(45,82,130,0.85) 60%, rgba(30,58,95,0.90) 100%)'
+            background: 'linear-gradient(135deg, rgba(7,59,76,0.94) 0%, rgba(15,84,104,0.88) 60%, rgba(7,59,76,0.92) 100%)'
           }} />
           {/* Vague décorative bas */}
           <svg className="absolute bottom-0 left-0 w-full" height="80" viewBox="0 0 1440 80" preserveAspectRatio="none">
-            <path d="M0 80 L1440 80 L1440 20 Q720 80 0 20 Z" fill="#f8f7f4" />
+            <path d="M0 80 L1440 80 L1440 20 Q720 80 0 20 Z" style={{ fill: 'var(--brand-cream)' }} />
           </svg>
         </div>
 
@@ -83,7 +83,10 @@ export default function Landing({ onStart }: LandingProps) {
               className="text-white"
             >
               <motion.div variants={fadeUp} custom={0}>
-                <span className="inline-flex items-center gap-2 bg-[#f6932a]/20 text-[#f6932a] text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full border border-[#f6932a]/30 mb-6">
+                <span
+                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full border mb-6"
+                  style={{ background: 'rgba(139,211,70,0.18)', color: 'var(--brand-accent)', borderColor: 'rgba(139,211,70,0.35)' }}
+                >
                   <Star size={11} fill="currentColor" />
                   Formation e-commerce — Afrique de l&apos;Ouest
                 </span>
@@ -95,13 +98,14 @@ export default function Landing({ onStart }: LandingProps) {
                 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-white mb-5"
               >
                 Commander depuis la Chine,{' '}
-                <span className="text-[#f6932a]">Vendre en Afrique</span>
+                <span style={{ color: 'var(--brand-accent)' }}>Vendre en Afrique</span>
               </motion.h1>
 
               <motion.p
                 variants={fadeUp}
                 custom={2}
-                className="text-base sm:text-lg leading-relaxed mb-8 max-w-md" style={{color:'rgba(255,255,255,0.88)'}}
+                className="text-base sm:text-lg leading-relaxed mb-8 max-w-md"
+                style={{ color: 'rgba(255,255,255,0.90)' }}
               >
                 La formation complète pour importer depuis AliExpress et Alibaba et revendre 
                 vos produits au Burkina Faso et en Afrique de l&apos;Ouest. Adapté au smartphone. 100% gratuit.
@@ -116,8 +120,8 @@ export default function Landing({ onStart }: LandingProps) {
                   Commencer gratuitement
                   <ArrowRight size={18} />
                 </button>
-                <div className="flex items-center gap-2 text-sm" style={{color:'rgba(255,255,255,0.85)'}}>
-                  <CheckCircle size={15} className="text-[#f6932a] shrink-0" />
+                <div className="flex items-center gap-2 text-sm" style={{ color: 'rgba(255,255,255,0.88)' }}>
+                  <CheckCircle size={15} style={{ color: 'var(--brand-accent)' }} className="shrink-0" />
                   <span>Aucun compte requis</span>
                 </div>
               </motion.div>
@@ -128,7 +132,11 @@ export default function Landing({ onStart }: LandingProps) {
                   {['S','K','A','M'].map((l, i) => (
                     <div
                       key={i}
-                      className="w-8 h-8 rounded-full bg-gradient-to-br from-[#f6932a] to-[#d97a1a] border-2 border-[#1e3a5f] flex items-center justify-center text-xs font-bold text-white"
+                      className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold text-white"
+                      style={{
+                        background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-dark) 100%)',
+                        borderColor: 'var(--brand-deep)'
+                      }}
                     >
                       {l}
                     </div>
@@ -136,9 +144,9 @@ export default function Landing({ onStart }: LandingProps) {
                 </div>
                 <div>
                   <div className="flex">
-                    {[1,2,3,4,5].map(i => <Star key={i} size={12} fill="#f6932a" color="#f6932a" />)}
+                    {[1,2,3,4,5].map(i => <Star key={i} size={12} fill="var(--brand-accent)" color="var(--brand-accent)" />)}
                   </div>
-                  <p className="text-xs mt-0.5" style={{color:'rgba(255,255,255,0.75)'}}>+200 apprenants actifs</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.78)' }}>+200 apprenants actifs</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -152,11 +160,11 @@ export default function Landing({ onStart }: LandingProps) {
             >
               <div className="relative">
                 {/* Main card */}
-                <div className="bg-white rounded-2xl shadow-2xl p-6 border border-white/10">
+                <div className="bg-white rounded-2xl shadow-2xl p-6" style={{ border: '1px solid rgba(255,255,255,0.12)' }}>
                   <div className="flex items-center gap-3 mb-5">
                     <GSLogo size={42} />
                     <div>
-                      <p className="font-bold text-[#1e3a5f] text-sm">Le Guide de Samuel</p>
+                      <p className="font-bold text-sm" style={{ color: 'var(--brand-deep)' }}>Le Guide de Samuel</p>
                       <p className="text-xs text-gray-400">Formation complète</p>
                     </div>
                     <span className="ml-auto badge-green">Gratuit</span>
@@ -166,7 +174,7 @@ export default function Landing({ onStart }: LandingProps) {
                     <div key={m.num} className="flex items-center gap-3 mb-3">
                       <div
                         className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ background: `${m.color}15` }}
+                        style={{ background: `${m.color}18` }}
                       >
                         <m.icon size={14} style={{ color: m.color }} />
                       </div>
@@ -184,10 +192,10 @@ export default function Landing({ onStart }: LandingProps) {
                       </span>
                     </div>
                   ))}
-                  <div className="mt-4 p-3 bg-[#fef3e8] rounded-xl border border-[#f6932a]/20">
+                  <div className="mt-4 p-3 rounded-xl border" style={{ background: 'var(--brand-accent-light)', borderColor: 'rgba(139,211,70,0.25)' }}>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-600 font-medium">Progression totale</span>
-                      <span className="text-xs font-bold text-[#f6932a]">200 XP</span>
+                      <span className="text-xs font-bold" style={{ color: 'var(--brand-accent-dark)' }}>200 XP</span>
                     </div>
                     <div className="progress-bar mt-2">
                       <div className="progress-fill" style={{ width: '40%' }} />
@@ -195,8 +203,11 @@ export default function Landing({ onStart }: LandingProps) {
                   </div>
                 </div>
                 {/* Floating badge */}
-                <div className="absolute -top-4 -right-4 bg-[#f6932a] text-white rounded-2xl px-3 py-2 shadow-lg rotate-3 flex items-center gap-1.5">
-                  <Award size={13} className="text-white" />
+                <div
+                  className="absolute -top-4 -right-4 text-white rounded-2xl px-3 py-2 shadow-lg rotate-3 flex items-center gap-1.5 animate-float"
+                  style={{ background: 'var(--brand-accent)', color: 'var(--brand-deep)' }}
+                >
+                  <Award size={13} />
                   <p className="text-xs font-bold">Certificat PDF</p>
                 </div>
               </div>
@@ -221,10 +232,10 @@ export default function Landing({ onStart }: LandingProps) {
                 variants={fadeUp}
                 className="text-center"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#fef3e8] flex items-center justify-center mx-auto mb-2">
-                  <Icon size={18} className="text-[#f6932a]" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ background: 'var(--brand-accent-light)' }}>
+                  <Icon size={18} style={{ color: 'var(--brand-accent-dark)' }} />
                 </div>
-                <p className="text-2xl font-extrabold text-[#1e3a5f]">{value}</p>
+                <p className="text-2xl font-extrabold" style={{ color: 'var(--brand-deep)' }}>{value}</p>
                 <p className="text-xs text-gray-500 mt-0.5">{label}</p>
               </motion.div>
             ))}
@@ -233,7 +244,7 @@ export default function Landing({ onStart }: LandingProps) {
       </section>
 
       {/* ── MODULES PREVIEW ───────────────────────────────────────── */}
-      <section className="py-16 bg-[#fafaf8]" aria-labelledby="modules-heading">
+      <section className="py-16" style={{ background: 'var(--brand-cream)' }} aria-labelledby="modules-heading">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div
             initial="hidden"
@@ -243,7 +254,7 @@ export default function Landing({ onStart }: LandingProps) {
           >
             <motion.div variants={fadeUp} className="text-center mb-10">
               <span className="badge-orange text-xs mb-3">5 modules progressifs</span>
-              <h2 id="modules-heading" className="text-2xl sm:text-3xl font-extrabold text-[#1e3a5f] mt-2">
+              <h2 id="modules-heading" className="text-2xl sm:text-3xl font-extrabold mt-2" style={{ color: 'var(--brand-deep)' }}>
                 Tout ce qu&apos;il faut savoir pour démarrer
               </h2>
               <p className="text-gray-500 mt-2 text-sm max-w-lg mx-auto">
@@ -268,19 +279,19 @@ export default function Landing({ onStart }: LandingProps) {
                   <div className="flex items-start gap-3">
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
-                      style={{ background: `${m.color}15` }}
+                      style={{ background: `${m.color}18` }}
                     >
                       <m.icon size={18} style={{ color: m.color }} />
                     </div>
                     <div className="min-w-0">
                       <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Module {m.num}</span>
-                      <h3 className="text-sm font-bold text-[#1e3a5f] leading-tight mt-0.5">{m.title}</h3>
+                      <h3 className="text-sm font-bold leading-tight mt-0.5" style={{ color: 'var(--brand-deep)' }}>{m.title}</h3>
                       <p className="text-xs text-gray-500 mt-1 leading-relaxed">{m.desc}</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
                     <span className="badge-navy text-[10px]">+100 XP</span>
-                    <ArrowRight size={14} className="text-[#f6932a] transition-transform group-hover:translate-x-1" />
+                    <ArrowRight size={14} style={{ color: 'var(--brand-accent-dark)' }} className="transition-transform group-hover:translate-x-1" />
                   </div>
                 </motion.div>
               ))}
@@ -289,23 +300,23 @@ export default function Landing({ onStart }: LandingProps) {
               <motion.div
                 variants={fadeUp}
                 custom={5}
-                className="sm:col-span-2 lg:col-span-1 rounded-2xl p-5 flex flex-col justify-between cursor-pointer hover:shadow-lg transition-shadow"
-                style={{background:'linear-gradient(135deg, #1e3a5f 0%, #2d5282 100%)'}}
+                className="sm:col-span-2 lg:col-span-1 rounded-2xl p-5 flex flex-col justify-between cursor-pointer hover:shadow-lg transition-all duration-200"
+                style={{ background: 'linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-deep-light) 100%)' }}
                 onClick={onStart}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => e.key === 'Enter' && onStart()}
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#f6932a] flex items-center justify-center mb-3">
-                    <Award size={18} className="text-white" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ background: 'var(--brand-accent)' }}>
+                    <Award size={18} style={{ color: 'var(--brand-deep)' }} />
                   </div>
                   <h3 className="text-sm font-bold text-white leading-tight">Certificat de formation</h3>
-                  <p className="text-xs mt-1 leading-relaxed" style={{color:'rgba(255,255,255,0.85)'}}>
+                  <p className="text-xs mt-1 leading-relaxed" style={{ color: 'rgba(255,255,255,0.88)' }}>
                     Téléchargez votre certificat PDF après avoir terminé les 5 modules.
                   </p>
                 </div>
-                <div className="flex items-center gap-2 mt-4 text-[#f6932a] text-xs font-semibold">
+                <div className="flex items-center gap-2 mt-4 text-xs font-semibold" style={{ color: 'var(--brand-accent)' }}>
                   <span>Commencer la formation</span>
                   <ArrowRight size={13} />
                 </div>
@@ -325,7 +336,7 @@ export default function Landing({ onStart }: LandingProps) {
             variants={stagger}
           >
             <motion.div variants={fadeUp} className="text-center mb-10">
-              <h2 id="features-heading" className="text-2xl sm:text-3xl font-extrabold text-[#1e3a5f]">
+              <h2 id="features-heading" className="text-2xl sm:text-3xl font-extrabold" style={{ color: 'var(--brand-deep)' }}>
                 Pourquoi Le Guide de Samuel ?
               </h2>
               <p className="text-gray-500 mt-2 text-sm">
@@ -339,13 +350,22 @@ export default function Landing({ onStart }: LandingProps) {
                   key={title}
                   variants={fadeUp}
                   custom={i}
-                  className="flex items-start gap-4 p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#f6932a]/30 hover:bg-[#fef3e8]/30 transition-colors"
+                  className="flex items-start gap-4 p-5 rounded-2xl border transition-all duration-200 group"
+                  style={{ background: '#f9fafb', borderColor: '#f3f4f6' }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(139,211,70,0.35)';
+                    (e.currentTarget as HTMLDivElement).style.background = 'var(--brand-accent-light)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLDivElement).style.borderColor = '#f3f4f6';
+                    (e.currentTarget as HTMLDivElement).style.background = '#f9fafb';
+                  }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#1e3a5f] flex items-center justify-center shrink-0">
-                    <Icon size={18} className="text-[#f6932a]" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'var(--brand-deep)' }}>
+                    <Icon size={18} style={{ color: 'var(--brand-primary-light)' }} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#1e3a5f] text-sm">{title}</h3>
+                    <h3 className="font-bold text-sm" style={{ color: 'var(--brand-deep)' }}>{title}</h3>
                     <p className="text-xs text-gray-500 mt-1 leading-relaxed">{desc}</p>
                   </div>
                 </motion.div>
@@ -356,7 +376,7 @@ export default function Landing({ onStart }: LandingProps) {
       </section>
 
       {/* ── FINAL CTA ─────────────────────────────────────────────── */}
-      <section className="py-16" style={{background:'linear-gradient(135deg, #1e3a5f 0%, #2d5282 60%, #1e3a5f 100%)'}} aria-labelledby="cta-heading">
+      <section className="py-16" style={{ background: 'linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-deep-light) 60%, var(--brand-deep) 100%)' }} aria-labelledby="cta-heading">
         <div className="max-w-xl mx-auto px-4 sm:px-6 text-center">
           <motion.div
             initial="hidden"
@@ -365,13 +385,13 @@ export default function Landing({ onStart }: LandingProps) {
             variants={stagger}
           >
             <motion.div variants={fadeUp}>
-              <div className="w-16 h-16 rounded-2xl bg-[#f6932a] flex items-center justify-center mx-auto mb-5 shadow-lg">
-                <Users size={28} className="text-white" />
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg" style={{ background: 'var(--brand-accent)' }}>
+                <Users size={28} style={{ color: 'var(--brand-deep)' }} />
               </div>
               <h2 id="cta-heading" className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
                 Prêt à vous lancer ?
               </h2>
-              <p className="mb-7 text-sm leading-relaxed" style={{color:'rgba(255,255,255,0.88)'}}>
+              <p className="mb-7 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.90)' }}>
                 Rejoignez les apprenants qui ont transformé leur business grâce à l&apos;import depuis la Chine. 
                 Formation 100% gratuite, en français, sur mobile.
               </p>
@@ -383,7 +403,7 @@ export default function Landing({ onStart }: LandingProps) {
                 Démarrer la formation
                 <ArrowRight size={18} />
               </button>
-              <p className="text-xs mt-4" style={{color:'rgba(255,255,255,0.70)'}}>
+              <p className="text-xs mt-4" style={{ color: 'rgba(255,255,255,0.78)' }}>
                 Sans inscription · Sans email · Vos données restent sur votre appareil
               </p>
             </motion.div>

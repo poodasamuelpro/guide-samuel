@@ -71,7 +71,7 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
   // Results screen
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#fafaf8] flex items-center justify-center px-4 py-16">
+      <div className="min-h-screen bg-[#f5faf9] flex items-center justify-center px-4 py-16">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -160,7 +160,7 @@ export default function Quiz({ moduleId, onPass, onBack }: QuizProps) {
   const isCorrect = selectedAnswer === current.correctIndex;
 
   return (
-    <div className="min-h-screen bg-[#fafaf8] flex flex-col">
+    <div className="min-h-screen bg-[#f5faf9] flex flex-col">
       {/* Header */}
       <div className="bg-[#073b4c] pt-4 pb-6">
         <div className="max-w-xl mx-auto px-4">

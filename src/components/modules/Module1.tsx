@@ -79,8 +79,8 @@ function SuitcaseAnimation() {
   return (
     <div ref={ref} className="card p-6 shadow-sm overflow-hidden">
       <div className="flex items-center gap-2 mb-2">
-        <Target size={18} className="text-[#f6932a]" />
-        <h2 className="text-base font-bold text-[#1e3a5f]">Ta valise d&apos;importateur</h2>
+        <Target size={18} className="text-[#8bd346]" />
+        <h2 className="text-base font-bold text-[#073b4c]">Ta valise d&apos;importateur</h2>
       </div>
       <p className="text-xs text-gray-500 mb-5">
         Clique sur chaque article pour l&apos;ajouter à ta valise — ces 3 éléments sont obligatoires avant ta première commande !
@@ -93,14 +93,14 @@ function SuitcaseAnimation() {
           initial={{ scale: 0.95, opacity: 0 }}
           animate={inView ? { scale: 1, opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
-          className="relative rounded-2xl border-4 border-[#1e3a5f] bg-[#1e3a5f] p-4 min-h-[140px] overflow-hidden"
+          className="relative rounded-2xl border-4 border-[#073b4c] bg-[#073b4c] p-4 min-h-[140px] overflow-hidden"
         >
           {/* Suitcase handle */}
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-4 rounded-full border-4 border-[#1e3a5f] bg-transparent" />
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-4 rounded-full border-4 border-[#073b4c] bg-transparent" />
 
           {/* Fill indicator */}
           <motion.div
-            className="absolute inset-0 bg-[#f6932a]/10 origin-bottom"
+            className="absolute inset-0 bg-[#8bd346]/10 origin-bottom"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: revealed / SUITCASE_ITEMS.length }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
@@ -146,7 +146,7 @@ function SuitcaseAnimation() {
                 transition={{ type: 'spring', stiffness: 500, damping: 25 }}
                 className="absolute top-2 right-2"
               >
-                <div className="w-8 h-8 rounded-full bg-[#f6932a] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-[#8bd346] flex items-center justify-center">
                   <BadgeCheck size={18} className="text-white" />
                 </div>
               </motion.div>
@@ -159,7 +159,7 @@ function SuitcaseAnimation() {
           {SUITCASE_ITEMS.map((_, i) => (
             <motion.div
               key={i}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i < revealed ? 'w-8 bg-[#f6932a]' : 'w-4 bg-gray-200'}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i < revealed ? 'w-8 bg-[#8bd346]' : 'w-4 bg-gray-200'}`}
             />
           ))}
         </div>
@@ -181,22 +181,22 @@ function SuitcaseAnimation() {
                 isRevealed
                   ? 'border-green-200 bg-green-50 cursor-default'
                   : isNext
-                  ? 'border-[#f6932a] bg-[#fef3e8] cursor-pointer hover:shadow-md'
+                  ? 'border-[#8bd346] bg-[#eef9de] cursor-pointer hover:shadow-md'
                   : 'border-gray-100 bg-gray-50 opacity-40 cursor-not-allowed'
               }`}
             >
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                isRevealed ? 'bg-green-100' : isNext ? 'bg-[#f6932a]/20' : 'bg-gray-100'
+                isRevealed ? 'bg-green-100' : isNext ? 'bg-[#8bd346]/20' : 'bg-gray-100'
               }`}>
                 {isRevealed
                   ? <CheckCircle size={20} className="text-green-600" />
                   : isNext
-                  ? <Icon size={20} className="text-[#f6932a]" />
+                  ? <Icon size={20} className="text-[#8bd346]" />
                   : <Lock size={20} className="text-gray-400" />
                 }
               </div>
               <div className="flex-1 min-w-0">
-                <p className={`text-sm font-bold ${isRevealed ? 'text-green-800' : 'text-[#1e3a5f]'}`}>{label}</p>
+                <p className={`text-sm font-bold ${isRevealed ? 'text-green-800' : 'text-[#073b4c]'}`}>{label}</p>
                 <p className={`text-xs mt-0.5 ${isRevealed ? 'text-green-600' : 'text-gray-500'}`}>{sublabel}</p>
               </div>
               {isNext && (
@@ -205,11 +205,11 @@ function SuitcaseAnimation() {
                   transition={{ repeat: Infinity, duration: 1 }}
                   className="shrink-0"
                 >
-                  <ChevronDown size={18} className="text-[#f6932a] rotate-[-90deg]" />
+                  <ChevronDown size={18} className="text-[#8bd346] rotate-[-90deg]" />
                 </motion.div>
               )}
               {isRevealed && (
-                <Star size={16} className="text-[#f6932a] shrink-0" />
+                <Star size={16} className="text-[#8bd346] shrink-0" />
               )}
             </motion.button>
           );
@@ -261,9 +261,9 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
   const [activeTab, setActiveTab] = useState<'content' | 'simulator'>('content');
 
   return (
-    <div className="min-h-screen bg-[#fafaf8]">
+    <div className="min-h-screen bg-[#f5faf9]">
       {/* Module header */}
-      <div className="bg-[#1e3a5f] pt-6 pb-8">
+      <div className="bg-[#073b4c] pt-6 pb-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <button
             onClick={onBack}
@@ -282,7 +282,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
               <CreditCard size={22} className="text-blue-400" />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-[#f6932a] uppercase tracking-widest">Module 01</p>
+              <p className="text-[10px] font-bold text-[#8bd346] uppercase tracking-widest">Module 01</p>
               <h1 className="text-xl sm:text-2xl font-extrabold text-white">
                 Les indispensables pour importer
               </h1>
@@ -296,7 +296,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all min-h-0 ${
                   activeTab === tab
-                    ? 'bg-[#f6932a] text-white'
+                    ? 'bg-[#8bd346] text-[#073b4c] font-bold'
                     : 'bg-white/10 text-white/80 hover:bg-white/20'
                 }`}
               >
@@ -337,7 +337,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
                     <CreditCard size={20} className="text-blue-600" />
                   </motion.div>
                   <div>
-                    <h2 className="text-base font-bold text-[#1e3a5f]">1. La carte bancaire internationale</h2>
+                    <h2 className="text-base font-bold text-[#073b4c]">1. La carte bancaire internationale</h2>
                     <p className="text-xs text-gray-500">Indispensable pour payer sur AliExpress / Alibaba</p>
                   </div>
                 </div>
@@ -352,7 +352,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
                   {/* UBA Africard */}
                   <div className="rounded-xl bg-blue-50 border border-blue-100 p-4">
                     <div className="flex items-start justify-between gap-3 mb-2">
-                      <p className="font-bold text-[#1e3a5f] text-sm">Carte VISA Prépayée UBA (Africard)</p>
+                      <p className="font-bold text-[#073b4c] text-sm">Carte VISA Prépayée UBA (Africard)</p>
                       <span className="badge-green shrink-0">Recommandée</span>
                     </div>
                     <ul className="space-y-1.5 text-xs text-gray-600">
@@ -381,7 +381,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
 
                   {/* VISA Orange Money */}
                   <div className="rounded-xl bg-orange-50 border border-orange-100 p-4">
-                    <p className="font-bold text-[#1e3a5f] text-sm mb-2">Carte VISA Orange Money</p>
+                    <p className="font-bold text-[#073b4c] text-sm mb-2">Carte VISA Orange Money</p>
                     <ul className="space-y-1.5 text-xs text-gray-600">
                       <li className="flex items-start gap-2">
                         <CheckCircle size={12} className="text-green-600 shrink-0 mt-0.5" />
@@ -400,7 +400,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
 
                   {/* Ecobank */}
                   <div className="rounded-xl bg-green-50 border border-green-100 p-4">
-                    <p className="font-bold text-[#1e3a5f] text-sm mb-2">Ecobank CashXpress / Carte prépayée</p>
+                    <p className="font-bold text-[#073b4c] text-sm mb-2">Ecobank CashXpress / Carte prépayée</p>
                     <ul className="space-y-1.5 text-xs text-gray-600">
                       <li className="flex items-start gap-2">
                         <CheckCircle size={12} className="text-green-600 shrink-0 mt-0.5" />
@@ -416,7 +416,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
 
                 <div className="tip-box mt-4">
                   <div className="flex items-start gap-2">
-                    <Lightbulb size={15} className="text-[#f6932a] shrink-0 mt-0.5" />
+                    <Lightbulb size={15} className="text-[#8bd346] shrink-0 mt-0.5" />
                     <p className="text-xs text-gray-700 leading-relaxed">
                       <strong>Conseil :</strong> Pour votre premier achat, rechargez uniquement le montant 
                       de votre commande + 10% de marge. Évitez de garder un solde élevé inutilement.
@@ -437,7 +437,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
                     <Mailbox size={20} className="text-green-600" />
                   </motion.div>
                   <div>
-                    <h2 className="text-base font-bold text-[#1e3a5f]">2. La boîte postale</h2>
+                    <h2 className="text-base font-bold text-[#073b4c]">2. La boîte postale</h2>
                     <p className="text-xs text-gray-500">Votre adresse fixe pour recevoir vos colis</p>
                   </div>
                 </div>
@@ -457,7 +457,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
                     { step: '4', text: 'Utilisez l\'adresse : La Poste Ouagadougou + N° de votre boîte + code postal 01 BP XXXX' },
                   ].map(({ step, text }) => (
                     <div key={step} className="flex items-start gap-3">
-                      <div className="w-7 h-7 rounded-full bg-[#1e3a5f] flex items-center justify-center shrink-0 text-xs font-extrabold text-[#f6932a]">
+                      <div className="w-7 h-7 rounded-full bg-[#073b4c] flex items-center justify-center shrink-0 text-xs font-extrabold text-[#8bd346]">
                         {step}
                       </div>
                       <p className="text-xs text-gray-700 leading-relaxed pt-1">{text}</p>
@@ -489,7 +489,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
                     <Calculator size={20} className="text-orange-500" />
                   </motion.div>
                   <div>
-                    <h2 className="text-base font-bold text-[#1e3a5f]">3. Budget de départ minimal</h2>
+                    <h2 className="text-base font-bold text-[#073b4c]">3. Budget de départ minimal</h2>
                     <p className="text-xs text-gray-500">Ce qu&apos;il faut prévoir pour commencer</p>
                   </div>
                 </div>
@@ -517,9 +517,9 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
             <ScrollSection delay={0.05}>
               <div className="tip-box">
                 <div className="flex items-start gap-2">
-                  <Lightbulb size={15} className="text-[#f6932a] shrink-0 mt-0.5" />
+                  <Lightbulb size={15} className="text-[#8bd346] shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-xs font-bold text-[#1e3a5f] mb-2">Les erreurs à éviter au démarrage</p>
+                    <p className="text-xs font-bold text-[#073b4c] mb-2">Les erreurs à éviter au démarrage</p>
                     <ul className="space-y-1.5 text-xs text-gray-700">
                       {[
                         'Ne pas commander trop en première commande — commencez par 3 à 10 pièces pour tester',
@@ -564,7 +564,7 @@ export default function Module1({ onStartQuiz, onBack }: Props) {
             <div className="mb-4 flex items-center gap-2">
               <button
                 onClick={() => setActiveTab('content')}
-                className="text-sm text-gray-500 hover:text-[#1e3a5f] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none transition-colors"
+                className="text-sm text-gray-500 hover:text-[#073b4c] flex items-center gap-1 min-h-0 p-0 bg-transparent border-none transition-colors"
               >
                 <ArrowLeft size={13} /> Retour au contenu
               </button>
@@ -598,7 +598,7 @@ function BudgetTable() {
     <div ref={ref} className="rounded-xl overflow-hidden border border-gray-100">
       <table className="w-full text-sm" role="table">
         <thead>
-          <tr className="bg-[#1e3a5f] text-white">
+          <tr className="bg-[#073b4c] text-white">
             <th className="text-left px-4 py-2.5 text-xs font-semibold">Élément</th>
             <th className="text-right px-4 py-2.5 text-xs font-semibold">Coût (FCFA)</th>
           </tr>
@@ -613,17 +613,17 @@ function BudgetTable() {
               className="hover:bg-gray-50"
             >
               <td className="px-4 py-2.5 text-gray-700 text-xs">{item}</td>
-              <td className="px-4 py-2.5 text-right font-bold text-[#1e3a5f] text-xs">{cost}</td>
+              <td className="px-4 py-2.5 text-right font-bold text-[#073b4c] text-xs">{cost}</td>
             </motion.tr>
           ))}
           <motion.tr
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.6 }}
-            className="bg-[#fef3e8]"
+            className="bg-[#eef9de]"
           >
-            <td className="px-4 py-2.5 font-bold text-[#1e3a5f] text-xs">Total minimal</td>
-            <td className="px-4 py-2.5 text-right font-extrabold text-[#f6932a] text-sm">~30 200 FCFA</td>
+            <td className="px-4 py-2.5 font-bold text-[#073b4c] text-xs">Total minimal</td>
+            <td className="px-4 py-2.5 text-right font-extrabold text-[#8bd346] text-sm">~30 200 FCFA</td>
           </motion.tr>
         </tbody>
       </table>

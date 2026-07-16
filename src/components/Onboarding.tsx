@@ -56,7 +56,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf8] flex items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#f5faf9] flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-md">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -86,7 +86,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
               {TIPS.map((tip) => (
                 <div key={tip} className="flex items-start gap-2">
                   <CheckCircle size={13} className="text-[#6ba832] shrink-0 mt-0.5" />
-                  <span className="text-xs text-white/70 leading-tight">{tip}</span>
+                  <span className="text-xs text-white/88 leading-tight">{tip}</span>
                 </div>
               ))}
             </div>

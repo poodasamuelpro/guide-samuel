@@ -499,6 +499,94 @@ input::placeholder, textarea::placeholder {
 .on-dark-muted { color: var(--text-on-dark-muted); }
 .on-dark-subtle { color: var(--text-on-dark-subtle); }
 
+/* ── Prevent system dark-mode from breaking custom palette ──────────── */
+/* The site has its own dark sections (brand-deep) and must NOT be      */
+/* overridden by prefers-color-scheme: dark                              */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: light; /* force light scheme — we manage our own darks */
+  }
+  body {
+    background-color: var(--brand-cream) !important;
+    color: #1f2937 !important;
+  }
+  /* Cards always white */
+  .card {
+    background: #ffffff !important;
+    color: #1f2937 !important;
+  }
+  /* Header always white */
+  .header-glass {
+    background: rgba(255,255,255,0.97) !important;
+    color: var(--brand-deep) !important;
+  }
+  /* Inputs always legible */
+  .sim-input, .quiz-option {
+    background: #ffffff !important;
+    color: #1f2937 !important;
+  }
+}
+
+/* ── Micro-animations supplémentaires ──────────────────────────────── */
+@keyframes slide-in-up {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.92); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14,168,212,0.0); }
+  50%       { box-shadow: 0 0 18px 6px rgba(14,168,212,0.22); }
+}
+
+.animate-slide-in-up { animation: slide-in-up 0.45s cubic-bezier(0.22,1,0.36,1) forwards; }
+.animate-scale-in    { animation: scale-in 0.35s cubic-bezier(0.22,1,0.36,1) forwards; }
+.animate-glow-pulse  { animation: glow-pulse 2.5s ease-in-out infinite; }
+
+/* ── Button hover lift effect ──────────────────────────────────────── */
+.btn-primary, .btn-secondary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background 0.2s;
+}
+.btn-primary:hover::after {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ── Interactive card ripple ───────────────────────────────────────── */
+.card-interactive {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Tag/badge hover bounce ────────────────────────────────────────── */
+.badge-accent:hover, .badge-primary:hover, .badge-green:hover {
+  transform: scale(1.06);
+  transition: transform 0.15s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+/* ── Module header band (update to use CSS vars) ───────────────────── */
+.module-hero {
+  background: linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-deep-light) 60%, var(--brand-deep) 100%);
+}
+
+/* ── Focus ring sur fond sombre ────────────────────────────────────── */
+.module-hero :focus-visible,
+footer :focus-visible {
+  outline-color: var(--brand-primary-light);
+}
+
 /* ── Module hero bands ─────────────────────────────────────────────── */
 .module-hero {
   background: linear-gradient(135deg, #073b4c 0%, #0f5468 60%, #073b4c 100%);
