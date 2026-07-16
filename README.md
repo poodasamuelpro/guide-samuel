@@ -2,7 +2,7 @@
 
 Formation e-learning complète pour **importer depuis la Chine** et **vendre en Afrique de l'Ouest** (Burkina Faso / UEMOA).
 
-🌐 **Live** → [guide-samuel.vercel.app](https://guide-samuel.vercel.app)
+🌐 **Live** → [guide-samuel.vercel.app](https://le-guide-samuel.vercel.app/)
 
 ---
 
